@@ -1,0 +1,43 @@
+.my-custom-button {
+    padding: 10px 20px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    &.primary {
+        background-color: #24a96b;
+        color: white;
+
+        &:hover {
+            background-color: #14bd6e;
+        }
+    }
+
+    &.success {
+        background-color: #22c55e;
+        color: white;
+
+        &:hover {
+            background-color: #16a34a;
+        }
+    }
+
+    &.link {
+        background-color: transparent;
+        color: #3b82f6;
+        padding: 5px 10px;
+        text-decoration: underline;
+
+        &:hover {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        &:active {
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+    }
+}

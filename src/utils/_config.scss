@@ -1,0 +1,31 @@
+@use "sass:map";
+$themes: (
+    light: (bg-body: linear-gradient(180deg, #F0F9FF 0%, #FFFFFF 100%),
+        bg-card: #ffffff,
+        text-main: #1F2937,
+        text-muted: #4B5563,
+        border: #E5E7EB,
+        shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1)),
+    dark: (bg-body: linear-gradient(180deg, #0B0F19 0%, #111827 100%),
+        bg-card: #1F2937,
+        text-main: #F9FAFB,
+        text-muted: #9CA3AF,
+        border: #374151,
+        shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.5))
+);
+
+@mixin generate-variables($theme-name) {
+    $theme: map.get($themes, $theme-name);
+
+    @each $key, $value in $theme {
+        --#{$key}: #{$value};
+    }
+}
+
+root {
+    @include generate-variables(light);
+}
+
+[data-theme='dark'] {
+    @include generate-variables(dark);
+}
