@@ -1,69 +1,165 @@
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router';
-import { register } from '../../services/auth.service';
-import Container from '../ui/Container/PageContainer';
-import Input from '../ui/Input/Input';
-import Button from '../ui/Button/Button';
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import { register } from "../../services/auth.service";
+import Container from "../ui/Container/PageContainer";
+import Input from "../ui/Input/Input";
+import Button from "../ui/Button/Button";
+import { z } from "zod";
+import axios from "axios";
+import "./RegisterForm.scss";
+import { useLoading } from "../../hooks/useLoading";
+interface ApiError {
+  message: string;
+}
+const registerSchema = z.object({
+  email: z
+    .string()
+    .min(1, "E-posta alanı zorunludur.")
+    .email("Geçerli bir e-posta giriniz."),
+  password: z
+    .string()
+    .min(1, "Şifre alanı zorunludur.")
+    .min(6, "Şifre en az 6 karakter olmalıdır."),
+  firstName: z
+    .string()
+    .min(1, "Ad alanı zorunludur.")
+    .min(3, "Ad alanı en az 3 karakter olmalıdır."),
+  lastName: z
+    .string()
+    .min(1, "Soyad alanı zorunludur.")
+    .min(3, "Soyad alanı en az 3 karakter olmalıdır."),
+});
 
 function RegisterForm() {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [emailError, setEmailError] = useState("");
-    const [passwordError, setPasswordError] = useState("");
-    const [firstNameError, setFirstNameError] = useState("");
-    const [lastNameError, setLastNameError] = useState("");
+  const { showLoading, hideLoading } = useLoading();
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+    firstName: "",
+    lastName: "",
+  });
 
-    const navigate = useNavigate();
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const handleRegister = async () => {
-        try {
-            setEmailError("");
-            setPasswordError("");
-            setFirstNameError("");
-            setLastNameError("");
-            if (!email) {
-                setEmailError("Lütfen e-posta adresinizi girin.");
-                return;
-            }
-            if (password.length < 6) {
-                setPasswordError("Şifre en az 6 karakter olmalıdır.");
-                return;
-            }
-            if (!firstName) {
-                setFirstNameError("Lütfen adınızı girin.");
-                return;
-            }
-            if (!lastName) {
-                setLastNameError("Lütfen soyadınızı girin.");
-                return;
-            }
-            await register({ email, password, firstName, lastName });
-            navigate("/login");
-        } catch (error) {
-            console.log("error", error);
-        }
+  const navigate = useNavigate();
+
+  const handleChange = (name: string, value: string) => {
+    setFormData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name];
+        return newErrors;
+      });
     }
+  };
+  const handleRegister = async () => {
+    setErrors({});
+    const result = registerSchema.safeParse(formData);
+    if (!result.success) {
+      const formattedErrors: Record<string, string> = {};
+      result.error.issues.forEach((issue) => {
+        const fieldName = issue.path[0] as string;
+        formattedErrors[fieldName] = issue.message;
+      });
+      setErrors(formattedErrors);
+      return;
+    }
+    showLoading("Hesabınız oluşturuluyor...");
 
-    return (
-        <Container size='small'>
-            <div>
-                <h1>RegisterForm</h1>
-                <div>
-                    <Input label='E-posta' type="email" placeholder="m@example.com" value={email} onChange={setEmail} error={emailError} />
-                    <Input label='Şifre' type="password" placeholder="Password" value={password} onChange={setPassword} error={passwordError} />
-                    <Input label='Ad' type="text" placeholder="First Name" value={firstName} onChange={setFirstName} error={firstNameError} />
-                    <Input label='Soyad' type="text" placeholder="Last Name" value={lastName} onChange={setLastName} error={lastNameError} />
-                    <Button variant='primary' onClick={handleRegister}>Kayıt Ol</Button>
-                </div>
-                <div>
-                    <p>Zaten hesabınız var mı?</p>
-                    <Button variant='link' onClick={() => navigate("/login")}>Giriş Yap</Button>
-                </div>
-            </div>
-        </Container>
-    )
+    try {
+      await register(formData);
+      navigate("/login", {
+        state: { message: "Kayıt başarılı! Lütfen giriş yapın." },
+      });
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const serverError = error.response?.data as ApiError;
+        const message =
+          serverError?.message || "Sunucuyla bağlantı kurulamadı.";
+        setErrors((prev) => ({ ...prev, general: message }));
+      } else {
+        console.error("Beklenmedik bir hata:", error);
+        setErrors((prev) => ({
+          ...prev,
+          general: "Bir sistem hatası oluştu.",
+        }));
+      }
+    } finally {
+      hideLoading();
+    }
+  };
+
+  return (
+    <Container size="small">
+      <div className="register-card">
+        <h2 className="register-card__title">Register</h2>
+        <p className="register-card__subtitle">
+          Create an account to start managing your budget.
+        </p>
+
+        {errors.general && (
+          <div className="register-card__error">{errors.general}</div>
+        )}
+
+        <form
+          className="register-card__form"
+          onSubmit={(e) => {
+            e.preventDefault();
+            handleRegister();
+          }}
+          noValidate
+        >
+          <Input
+            label="E-mail"
+            type="email"
+            placeholder="m@example.com"
+            value={formData.email}
+            onChange={(val) => handleChange("email", val)}
+            error={errors.email}
+          />
+          <Input
+            label="Password"
+            type="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={(val) => handleChange("password", val)}
+            error={errors.password}
+          />
+
+          <div className="register-card__row">
+            <Input
+              label="First Name"
+              type="text"
+              placeholder="First Name"
+              value={formData.firstName}
+              onChange={(val) => handleChange("firstName", val)}
+              error={errors.firstName}
+            />
+            <Input
+              label="Last Name"
+              type="text"
+              placeholder="Last Name"
+              value={formData.lastName}
+              onChange={(val) => handleChange("lastName", val)}
+              error={errors.lastName}
+            />
+          </div>
+
+          <Button variant="primary" type="submit">
+            Register
+          </Button>
+
+          <div className="register-card__footer">
+            Already have an account?
+            <Button variant="link" onClick={() => navigate("/login")}>
+              Login
+            </Button>
+          </div>
+        </form>
+      </div>
+    </Container>
+  );
 }
 
-export default RegisterForm
+export default RegisterForm;

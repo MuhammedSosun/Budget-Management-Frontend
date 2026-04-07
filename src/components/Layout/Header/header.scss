@@ -1,46 +1,96 @@
-@use "../../../utils/_config.scss";
-
 .main-header {
-    background-color: var(--bg-card);
-    padding: 15px 5%;
+  background-color: var(--bg-card);
+  padding: 0 5%;
+  height: 70px; // Sabit yükseklik her zaman daha iyi durur
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  transition: background-color 0.3s ease;
+
+  &__left {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid var(--border);
-    position: sticky;
-    top: 0;
-    z-index: 1000;
+    gap: 12px;
 
-    .header-left {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-
-        img {
-            height: 40px;
-            width: auto;
-            cursor: pointer;
-        }
-
-        div {
-            font-weight: 700;
-            font-size: 1.2rem;
-            color: var(--text-main);
-        }
+    img {
+      height: 35px;
+      width: auto;
     }
+  }
 
-    .header-right {
-        display: flex;
-        gap: 15px;
+  &__brand {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--text-main);
+    letter-spacing: -0.5px;
+  }
 
+  &__right {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
 
-        select {
-            background: var(--bg-card);
-            color: var(--text-main);
-            border: 1px solid var(--border);
-            padding: 5px;
-            border-radius: 4px;
-            cursor: pointer;
-        }
+  &__nav {
+    display: flex;
+    gap: 10px;
+  }
+
+  &__divider {
+    width: 1px;
+    height: 24px;
+    background-color: var(--border);
+  }
+
+  &__settings {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  &__select {
+    background: transparent;
+    color: var(--text-main);
+    border: 1px solid var(--border);
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 13px;
+    outline: none;
+  }
+
+  &__theme-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    transition: background 0.2s;
+
+    &:hover {
+      background-color: var(--bg-body);
     }
+  }
+
+  &__auth {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  &__user-info {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  &__username {
+    color: var(--text-main);
+    font-weight: 500;
+    font-size: 0.9rem;
+  }
 }

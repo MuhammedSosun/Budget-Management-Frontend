@@ -1,31 +1,17 @@
-import React from 'react'
-import { useNavigate } from 'react-router';
-import { logout } from '../services/auth.service';
+import Header from "../components/Layout/Header/Header";
+import Container from "../components/ui/Container/PageContainer";
+import "./Home.scss";
+import Dashboard from "../components/Layout/Dashboard/Dashboard";
 
 function Home() {
-
-
-    const navigate = useNavigate()
-    const handleLogout = async () => {
-        try {
-            await logout();
-            navigate("/login");
-        } catch (error) {
-            console.log("error", error);
-        }
-    }
-    return (
-        <div>
-
-            <h1>
-                Bütçe Yönetim Sistemi
-            </h1>
-            <p>
-                Bütçe Yönetim Sistemi, bütçenizi yönetmenize yardımcı olan bir uygulamadır.
-            </p>
-            <button onClick={handleLogout}>Çıkış Yap</button>
-        </div>
-    )
+  return (
+    <div className="home-page">
+      <Container size="large">
+        <Header />
+        <Dashboard />
+      </Container>
+    </div>
+  );
 }
 
-export default Home
+export default Home;

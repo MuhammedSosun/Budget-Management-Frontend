@@ -1,10 +1,9 @@
 import LoginForm from '../../components/Auth/LoginForm';
-
+import "./login.scss"
 function LoginPage() {
     return (
-        <div>
+        <div className="login-page-wrapper">
 
-            <h1>Login Page</h1>
             <LoginForm />
 
         </div>

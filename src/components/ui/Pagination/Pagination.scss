@@ -1,0 +1,44 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5rem;
+  margin: 2rem 0;
+
+  &__pages {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    .my-custom-button {
+      min-width: 45px;
+      height: 45px;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 8px;
+    }
+  }
+
+  & > .my-custom-button {
+    padding: 0 1.5rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .pagination {
+    gap: 0.75rem;
+
+    &__pages {
+      overflow-x: auto;
+      padding: 5px;
+      max-width: 150px;
+      -webkit-overflow-scrolling: touch;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+}

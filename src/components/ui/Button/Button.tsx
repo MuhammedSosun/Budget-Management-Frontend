@@ -1,22 +1,33 @@
-import React, { Children } from 'react'
-import './Button.scss'
+import "./Button.scss";
 
 interface ButtonProps {
-    children: React.ReactNode;
-    variant: 'primary' | 'succes' | 'danger' | 'link',
-    onClick?: () => void,
-    type?: 'button' | 'submit' | 'reset';
-
-
+  children: React.ReactNode;
+  variant: "primary" | "success" | "danger" | "link";
+  onClick?: () => void;
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
+  isLoading?: boolean;
 }
 
-function Button({ children, variant, onClick, type = "button" }: ButtonProps) {
-    const className = `my-custom-button ${variant}`;
-    return (
-        <button className={className} onClick={onClick} type={type}>
-            {children}
-        </button>
-    )
+function Button({
+  children,
+  variant,
+  onClick,
+  type = "button",
+  disabled,
+  isLoading,
+}: ButtonProps) {
+  const className = `my-custom-button ${variant} ${isLoading || disabled ? "disabled" : ""}`;
+  return (
+    <button
+      className={className}
+      onClick={onClick}
+      type={type}
+      disabled={disabled || isLoading}
+    >
+      {isLoading ? "Loading..." : children}
+    </button>
+  );
 }
 
-export default Button
+export default Button;
