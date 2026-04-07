@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router';
 import Button from '../ui/Button/Button';
 import Input from '../ui/Input/Input';
 import Container from '../ui/Container/PageContainer';
+import "./loginForm.scss"
 
 function LoginForm() {
     const [email, setEmail] = useState("");
@@ -35,26 +36,33 @@ function LoginForm() {
     }
     return (
         <Container size='small'>
-            <div>
-                <Input
-                    label="E-posta"
-                    type="email"
-                    placeholder="m@example.com"
-                    value={email}
-                    onChange={setEmail}
-                    error={emailError}
-                />
-                <Input
-                    label="Şifre"
-                    type="password"
-                    placeholder="Password"
-                    value={password}
-                    onChange={setPassword}
-                    error={passwordError}
-                />
-                <Button variant='primary' type='submit' onClick={handleLogin}>
-                    Giriş Yap
-                </Button>
+            <div className="login-card">
+                <h2 className="login-title">Login</h2>
+                <p className="login-subtitle">Hesabınıza erişmek için bilgilerinizi girin.</p>
+                <form className="login-form" onSubmit={(e) => { e.preventDefault(); handleLogin(); }}>
+                    <Input
+                        label="E-posta"
+                        type="email"
+                        placeholder="m@example.com"
+                        value={email}
+                        onChange={setEmail}
+                        error={emailError}
+                    />
+                    <Input
+                        label="Şifre"
+                        type="password"
+                        placeholder="Password"
+                        value={password}
+                        onChange={setPassword}
+                        error={passwordError}
+                    />
+                    <Button variant='primary' type='submit' onClick={handleLogin}>
+                        Giriş Yap
+                    </Button>
+                </form>
+                <p className="login-footer">
+                    Hesabınız yok mu? <a onClick={() => navigate("/register")}>Kayıt Ol</a>
+                </p>
             </div>
         </Container>
     )
