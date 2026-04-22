@@ -1,17 +1,63 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import "./SpendingChart.scss";
+import { transactionService } from "../../../../services/transaction.service";
+import { useEffect, useState } from "react";
+import { useLoading } from "../../../../hooks/useLoading";
+import { useTranslation } from "react-i18next";
 
-const data = [
-  { name: "Alışveriş", value: 1000 },
-  { name: "Market", value: 500 },
-  { name: "Fatura", value: 200 },
-  { name: "Ulaşım", value: 100 },
-  { name: "Diğer", value: 50 },
+interface StatData {
+  name: string;
+  value: number;
+}
+const COLORS = [
+  "#059669",
+  "#10B981",
+  "#34D399",
+  "#6EE7B7",
+  "#A7F3D0",
+  "#14B8A6",
 ];
-
-const COLORS = ["#059669", "#10B981", "#34D399", "#6EE7B7", "#A7F3D0"];
-
 export const SpendingChart = () => {
+  const { t } = useTranslation();
+  const [data, setData] = useState<StatData[]>([]);
+  const { showLoading, hideLoading } = useLoading();
+
+  const fetchStats = useCallback(async () => {
+    try {
+      showLoading();
+      const response = await transactionService.getCategoryStats();
+
+      const rawData: StatData[] = response.data;
+
+      rawData.sort((a: StatData, b: StatData) => b.value - a.value);
+
+      if (rawData.length > 5) {
+        const topFive = rawData.slice(0, 5);
+        const others = rawData.slice(5);
+        const othersTotal = others.reduce(
+          (sum: number, item: StatData) => sum + item.value,
+          0,
+        );
+
+        const finalData: StatData[] = [
+          ...topFive,
+          { name: t("all"), value: othersTotal },
+        ];
+        setData(finalData);
+      } else {
+        setData(rawData);
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      hideLoading();
+    }
+  }, [showLoading, hideLoading, t]);
+
+  useEffect(() => {
+    fetchStats();
+  }, []);
+
   let total = 0;
   for (let i = 0; i < data.length; i++) {
     total = data[i].value + total;
@@ -22,7 +68,7 @@ export const SpendingChart = () => {
         className="dashboard__title"
         style={{ alignSelf: "flex-start", marginBottom: "1rem" }}
       >
-        Harcama Dağılımı
+        {t("spending_breakdown")}
       </h3>
 
       <div className="spending-chart__wrapper">

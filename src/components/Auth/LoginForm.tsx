@@ -10,21 +10,24 @@ import axios from "axios";
 import { useLoading } from "../../hooks/useLoading";
 import { useAuth } from "../../hooks/useAuth";
 import "./LoginForm.scss";
+import { useTranslation } from "react-i18next";
 
 interface ApiError {
   message: string;
 }
-const loginSchema = z.object({
-  email: z
-    .string()
-    .min(1, "E-posta alanı zorunludur.")
-    .email("Geçerli bir e-posta adresi giriniz."),
-  password: z
-    .string()
-    .min(1, "Şifre alanı zorunludur.")
-    .min(6, "Şifre en az 6 karakter olmalıdır."),
-});
+
 function LoginForm() {
+  const { t } = useTranslation();
+  const loginSchema = z.object({
+    email: z
+      .string()
+      .min(1, t("errors.email_required"))
+      .email(t("errors.email_invalid")),
+    password: z
+      .string()
+      .min(1, t("errors.password_required"))
+      .min(6, t("errors.password_min")),
+  });
   const { showLoading, hideLoading } = useLoading();
   const { login: setAuthUser } = useAuth();
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -42,25 +45,22 @@ function LoginForm() {
         formattedErrors[fieldName] = issue.message;
       });
       setErrors(formattedErrors);
-      console.log("BACKEND'DEN GELEN TÜM CEVAP:", result);
       return;
     }
-    showLoading("Giriş yapılıyor, lütfen bekleyiniz...");
+    showLoading("Keep Going, Please Wait...");
     try {
       const response = await login(formData);
-      console.log("SUNUCUDAN GELEN HAM CEVAP:", response);
       setAuthUser(response.user, response.accessToken);
       navigate("/home");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const serverError = error.response?.data as ApiError;
-        const message =
-          serverError?.message || "Sunucuyla bağlantı kurulamadı.";
+        const message = serverError?.message || t("errors.general");
         setErrors((prev) => ({ ...prev, general: message }));
       } else {
         setErrors((prev) => ({
           ...prev,
-          general: "Bir sistem hatası oluştu.",
+          general: t("errors.system"),
         }));
       }
     } finally {
@@ -82,10 +82,8 @@ function LoginForm() {
   return (
     <Container size="small">
       <div className="login-card">
-        <h2 className="login-card__title">Login</h2>
-        <p className="login-card__subtitle">
-          Enter your information to access your account
-        </p>
+        <h2 className="login-card__title">{t("login")}</h2>
+        <p className="login-card__subtitle">{t("login_subtitle")}</p>
 
         {errors.general && (
           <div className="login-card__error">{errors.general}</div>
@@ -115,14 +113,14 @@ function LoginForm() {
             error={errors.password}
           />
           <Button variant="primary" type="submit">
-            Login
+            {t("login")}
           </Button>
         </form>
 
         <div className="login-card__footer">
-          Don't have an account?
+          {t("dont_have_account")}
           <Button variant="link" onClick={() => navigate("/register")}>
-            Register
+            {t("register")}
           </Button>
         </div>
       </div>

@@ -6,8 +6,11 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import Button from "../../ui/Button/Button";
 import { useAuth } from "../../../hooks/useAuth";
 import "./Header.scss";
+import { useTranslation } from "react-i18next";
+import Select from "../../ui/Select/Select";
 function Header() {
   const navigate = useNavigate();
+  const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
   const themeData = useContext(ThemeContext);
   if (!themeData) return null;
@@ -23,25 +26,30 @@ function Header() {
           {user ? (
             <>
               <Button variant="link" onClick={() => navigate("/home")}>
-                Dashboard
+                {t("dashboard")}
               </Button>
               <Button variant="link" onClick={() => navigate("/transactions")}>
-                Transactions
+                {t("transactions")}
               </Button>
             </>
           ) : (
             <>
-              <Button variant="link">Features</Button>
-              <Button variant="link">How It Works</Button>
+              <Button variant="link">{t("nav.features")}</Button>
+              <Button variant="link">{t("nav.how_it_works")}</Button>
             </>
           )}
         </div>
         <div className="main-header__divider"></div>
         <div className="main-header__settings">
-          <select className="main-header__select">
-            <option value="tr">TR</option>
-            <option value="en">EN</option>
-          </select>
+          <Select
+            label=""
+            options={[
+              { label: "Türkçe", value: "tr" },
+              { label: "English", value: "en" },
+            ]}
+            value={i18n.language}
+            onChange={(val) => i18n.changeLanguage(val)}
+          />
 
           <button
             className="main-header__theme-btn"
@@ -58,16 +66,16 @@ function Header() {
             <div className="main-header__user-info">
               <span className="main-header__username">{user.firstName}</span>
               <Button variant="primary" onClick={logout}>
-                Logout
+                {t("logout")}
               </Button>
             </div>
           ) : (
             <>
               <Button variant="link" onClick={() => navigate("/login")}>
-                Login
+                {t("login")}
               </Button>
               <Button variant="primary" onClick={() => navigate("/register")}>
-                Register
+                {t("register")}
               </Button>
             </>
           )}

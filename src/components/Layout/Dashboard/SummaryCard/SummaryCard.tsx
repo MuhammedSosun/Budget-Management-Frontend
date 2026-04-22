@@ -3,7 +3,7 @@ import "./SummaryCard.scss";
 
 interface SummaryCardProps {
   title: string;
-  amount: number;
+  amount: number | string;
   type: "balance" | "income" | "expense";
 }
 

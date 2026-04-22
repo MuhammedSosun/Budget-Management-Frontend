@@ -6,6 +6,7 @@ import { ThemeProvider } from "./context/ThemeContext.tsx";
 import { AuthProvider } from "./context/AuthContext.tsx";
 import { AxiosInterceptors } from "./api/AxiosInterceptor.tsx";
 import { LoadingProvider } from "./context/LoadingContext.tsx";
+import "./context/i18n";
 
 createRoot(document.getElementById("root")!).render(
   <LoadingProvider>

@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../Button/Button";
 import "./Pagination.scss";
+import { useTranslation } from "react-i18next";
 
 interface PaginationProps {
   currentPage: number;
@@ -13,16 +14,17 @@ const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
+  const { t } = useTranslation();
   if (totalPages <= 1) return null;
 
   return (
-    <nav className="pagination" aria-label="Sayfalama">
+    <nav className="pagination" aria-label={t("pagination")}>
       <Button
         variant="primary"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
-        Geri
+        {t("pagination.previous")}
       </Button>
 
       <div className="pagination__pages">
@@ -47,7 +49,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
-        İleri
+        {t("pagination.next")}
       </Button>
     </nav>
   );

@@ -5,6 +5,11 @@ import type { Transaction } from "../types/transaction";
 
 export const useTransactions = (initialPageSize = 10) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
+  const [filters, setFilters] = useState({
+    type: "",
+    startDate: "",
+    endDate: "",
+  });
   const [pagination, setPagination] = useState({
     currentPage: 1,
     totalPages: 1,
@@ -14,10 +19,14 @@ export const useTransactions = (initialPageSize = 10) => {
   const { showLoading, hideLoading } = useLoading();
 
   const fetchTransactions = useCallback(
-    async (page: number) => {
+    async (page: number, currentFilters = filters) => {
       try {
         showLoading("Loading...");
-        const response = await transactionService.getAll(page, initialPageSize);
+        const response = await transactionService.getAll(
+          page,
+          initialPageSize,
+          currentFilters,
+        );
 
         setTransactions(response.data.content);
 
@@ -48,13 +57,15 @@ export const useTransactions = (initialPageSize = 10) => {
   );
 
   useEffect(() => {
-    fetchTransactions(pagination.currentPage);
-  }, [pagination.currentPage, fetchTransactions]);
+    fetchTransactions(pagination.currentPage, filters);
+  }, [pagination.currentPage, filters, fetchTransactions]);
 
   return {
     transactions,
     pagination,
     setPagination,
+    filters,
+    setFilters,
     refresh: fetchTransactions,
   };
 };

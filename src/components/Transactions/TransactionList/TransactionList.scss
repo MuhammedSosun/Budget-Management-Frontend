@@ -18,6 +18,76 @@
     margin: 0;
   }
 
+  .transaction-filters {
+    display: flex;
+    align-items: flex-end; // Elemanları tabanda hizalar (Select ve Inputlar farklı boyda olsa bile)
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    margin: 0 0 2.5rem 0;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+
+    // Senin Select komponentin için özel hizalama
+    .select-group {
+      margin-bottom: 0; // Eğer komponent içinde default margin varsa sıfırlıyoruz
+
+      &__label {
+        font-size: 0.8rem;
+        color: #888;
+        margin-bottom: 0.3rem;
+      }
+
+      &__input {
+        background: #1a1f2e;
+        border: 1px solid #333;
+        color: white;
+        height: 40px; // Inputlarla boyu eşitlemek için
+        border-radius: 4px;
+      }
+    }
+
+    // Tarih inputları için grup
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+
+      label {
+        font-size: 0.8rem;
+        color: #888;
+      }
+
+      input[type="date"] {
+        background: #1a1f2e;
+        border: 1px solid #333;
+        color: white;
+        padding: 0.53rem;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        outline: none;
+        height: 40px;
+
+        &::-webkit-calendar-picker-indicator {
+          filter: invert(1);
+          cursor: pointer;
+        }
+
+        &:focus {
+          border-color: #48bb78;
+        }
+      }
+    }
+
+    button {
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
   &__items {
     display: flex;
     flex-direction: column;
@@ -43,5 +113,48 @@
     text-align: center;
     padding: 3rem;
     color: #888;
+  }
+
+  .transaction-filters {
+    display: flex;
+    align-items: flex-end;
+    gap: 1rem;
+    margin: 1rem 0 2rem 0;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+
+    .filter-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+
+      label {
+        font-size: 0.8rem;
+        color: #888;
+      }
+
+      input {
+        background: #1a1f2e;
+        border: 1px solid #333;
+        color: white;
+        padding: 0.5rem;
+        border-radius: 4px;
+      }
+    }
+  }
+
+  .delete-confirm {
+    &__text {
+      color: var(--text-muted);
+      line-height: 1.5;
+      margin-bottom: 2rem;
+    }
+
+    &__actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+    }
   }
 }

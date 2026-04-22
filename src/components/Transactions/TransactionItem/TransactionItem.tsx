@@ -2,7 +2,7 @@ import React from "react";
 import { type Transaction } from "../../../types/transaction";
 import "./TransactionItem.scss";
 import Button from "../../ui/Button/Button";
-import { transactionService } from "../../../services/transaction.service";
+import { useTranslation } from "react-i18next";
 
 interface Props {
   data: Transaction;
@@ -10,29 +10,10 @@ interface Props {
   onEdit: (data: Transaction) => void;
 }
 function TransactionItem({ data, onDelete, onEdit }: Props) {
+  const { t } = useTranslation();
   const isExpense = data.type === "expense";
 
   const formattedDate = new Date(data.date).toLocaleDateString("tr-TR");
-  const handleDelete = async (id: string) => {
-    if (window.confirm("Bu harcamayı silmek istediğine emin misin?")) {
-      try {
-        await transactionService.delete(id);
-        onDelete();
-      } catch (err) {
-        console.error("Silme hatası:", err);
-      }
-    }
-  };
-  const handleEdit = async (id: string) => {
-    try {
-      await transactionService.update(id, data);
-      if (onEdit) {
-        onEdit(data);
-      }
-    } catch (err) {
-      console.error("Güncelleme hatası:", err);
-    }
-  };
 
   return (
     <div className="transaction-item">
@@ -40,7 +21,7 @@ function TransactionItem({ data, onDelete, onEdit }: Props) {
         <div
           className={`transaction-item__icon transaction-item__icon--${data.type}`}
         >
-          <span>🛒</span>
+          <span>{isExpense ? "💸" : "💰"}</span>
         </div>
         <div className="transaction-item__info">
           <span className="transaction-item__title">{data.title}</span>
@@ -59,11 +40,11 @@ function TransactionItem({ data, onDelete, onEdit }: Props) {
         </div>
 
         <div className="transaction-item__actions">
-          <Button variant="danger" onClick={() => handleDelete(data._id!)}>
-            Delete
+          <Button variant="danger" onClick={onDelete}>
+            {t("delete")}
           </Button>
-          <Button variant="primary" onClick={() => handleEdit(data._id!)}>
-            Edit
+          <Button variant="primary" onClick={() => onEdit(data)}>
+            {t("edit")}
           </Button>
         </div>
       </div>

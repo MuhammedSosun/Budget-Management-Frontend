@@ -8,29 +8,31 @@ import { z } from "zod";
 import axios from "axios";
 import "./RegisterForm.scss";
 import { useLoading } from "../../hooks/useLoading";
+import { useTranslation } from "react-i18next";
 interface ApiError {
   message: string;
 }
-const registerSchema = z.object({
-  email: z
-    .string()
-    .min(1, "E-posta alanı zorunludur.")
-    .email("Geçerli bir e-posta giriniz."),
-  password: z
-    .string()
-    .min(1, "Şifre alanı zorunludur.")
-    .min(6, "Şifre en az 6 karakter olmalıdır."),
-  firstName: z
-    .string()
-    .min(1, "Ad alanı zorunludur.")
-    .min(3, "Ad alanı en az 3 karakter olmalıdır."),
-  lastName: z
-    .string()
-    .min(1, "Soyad alanı zorunludur.")
-    .min(3, "Soyad alanı en az 3 karakter olmalıdır."),
-});
 
 function RegisterForm() {
+  const { t } = useTranslation();
+  const registerSchema = z.object({
+    email: z
+      .string()
+      .min(1, t("errors.email_required"))
+      .email(t("errors.email_invalid")),
+    password: z
+      .string()
+      .min(1, t("errors.password_required"))
+      .min(6, t("errors.password_min")),
+    firstName: z
+      .string()
+      .min(1, t("errors.firstName_required"))
+      .min(3, t("errors.firstName_min")),
+    lastName: z
+      .string()
+      .min(1, t("errors.lastName_required"))
+      .min(3, t("errors.lastName_min")),
+  });
   const { showLoading, hideLoading } = useLoading();
   const [formData, setFormData] = useState({
     email: "",
@@ -65,24 +67,23 @@ function RegisterForm() {
       setErrors(formattedErrors);
       return;
     }
-    showLoading("Hesabınız oluşturuluyor...");
+    showLoading(t("loading.register"));
 
     try {
       await register(formData);
       navigate("/login", {
-        state: { message: "Kayıt başarılı! Lütfen giriş yapın." },
+        state: { message: t("loading.register_success") },
       });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const serverError = error.response?.data as ApiError;
-        const message =
-          serverError?.message || "Sunucuyla bağlantı kurulamadı.";
+        const message = serverError?.message || t("errors.general");
         setErrors((prev) => ({ ...prev, general: message }));
       } else {
         console.error("Beklenmedik bir hata:", error);
         setErrors((prev) => ({
           ...prev,
-          general: "Bir sistem hatası oluştu.",
+          general: t("errors.system"),
         }));
       }
     } finally {
@@ -93,10 +94,8 @@ function RegisterForm() {
   return (
     <Container size="small">
       <div className="register-card">
-        <h2 className="register-card__title">Register</h2>
-        <p className="register-card__subtitle">
-          Create an account to start managing your budget.
-        </p>
+        <h2 className="register-card__title">{t("register")}</h2>
+        <p className="register-card__subtitle">{t("register_subtitle")}</p>
 
         {errors.general && (
           <div className="register-card__error">{errors.general}</div>
@@ -111,7 +110,7 @@ function RegisterForm() {
           noValidate
         >
           <Input
-            label="E-mail"
+            label={t("email")}
             type="email"
             placeholder="m@example.com"
             value={formData.email}
@@ -119,9 +118,9 @@ function RegisterForm() {
             error={errors.email}
           />
           <Input
-            label="Password"
+            label={t("password")}
             type="password"
-            placeholder="Password"
+            placeholder={t("password")}
             value={formData.password}
             onChange={(val) => handleChange("password", val)}
             error={errors.password}
@@ -129,17 +128,17 @@ function RegisterForm() {
 
           <div className="register-card__row">
             <Input
-              label="First Name"
+              label={t("first_name")}
               type="text"
-              placeholder="First Name"
+              placeholder={t("first_name")}
               value={formData.firstName}
               onChange={(val) => handleChange("firstName", val)}
               error={errors.firstName}
             />
             <Input
-              label="Last Name"
+              label={t("last_name")}
               type="text"
-              placeholder="Last Name"
+              placeholder={t("last_name")}
               value={formData.lastName}
               onChange={(val) => handleChange("lastName", val)}
               error={errors.lastName}
@@ -147,13 +146,13 @@ function RegisterForm() {
           </div>
 
           <Button variant="primary" type="submit">
-            Register
+            {t("register")}
           </Button>
 
           <div className="register-card__footer">
-            Already have an account?
+            {t("already_have_account")}
             <Button variant="link" onClick={() => navigate("/login")}>
-              Login
+              {t("login")}
             </Button>
           </div>
         </form>

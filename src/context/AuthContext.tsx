@@ -47,28 +47,22 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
   }, []);
 
   const checkUser = useCallback(async () => {
-    console.log("[AuthContext] checkUser started");
     showLoading("Checking session...");
 
     try {
       const response = await refreshToken();
-      console.log("[AuthContext] refresh response:", response);
 
       if (response?.accessToken) {
-        console.log("[AuthContext] access token received");
         api.defaults.headers.common["Authorization"] =
           `Bearer ${response.accessToken}`;
         setUser(response.user);
-        console.log("[AuthContext] user set:", response.user);
       } else {
-        console.log("[AuthContext] token not found in response");
         clearAuth();
       }
     } catch (error) {
-      console.log("[AuthContext] checkUser failed:", error);
       clearAuth();
+      console.error(error);
     } finally {
-      console.log("[AuthContext] checkUser finished");
       setIsChecking(false);
       hideLoading();
     }

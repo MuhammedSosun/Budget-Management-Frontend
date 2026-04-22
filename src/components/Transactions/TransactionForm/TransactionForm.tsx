@@ -4,14 +4,21 @@ import Button from "../../ui/Button/Button";
 import { transactionService } from "../../../services/transaction.service";
 import type { Transaction } from "../../../types/transaction";
 import Select from "../../ui/Select/Select";
+import { useTranslation } from "react-i18next";
 interface TransactionFormProps {
   onSuccess?: () => void;
+  onCancel: () => void;
   initialData?: Transaction | null;
 }
-function TransactionForm({ onSuccess, initialData }: TransactionFormProps) {
+function TransactionForm({
+  onSuccess,
+  onCancel,
+  initialData,
+}: TransactionFormProps) {
+  const { t } = useTranslation();
   const typeOptions = [
-    { label: "Income", value: "income" },
-    { label: "Expense", value: "expense" },
+    { label: t("income"), value: "income" },
+    { label: t("expense"), value: "expense" },
   ];
   const [formData, setFormData] = useState<Transaction>(() => {
     if (initialData) return initialData;
@@ -53,54 +60,53 @@ function TransactionForm({ onSuccess, initialData }: TransactionFormProps) {
   const [errors] = useState<Record<string, string>>({});
 
   return (
-    <div>
-      <div>
+    <div className="transaction-form">
+      <div className="transaction-form__inputs">
         <Input
-          label="Title"
-          placeholder="Grocery shopping"
+          label={t("title")}
+          placeholder={t("title_placeholder")}
           value={formData.title}
           onChange={(val) => handleChange("title", val)}
           error={errors.title}
         />
         <Input
-          label="Amount"
-          placeholder="100"
+          label={t("amount")}
+          placeholder={t("amount_placeholder")}
           value={formData.amount}
           onChange={(val) => handleChange("amount", val)}
           error={errors.amount}
         />
         <Input
-          label="Category"
-          placeholder="Groceries"
+          label={t("category")}
+          placeholder={t("category_placeholder")}
           value={formData.category}
           onChange={(val) => handleChange("category", val)}
           error={errors.category}
         />
         <Input
-          label="Date"
-          placeholder="2022-01-01"
+          label={t("date")}
+          type="date"
           value={formData.date}
           onChange={(val) => handleChange("date", val)}
           error={errors.date}
         />
         <Select
-          label="Transaction Type"
+          label={t("transaction_type")}
           options={typeOptions}
           value={formData.type}
           onChange={(val) => handleChange("type", val)}
           error={errors.type}
         />
       </div>
-      <div>
-        {initialData ? (
-          <Button variant="primary" onClick={() => handleSubmit()}>
-            Update Transaction
-          </Button>
-        ) : (
-          <Button variant="primary" onClick={() => handleSubmit()}>
-            Add Transaction
-          </Button>
-        )}
+
+      <div className="transaction-form__actions">
+        <Button variant="primary" onClick={() => handleSubmit()}>
+          {initialData ? t("edit_transaction_this") : t("add_transaction_this")}
+        </Button>
+
+        <Button variant="danger" onClick={onCancel}>
+          {t("cancel")}
+        </Button>
       </div>
     </div>
   );

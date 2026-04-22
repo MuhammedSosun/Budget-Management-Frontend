@@ -7,3 +7,10 @@ export interface Transaction {
   date: string;
   _id?: string;
 }
+
+export interface TransactionFilters {
+  type?: string;
+  startDate?: string;
+  endDate?: string;
+  category?: string;
+}

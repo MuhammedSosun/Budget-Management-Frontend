@@ -9,15 +9,12 @@ import {
   AreaChart,
 } from "recharts";
 import "./TrendChart.scss";
+import { useEffect, useState } from "react";
+import { useLoading } from "../../../../hooks/useLoading";
+import { transactionService } from "../../../../services/transaction.service";
+import Select from "../../../ui/Select/Select";
+import { useTranslation } from "react-i18next";
 
-const data = [
-  { name: "Pzt", t: 1500 },
-  { name: "Sal", t: 1600 },
-  { name: "Çar", t: 3200 },
-  { name: "Per", t: 2800 },
-  { name: "Cum", t: 4800 },
-  { name: "Cmt", t: 5500 },
-];
 interface CustomTooltipProps {
   active?: boolean;
   payload?: { value: number }[];
@@ -72,13 +69,40 @@ const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
 };
 
 export const TrendChart = () => {
+  const { t } = useTranslation();
+  const [data, setData] = useState<{ name: string; value: number }[]>([]);
+  const [period, setPeriod] = useState<"weekly" | "monthly">("weekly");
+  const { showLoading, hideLoading } = useLoading();
+  const periodOptions = [
+    { label: t("weekly"), value: "weekly" },
+    { label: t("monthly"), value: "monthly" },
+  ];
+  const fetchTrendStats = async () => {
+    try {
+      showLoading("Trend Data is loading...");
+      const response = await transactionService.getTrendStats(period);
+      if (response.success) {
+        setData(response.data);
+      }
+    } catch (error) {
+      console.error("Trend hatası:", error);
+    } finally {
+      hideLoading();
+    }
+  };
+  useEffect(() => {
+    fetchTrendStats();
+  }, [period]);
   return (
     <div className="trend-chart__container">
       <div className="trend-chart__header">
-        <h3 className="dashboard__title">Harcama Trendi</h3>
-        <div className="trend-chart__dropdown">
-          Haftalık <span className="trend-chart__dropdown-icon">▼</span>
-        </div>
+        <h3 className="dashboard__title">{t("dashboard_title")}</h3>
+        <Select
+          label=""
+          options={periodOptions}
+          value={period}
+          onChange={(val) => setPeriod(val as "weekly" | "monthly")}
+        />
       </div>
 
       <div className="trend-chart__wrapper">
@@ -120,7 +144,7 @@ export const TrendChart = () => {
 
             <Area
               type="monotone"
-              dataKey="t"
+              dataKey="value"
               stroke="none"
               fill="url(#colorTrend)"
               fillOpacity={1}
@@ -128,7 +152,7 @@ export const TrendChart = () => {
 
             <Line
               type="monotone"
-              dataKey="t"
+              dataKey="value"
               stroke="#10B981"
               strokeWidth={3}
               dot={<CustomDot />}

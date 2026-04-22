@@ -1,5 +1,8 @@
 import api from "../api";
-import { type Transaction } from "../types/transaction";
+import {
+  type Transaction,
+  type TransactionFilters,
+} from "../types/transaction";
 
 export const transactionService = {
   create: async (data: Transaction) => {
@@ -7,11 +10,16 @@ export const transactionService = {
     return response.data;
   },
 
-  getAll: async (page: number, pageSize: number) => {
+  getAll: async (
+    page: number,
+    pageSize: number,
+    filters: TransactionFilters,
+  ) => {
     const response = await api.get("/transactions/get-all", {
       params: {
         page,
         pageSize,
+        ...filters,
       },
     });
     return response.data;
@@ -34,6 +42,16 @@ export const transactionService = {
   },
   totalExpense: async () => {
     const response = await api.get("/transactions/total-expense");
+    return response.data;
+  },
+  getCategoryStats: async () => {
+    const response = await api.get("/transactions/category-stats");
+    return response.data;
+  },
+  getTrendStats: async (period: string = "weekly") => {
+    const response = await api.get(
+      `/transactions/trend-stats?period=${period}`,
+    );
     return response.data;
   },
 };
