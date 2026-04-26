@@ -1,7 +1,7 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import "./SpendingChart.scss";
 import { transactionService } from "../../../../services/transaction.service";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useTranslation } from "react-i18next";
 
