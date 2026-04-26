@@ -20,7 +20,7 @@
 
   .transaction-filters {
     display: flex;
-    align-items: flex-end; // Elemanları tabanda hizalar (Select ve Inputlar farklı boyda olsa bile)
+    align-items: flex-end;
     flex-wrap: wrap;
     gap: 1.5rem;
     margin: 0 0 2.5rem 0;
@@ -29,9 +29,8 @@
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 12px;
 
-    // Senin Select komponentin için özel hizalama
     .select-group {
-      margin-bottom: 0; // Eğer komponent içinde default margin varsa sıfırlıyoruz
+      margin-bottom: 0;
 
       &__label {
         font-size: 0.8rem;
@@ -43,12 +42,11 @@
         background: #1a1f2e;
         border: 1px solid #333;
         color: white;
-        height: 40px; // Inputlarla boyu eşitlemek için
+        height: 40px;
         border-radius: 4px;
       }
     }
 
-    // Tarih inputları için grup
     .filter-group {
       display: flex;
       flex-direction: column;

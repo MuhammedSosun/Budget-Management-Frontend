@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
 import Container from "../ui/Container/PageContainer";
-import "./loginForm.scss";
 import { z } from "zod";
 import axios from "axios";
 import { useLoading } from "../../hooks/useLoading";

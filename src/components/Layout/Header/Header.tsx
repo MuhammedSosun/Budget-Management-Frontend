@@ -1,11 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import "./header.scss";
+import "./Header.scss";
 import logo from "../../../../public/logo.png";
 import { useContext } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import Button from "../../ui/Button/Button";
 import { useAuth } from "../../../hooks/useAuth";
-import "./Header.scss";
 import { useTranslation } from "react-i18next";
 import Select from "../../ui/Select/Select";
 function Header() {

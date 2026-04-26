@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import "./unauthorizedPage.scss";
+import "./UnauthorizedPage.scss";
 import Button from "../../components/ui/Button/Button";
 
 function UnauthorizedPage() {

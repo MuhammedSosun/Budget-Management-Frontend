@@ -49,7 +49,9 @@ function TransactionList() {
   return (
     <div className="transaction-list">
       <div className="transaction-list__header">
-        <h3 className="transaction-list__title">Son İşlemler</h3>
+        <h3 className="transaction-list__title">
+          {t("transaction_list__title")}
+        </h3>
         <Button
           variant="primary"
           onClick={() => {

@@ -1,5 +1,6 @@
 import type React from "react";
 import { useEffect } from "react";
+import { createPortal } from "react-dom";
 import "./Modal.scss";
 
 interface ModalProps {
@@ -30,7 +31,7 @@ export const Modal = ({
 
   if (!isOpen) return null;
 
-  return (
+  return createPortal(
     <div className="modal" onClick={onClose}>
       <div
         className="modal__content"
@@ -45,6 +46,7 @@ export const Modal = ({
         </div>
         <div className="modal__body">{children}</div>
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 };
