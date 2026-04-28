@@ -5,6 +5,7 @@ import { transactionService } from "../../../services/transaction.service";
 import type { Transaction } from "../../../types/transaction";
 import Select from "../../ui/Select/Select";
 import { useTranslation } from "react-i18next";
+import { refreshDashboard } from "../../../utils/events";
 interface TransactionFormProps {
   onSuccess?: () => void;
   onCancel: () => void;
@@ -46,8 +47,10 @@ function TransactionForm({
     try {
       if (isEditMode && initialData?._id) {
         await transactionService.update(initialData._id, payload);
+        refreshDashboard();
       } else {
         await transactionService.create(payload);
+        refreshDashboard();
       }
       if (onSuccess) {
         onSuccess();

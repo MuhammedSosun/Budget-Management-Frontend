@@ -93,4 +93,101 @@
     font-weight: 500;
     font-size: 0.9rem;
   }
+
+  &__profile-zone {
+    position: relative;
+  }
+
+  &__user-trigger {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    padding: 5px 12px;
+    border-radius: 20px;
+    transition: background 0.2s;
+
+    &:hover,
+    &.active {
+      background: rgba(255, 255, 255, 0.08);
+    }
+  }
+
+  &__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary);
+  }
+
+  &__username {
+    font-weight: 500;
+    color: var(--text-main);
+  }
+
+  &__arrow {
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+
+  &__dropdown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    width: 200px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    padding: 10px 0;
+    z-index: 1000;
+    animation: fadeIn 0.2s ease-out;
+
+    .dropdown-info {
+      padding: 8px 16px;
+
+      p {
+        margin: 0;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+
+      small {
+        color: var(--text-muted);
+        font-size: 0.75rem;
+      }
+    }
+
+    hr {
+      border: 0;
+      border-top: 1px solid var(--border);
+      margin: 8px 0;
+    }
+
+    .dropdown-item {
+      display: block;
+      width: 100%;
+      padding: 10px 16px;
+      text-align: left;
+      background: transparent;
+      border: none;
+      color: var(--text-main);
+      cursor: pointer;
+      font-size: 0.9rem;
+
+      &:hover {
+        background: rgba(255, 255, 255, 0.05);
+        color: var(--primary);
+      }
+
+      &.logout {
+        color: var(--danger);
+
+        &:hover {
+          background: rgba(239, 68, 68, 0.1);
+        }
+      }
+    }
+  }
 }

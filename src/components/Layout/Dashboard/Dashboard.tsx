@@ -22,6 +22,9 @@ function Dashboard() {
         ]);
         setIncome(incomeResponse.data || 0);
         setExpense(expenseResponse.data || 0);
+        window.addEventListener("refresh-dashboard", fetchTotals);
+        return () =>
+          window.removeEventListener("refresh-dashboard", fetchTotals);
       } catch (error) {
         console.error("Datas did not get:", error);
       } finally {

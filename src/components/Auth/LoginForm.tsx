@@ -15,7 +15,7 @@ interface ApiError {
   message: string;
 }
 
-function LoginForm() {
+function LoginForm({ onSuccessRedirect }: { onSuccessRedirect: string }) {
   const { t } = useTranslation();
   const loginSchema = z.object({
     email: z
@@ -50,7 +50,9 @@ function LoginForm() {
     try {
       const response = await login(formData);
       setAuthUser(response.user, response.accessToken);
-      navigate("/home");
+      setTimeout(() => {
+        navigate(onSuccessRedirect);
+      }, 100);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const serverError = error.response?.data as ApiError;

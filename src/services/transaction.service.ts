@@ -3,10 +3,13 @@ import {
   type Transaction,
   type TransactionFilters,
 } from "../types/transaction";
+import { v4 as uuidv4 } from "uuid";
 
 export const transactionService = {
   create: async (data: Transaction) => {
-    const response = await api.post("/transactions/create", data);
+    const response = await api.post("/transactions/create", data, {
+      headers: { "x-idempotency-key": uuidv4() },
+    });
     return response.data;
   },
 
@@ -29,7 +32,9 @@ export const transactionService = {
     return response.data;
   },
   update: async (id: string, data: Transaction) => {
-    const response = await api.put(`/transactions/update/${id}`, data);
+    const response = await api.put(`/transactions/update/${id}`, data, {
+      headers: { "x-idempotency-key": uuidv4() },
+    });
     return response.data;
   },
   getById: async (id: string) => {

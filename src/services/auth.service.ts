@@ -1,18 +1,23 @@
 import api from "../api";
+import { v4 as uuidv4 } from "uuid";
 export const register = async (credentials: {
   email: string;
   password: string;
   firstName: string;
   lastName: string;
 }) => {
-  const response = await api.post("/auth/register", credentials);
+  const response = await api.post("/auth/register", credentials, {
+    headers: { "x-idempotency-key": uuidv4() },
+  });
   return response.data;
 };
 export const login = async (credentials: {
   email: string;
   password: string;
 }) => {
-  const response = await api.post("/auth/login", credentials);
+  const response = await api.post("/auth/login", credentials, {
+    headers: { "x-idempotency-key": uuidv4() },
+  });
   return response.data;
 };
 

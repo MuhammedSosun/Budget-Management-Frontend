@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import api from ".";
 import { useAuth } from "../hooks/useAuth";
+import axios from "axios";
 
 interface Props {
   children: React.ReactNode;
@@ -41,7 +42,13 @@ export const AxiosInterceptors = ({ children }: Props) => {
 
             return api(originalRequest);
           } catch (refreshError) {
-            await logout();
+            if (
+              axios.isAxiosError(refreshError) &&
+              (refreshError.response?.status === 401 ||
+                refreshError.response?.status === 403)
+            ) {
+              await logout();
+            }
             return Promise.reject(refreshError);
           }
         }

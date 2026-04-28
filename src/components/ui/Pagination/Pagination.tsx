@@ -1,7 +1,6 @@
 import React from "react";
 import Button from "../Button/Button";
 import "./Pagination.scss";
-import { useTranslation } from "react-i18next";
 
 interface PaginationProps {
   currentPage: number;
@@ -14,31 +13,59 @@ const Pagination: React.FC<PaginationProps> = ({
   totalPages,
   onPageChange,
 }) => {
-  const { t } = useTranslation();
   if (totalPages <= 1) return null;
 
+  const getPageNumbers = () => {
+    const pages = [];
+
+    if (totalPages <= 7) {
+      for (let i = 1; i <= totalPages; i++) pages.push(i);
+    } else {
+      pages.push(1);
+
+      if (currentPage > 3) pages.push("...");
+
+      const start = Math.max(2, currentPage - 1);
+      const end = Math.min(totalPages - 1, currentPage + 1);
+
+      for (let i = start; i <= end; i++) {
+        pages.push(i);
+      }
+
+      if (currentPage < totalPages - 2) pages.push("...");
+
+      pages.push(totalPages);
+    }
+    return pages;
+  };
+
   return (
-    <nav className="pagination" aria-label={t("pagination")}>
+    <nav className="pagination">
       <Button
         variant="primary"
         disabled={currentPage === 1}
         onClick={() => onPageChange(currentPage - 1)}
       >
-        {t("pagination.previous")}
+        &lsaquo;
       </Button>
 
       <div className="pagination__pages">
-        {[...Array(totalPages)].map((_, index) => {
-          const pageNumber = index + 1;
-          const isActive = currentPage === pageNumber;
+        {getPageNumbers().map((page, index) => {
+          if (page === "...") {
+            return (
+              <span key={`dots-${index}`} className="pagination__dots">
+                ...
+              </span>
+            );
+          }
 
           return (
             <Button
-              key={pageNumber}
-              variant={isActive ? "success" : "primary"}
-              onClick={() => onPageChange(pageNumber)}
+              key={page}
+              variant={currentPage === page ? "success" : "primary"}
+              onClick={() => onPageChange(page as number)}
             >
-              {pageNumber}
+              {page}
             </Button>
           );
         })}
@@ -49,7 +76,7 @@ const Pagination: React.FC<PaginationProps> = ({
         disabled={currentPage === totalPages}
         onClick={() => onPageChange(currentPage + 1)}
       >
-        {t("pagination.next")}
+        &rsaquo;
       </Button>
     </nav>
   );

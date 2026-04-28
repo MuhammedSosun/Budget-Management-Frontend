@@ -5,19 +5,20 @@ import Home from "../views/Home";
 import RegisterPage from "../views/Auth/RegisterPage";
 import Unauthorized from "../views/UnauthorizedPage/Unauthorizedpage";
 import ProtectedRoute from "./ProtectedRoute";
-import TransactionPage from "../views/Transactions/TransactionPage";
+import PublicRoute from "./PublicRoute";
 
 const AppRouter = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/unauthorized" element={<Unauthorized />} />
-      <Route path="/login" element={<LoginPage />} />
-      <Route path="/register" element={<RegisterPage />} />
 
+      <Route element={<PublicRoute />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Route>
       <Route element={<ProtectedRoute />}>
         <Route path="/home" element={<Home />} />
-        <Route path="/transactions" element={<TransactionPage />} />
       </Route>
 
       <Route path="*" element={<Navigate to="/" />} />

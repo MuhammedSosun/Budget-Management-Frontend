@@ -34,10 +34,10 @@ export const SpendingChart = () => {
       if (rawData.length > 5) {
         const topFive = rawData.slice(0, 5);
         const others = rawData.slice(5);
-        const othersTotal = others.reduce(
-          (sum: number, item: StatData) => sum + item.value,
-          0,
-        );
+        let othersTotal = 0;
+        for (let i = 0; i < others.length; i++) {
+          othersTotal += others[i].value;
+        }
 
         const finalData: StatData[] = [
           ...topFive,
