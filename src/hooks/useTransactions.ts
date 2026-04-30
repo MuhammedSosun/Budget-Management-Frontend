@@ -19,9 +19,10 @@ export const useTransactions = (initialPageSize = 10) => {
   const { showLoading, hideLoading } = useLoading();
 
   const fetchTransactions = useCallback(
-    async (page: number, currentFilters = filters) => {
+    async (page: number, currentFilters: typeof filters) => {
       try {
         showLoading("Loading...");
+
         const response = await transactionService.getAll(
           page,
           initialPageSize,
@@ -30,25 +31,15 @@ export const useTransactions = (initialPageSize = 10) => {
 
         setTransactions(response.data.content);
 
-        setPagination((prev) => {
-          const nextCurrentPage = response.data.currentPage;
-          const nextTotalPages = response.data.totalPages;
-
-          if (
-            prev.currentPage === nextCurrentPage &&
-            prev.totalPages === nextTotalPages
-          ) {
-            return prev;
-          }
-
-          return {
-            ...prev,
-            currentPage: nextCurrentPage,
-            totalPages: nextTotalPages,
-          };
-        });
+        setPagination((prev) => ({
+          ...prev,
+          currentPage: response.data.currentPage,
+          totalPages: response.data.totalPages,
+        }));
       } catch (error) {
-        console.error(error);
+        if (import.meta.env.DEV) {
+          console.error(error);
+        }
       } finally {
         hideLoading();
       }

@@ -9,20 +9,26 @@ import {
   AreaChart,
 } from "recharts";
 import "./TrendChart.scss";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useLoading } from "../../../../hooks/useLoading";
 import { transactionService } from "../../../../services/transaction.service";
 import Select from "../../../ui/Select/Select";
 import { useTranslation } from "react-i18next";
 
+type Currency = "TRY" | "USD" | "EUR";
+type Period = "weekly" | "monthly";
 interface CustomTooltipProps {
   active?: boolean;
   payload?: { value: number }[];
   label?: string;
 }
-const formatYAxis = (value: number) => {
-  if (value === 0) return "0 t";
-  return `${value / 1000}K t`;
+interface TrendChartProps {
+  currency: Currency;
+}
+const getCurrencySymbol = (currency: Currency) => {
+  if (currency === "TRY") return "₺";
+  if (currency === "USD") return "$";
+  return "€";
 };
 
 const CustomDot = (props: {
@@ -33,75 +39,92 @@ const CustomDot = (props: {
 }) => {
   const { cx = 0, cy = 0, stroke, value = 0 } = props;
 
-  if (value > 0) {
-    return (
-      <svg x={cx - 8} y={cy - 8} width={16} height={16} viewBox="0 0 16 16">
-        <circle
-          cx="8"
-          cy="8"
-          r="7"
-          stroke={stroke}
-          strokeWidth="2"
-          fill="none"
-          opacity={0.3}
-        />
-        <circle cx="8" cy="8" r="4" fill={stroke} />
-      </svg>
-    );
-  }
+  if (value <= 0) return null;
 
-  return null;
+  return (
+    <svg x={cx - 8} y={cy - 8} width={16} height={16} viewBox="0 0 16 16">
+      <circle
+        cx="8"
+        cy="8"
+        r="7"
+        stroke={stroke}
+        strokeWidth="2"
+        fill="none"
+        opacity={0.3}
+      />
+      <circle cx="8" cy="8" r="4" fill={stroke} />
+    </svg>
+  );
+};
+const CustomTooltip = ({
+  active,
+  payload,
+  label,
+  currencySymbol,
+}: CustomTooltipProps & { currencySymbol: string }) => {
+  if (!active || !payload?.length) return null;
+
+  return (
+    <div className="trend-chart__tooltip">
+      <p className="trend-chart__tooltip-date">{label}</p>
+      <p className="trend-chart__tooltip-amount">
+        {currencySymbol} {payload[0].value.toLocaleString("tr-TR")}
+      </p>
+    </div>
+  );
 };
 
-const CustomTooltip = ({ active, payload, label }: CustomTooltipProps) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="trend-chart__tooltip">
-        <p className="trend-chart__tooltip-date">{label}</p>
-        <p className="trend-chart__tooltip-amount">
-          {payload[0].value.toLocaleString("tr-TR")} TL
-        </p>
-      </div>
-    );
-  }
-
-  return null;
-};
-
-export const TrendChart = () => {
+export const TrendChart = ({ currency }: TrendChartProps) => {
   const { t } = useTranslation();
   const [data, setData] = useState<{ name: string; value: number }[]>([]);
-  const [period, setPeriod] = useState<"weekly" | "monthly">("weekly");
+  const [period, setPeriod] = useState<Period>("weekly");
   const { showLoading, hideLoading } = useLoading();
+
+  const currencySymbol = getCurrencySymbol(currency);
+
   const periodOptions = [
     { label: t("weekly"), value: "weekly" },
     { label: t("monthly"), value: "monthly" },
   ];
-  const fetchTrendStats = async () => {
+
+  const fetchTrendStats = useCallback(async () => {
     try {
-      showLoading("Trend Data is loading...");
-      const response = await transactionService.getTrendStats(period);
-      if (response.success) {
-        setData(response.data);
-      }
+      showLoading(t("loading_trend"));
+
+      const response = await transactionService.getTrendStats(period, currency);
+
+      setData(response.data || []);
     } catch (error) {
-      console.error("Trend hatası:", error);
+      if (import.meta.env.DEV) {
+        console.error("Trend hatası:", error);
+      }
     } finally {
       hideLoading();
     }
-  };
+  }, [period, currency, showLoading, hideLoading, t]);
+
   useEffect(() => {
     fetchTrendStats();
-  }, [period]);
+  }, [fetchTrendStats]);
+
+  const formatYAxis = (value: number) => {
+    if (value === 0) return `0 ${currencySymbol}`;
+
+    return `${
+      value >= 1000 ? `${(value / 1000).toFixed(1)}K` : value
+    } ${currencySymbol}`;
+  };
+
   return (
     <div className="trend-chart__container">
       <div className="trend-chart__header">
         <h3 className="dashboard__title">{t("dashboard_title")}</h3>
+
         <Select
           label=""
           options={periodOptions}
           value={period}
-          onChange={(val) => setPeriod(val as "weekly" | "monthly")}
+          onChange={(val) => setPeriod(val as Period)}
         />
       </div>
 
@@ -123,12 +146,14 @@ export const TrendChart = () => {
               vertical={false}
               stroke="var(--border)"
             />
+
             <XAxis
               dataKey="name"
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: "var(--text-muted)" }}
             />
+
             <YAxis
               axisLine={false}
               tickLine={false}
@@ -138,7 +163,7 @@ export const TrendChart = () => {
             />
 
             <Tooltip
-              content={<CustomTooltip />}
+              content={<CustomTooltip currencySymbol={currencySymbol} />}
               cursor={{ stroke: "var(--border)", strokeDasharray: "5 5" }}
             />
 

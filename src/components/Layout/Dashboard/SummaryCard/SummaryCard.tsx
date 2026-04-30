@@ -14,7 +14,7 @@ const SummaryCard: React.FC<SummaryCardProps> = ({ title, amount, type }) => {
         <span className="summary-card__title">{title}</span>
       </div>
       <div className="summary-card__body">
-        <h2 className="summary-card__amount">{amount} ₺</h2>
+        <h2 className="summary-card__amount">{amount}</h2>
       </div>
     </div>
   );

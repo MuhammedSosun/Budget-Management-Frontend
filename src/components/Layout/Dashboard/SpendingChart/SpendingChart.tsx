@@ -1,13 +1,16 @@
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip } from "recharts";
 import "./SpendingChart.scss";
 import { transactionService } from "../../../../services/transaction.service";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useLoading } from "../../../../hooks/useLoading";
 import { useTranslation } from "react-i18next";
 
 interface StatData {
   name: string;
   value: number;
+}
+interface SpendingChartProps {
+  currency: "TRY" | "USD" | "EUR";
 }
 const COLORS = [
   "#059669",
@@ -17,47 +20,41 @@ const COLORS = [
   "#A7F3D0",
   "#14B8A6",
 ];
-export const SpendingChart = () => {
+export const SpendingChart = ({ currency }: SpendingChartProps) => {
   const { t } = useTranslation();
   const [data, setData] = useState<StatData[]>([]);
   const { showLoading, hideLoading } = useLoading();
 
-  const fetchStats = useCallback(async () => {
-    try {
-      showLoading();
-      const response = await transactionService.getCategoryStats();
-
-      const rawData: StatData[] = response.data;
-
-      rawData.sort((a: StatData, b: StatData) => b.value - a.value);
-
-      if (rawData.length > 5) {
-        const topFive = rawData.slice(0, 5);
-        const others = rawData.slice(5);
-        let othersTotal = 0;
-        for (let i = 0; i < others.length; i++) {
-          othersTotal += others[i].value;
-        }
-
-        const finalData: StatData[] = [
-          ...topFive,
-          { name: t("all"), value: othersTotal },
-        ];
-        setData(finalData);
-      } else {
-        setData(rawData);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      hideLoading();
-    }
-  }, [showLoading, hideLoading, t]);
-
   useEffect(() => {
-    fetchStats();
-  }, []);
+    const fetchStats = async () => {
+      try {
+        showLoading();
+        const response = await transactionService.getCategoryStats(currency);
+        const rawData: StatData[] = response.data;
 
+        rawData.sort((a, b) => b.value - a.value);
+
+        if (rawData.length > 5) {
+          const topFive = rawData.slice(0, 5);
+          const othersTotal = rawData
+            .slice(5)
+            .reduce((acc, curr) => acc + curr.value, 0);
+
+          setData([...topFive, { name: t("all"), value: othersTotal }]);
+        } else {
+          setData(rawData);
+        }
+      } catch (error) {
+        console.error("Grafik verisi çekilemedi:", error);
+      } finally {
+        hideLoading();
+      }
+    };
+
+    fetchStats();
+  }, [currency, t, showLoading, hideLoading]);
+  const currencySymbol =
+    currency === "TRY" ? "₺" : currency === "USD" ? "$" : "€";
   let total = 0;
   for (let i = 0; i < data.length; i++) {
     total = data[i].value + total;
@@ -102,7 +99,7 @@ export const SpendingChart = () => {
                         className="spending-chart__tooltip-data"
                         style={{ color: payload[0].payload.fill }}
                       >
-                        {payload[0].value} TL
+                        {currencySymbol} {payload[0].value}
                       </p>
                     </div>
                   );
@@ -113,7 +110,6 @@ export const SpendingChart = () => {
           </PieChart>
         </ResponsiveContainer>
       </div>
-
       <ul className="spending-chart__legend">
         {data.map((entry, index) => (
           <li key={entry.name} className="spending-chart__legend-item">
@@ -125,7 +121,7 @@ export const SpendingChart = () => {
               <span>{entry.name}</span>
             </div>
             <span className="spending-chart__legend-value">
-              %{((entry.value / total) * 100).toFixed(0)}
+              %{total > 0 ? ((entry.value / total) * 100).toFixed(0) : 0}
             </span>
           </li>
         ))}

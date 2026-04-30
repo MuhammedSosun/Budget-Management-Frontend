@@ -34,7 +34,8 @@ function TransactionItem({ data, onDelete, onEdit }: Props) {
           <span
             className={`transaction-item__amount ${isExpense ? "transaction-item__amount--expense" : "transaction-item__amount--income"}`}
           >
-            {isExpense ? "-" : "+"} {data.amount.toLocaleString("tr-TR")} ₺
+            {isExpense ? "-" : "+"} {data.input_details.amount}{" "}
+            {data.input_details.currency}
           </span>
           <span className="transaction-item__date">{formattedDate}</span>
         </div>
