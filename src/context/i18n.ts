@@ -6,6 +6,7 @@ const resources = {
   en: {
     translation: {
       dashboard_title: "Expense Trend",
+      welcome_dashboard: "Welcome to your dashboard",
       new_transaction: "New Transaction",
       edit_transaction: "Edit Transaction",
       new_category: "New Category",
@@ -19,6 +20,7 @@ const resources = {
       transaction_type: "Transaction Type",
       title_placeholder: "Grocery shopping",
       amount_placeholder: "100",
+      currency_label: "Currency",
       category_placeholder: "Groceries",
       date_placeholder: "2022-01-01",
       transaction_type_placeholder: "Income or Expense",
@@ -73,6 +75,19 @@ const resources = {
         health: "Health",
         food: "Food & Drink",
         transport: "Transportation",
+        rent: "Rent",
+        entertainment: "Entertainment",
+        education: "Education",
+        bills: "Billing",
+        other: "Other",
+        salary: "Salary",
+        dividend: "Dividend Income",
+        trade_profit: "Trade Profit",
+        freelance: "Freelance",
+        etf_investment: "ETF Investment",
+        custom: "Add custom category",
+        add_custom_title: "Add custom category",
+        custom_placeholder: "Ex: Coffee, Sport, Education",
       },
 
       nav: {
@@ -82,6 +97,19 @@ const resources = {
       pagination: {
         previous: "Previous",
         next: "Next",
+      },
+      validation: {
+        transaction_title_min_length: "Title must be at least 3 characters.",
+        transaction_title_max_length: "Title must be at most 50 characters.",
+        transaction_amount_invalid: "Please enter a valid amount.",
+        transaction_amount_positive: "Amount must be positive.",
+        transaction_amount_max: "Amount must be at most 10000000.",
+        transaction_amount_decimals: "Amount must be at most 2 decimal places.",
+        transaction_category_min_length:
+          "Category must be at least 3 characters.",
+        transaction_date_required: "Date is required.",
+        transaction_description_max_length:
+          "Description must be at most 200 characters.",
       },
 
       errors: {
@@ -101,6 +129,7 @@ const resources = {
   tr: {
     translation: {
       dashboard_title: "Harcama Trendi",
+      welcome_dashboard: "Hesabınıza Hoş Geldiniz",
       new_transaction: "Yeni İşlem",
       spending_breakdown: "Harcama Dağılımı",
       edit_transaction: "İşlem Güncelle",
@@ -151,7 +180,7 @@ const resources = {
       end_date: "Bitiş Tarihi",
       reset: "Sıfırla",
       no_transactions: "Henüz bir işlem bulunamadı.",
-
+      currency_label: "Para Birimi",
       confirm_delete: "Silmeyi Onayla",
       delete_confirm:
         "Bu harcamayı silmek istediğine emin misin? Bu işlem geri alınamaz.",
@@ -165,13 +194,6 @@ const resources = {
         login: "Giriş yapılıyor...",
       },
 
-      categories: {
-        market: "Market",
-        health: "Sağlık",
-        food: "Yemek & İçecek",
-        transport: "Ulaşım",
-      },
-
       nav: {
         features: "Özellikler",
         how_it_works: "Nasıl Çalışır?",
@@ -179,6 +201,38 @@ const resources = {
       pagination: {
         previous: "Geri",
         next: "İleri",
+      },
+      validation: {
+        transaction_title_min_length: "Başlık en az 3 kelime olmalı",
+        transaction_title_max_length: "Başlık en fazla 50 karakter olmalı",
+        transaction_amount_invalid: "Lütfen geçerli bir rakam giriniz",
+        transaction_amount_positive: "Miktar 0'dan büyük olmalıdır",
+        transaction_amount_max:
+          "Tek seferde 10 milyondan fazla işlem girişi yapılamaz",
+        transaction_amount_decimals:
+          "En fazla 2 ondalık basamak (kuruş) girebilirsiniz",
+        transaction_category_min_length: "Kategori seçimi zorunludur",
+        transaction_date_required: "Tarih seçimi zorunludur",
+        transaction_description_max_length: "Açıklama 200 karakteri geçemez",
+      },
+      categories: {
+        market: "Market",
+        health: "Sağlık",
+        food: "Yemek & İçecek",
+        transport: "Ulaşım",
+        rent: "Kira",
+        entertainment: "Eğlence",
+        education: "Eğitim",
+        bills: "Faturalar",
+        other: "Diğer",
+        salary: "Maaş",
+        dividend: "Temettü Geliri",
+        trade_profit: "Borsa / Trade",
+        freelance: "Ek İş / Freelance",
+        etf_investment: "ETF Yatırımı",
+        custom: "Özel Kategori Ekle",
+        add_custom_title: "Özel Kategori Ekle",
+        custom_placeholder: "Örn: Kahve, Spor, Eğitim",
       },
 
       errors: {
