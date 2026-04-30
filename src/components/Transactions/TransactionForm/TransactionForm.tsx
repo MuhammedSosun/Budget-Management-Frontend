@@ -6,7 +6,6 @@ import type { Transaction } from "../../../types/transaction";
 import Select from "../../ui/Select/Select";
 import { getTransactionSchema } from "../../../schema/TransactionSchema";
 import { useTranslation } from "react-i18next";
-import { refreshDashboard } from "../../../utils/events";
 import { z } from "zod";
 import "./TransactionForm.scss";
 
@@ -109,8 +108,6 @@ function TransactionForm({
       } else {
         await transactionService.create(payload as any);
       }
-
-      refreshDashboard();
       onSuccess?.();
     } catch (error) {
       if (error instanceof z.ZodError) {

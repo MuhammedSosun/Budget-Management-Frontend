@@ -31,11 +31,23 @@ export const useTransactions = (initialPageSize = 10) => {
 
         setTransactions(response.data.content);
 
-        setPagination((prev) => ({
-          ...prev,
-          currentPage: response.data.currentPage,
-          totalPages: response.data.totalPages,
-        }));
+        setPagination((prev) => {
+          const nextCurrentPage = response.data.currentPage;
+          const nextTotalPages = response.data.totalPages;
+
+          if (
+            prev.currentPage === nextCurrentPage &&
+            prev.totalPages === nextTotalPages
+          ) {
+            return prev;
+          }
+
+          return {
+            ...prev,
+            currentPage: nextCurrentPage,
+            totalPages: nextTotalPages,
+          };
+        });
       } catch (error) {
         if (import.meta.env.DEV) {
           console.error(error);
@@ -49,7 +61,7 @@ export const useTransactions = (initialPageSize = 10) => {
 
   useEffect(() => {
     fetchTransactions(pagination.currentPage, filters);
-  }, [pagination.currentPage, filters, fetchTransactions]);
+  }, [pagination.currentPage, filters]);
 
   return {
     transactions,

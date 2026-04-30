@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SummaryCard from "./SummaryCard/SummaryCard";
 import "./Dashboard.scss";
 import { SpendingChart } from "./SpendingChart/SpendingChart";
@@ -11,11 +11,14 @@ function Dashboard() {
   const { t } = useTranslation();
   const [income, setIncome] = useState<number>(0);
   const [expense, setExpense] = useState<number>(0);
+  const isFetchingRef = useRef(false);
   const [currency, setCurrency] = useState<"TRY" | "USD" | "EUR">("TRY");
   const { showLoading, hideLoading } = useLoading();
 
   useEffect(() => {
     const fetchTotals = async () => {
+      if (isFetchingRef.current) return;
+      isFetchingRef.current = true;
       try {
         showLoading(t("loading_data"));
         const [incomeResponse, expenseResponse] = await Promise.all([
@@ -28,6 +31,7 @@ function Dashboard() {
         console.error("Veriler çekilemedi:", error);
       } finally {
         hideLoading();
+        isFetchingRef.current = false;
       }
     };
 
