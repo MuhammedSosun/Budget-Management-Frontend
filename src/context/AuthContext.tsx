@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
       if (response?.accessToken) {
         api.defaults.headers.common["Authorization"] =
           `Bearer ${response.accessToken}`;
+
         setUser(response.user);
       } else {
         clearAuth();
@@ -93,7 +94,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     <AuthContext.Provider
       value={{ user, login, logout, clearAuth, isChecking }}
     >
-      {!isChecking && children}
+      {children}
     </AuthContext.Provider>
   );
 };

@@ -41,22 +41,35 @@ export const transactionService = {
     const response = await api.get(`/transactions/get/${id}`);
     return response.data;
   },
-  totalIncome: async () => {
-    const response = await api.get("/transactions/total-income");
+  totalIncome: async (currency: string) => {
+    const response = await api.get("/transactions/total-income", {
+      params: { currency },
+    });
     return response.data;
   },
-  totalExpense: async () => {
-    const response = await api.get("/transactions/total-expense");
+  totalExpense: async (currency: string) => {
+    const response = await api.get("/transactions/total-expense", {
+      params: { currency },
+    });
     return response.data;
   },
-  getCategoryStats: async () => {
-    const response = await api.get("/transactions/category-stats");
+  getCategoryStats: async (currency: string = "TRY") => {
+    const response = await api.get("/transactions/category-stats", {
+      params: { currency },
+    });
     return response.data;
   },
-  getTrendStats: async (period: string = "weekly") => {
-    const response = await api.get(
-      `/transactions/trend-stats?period=${period}`,
-    );
+
+  getTrendStats: async (
+    period: string = "weekly",
+    currency: string = "TRY",
+  ) => {
+    const response = await api.get("/transactions/trend-stats", {
+      params: {
+        period,
+        currency,
+      },
+    });
     return response.data;
   },
 };

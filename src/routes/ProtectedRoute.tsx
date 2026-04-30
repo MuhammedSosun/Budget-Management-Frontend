@@ -1,14 +1,12 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
-
 const ProtectedRoute = () => {
   const { user, isChecking } = useAuth();
   const location = useLocation();
 
   if (isChecking) {
-    return null;
+    return <div>Loading...</div>;
   }
-
   if (!user) {
     return <Navigate to={`/login?returnUrl=${location.pathname}`} replace />;
   }
