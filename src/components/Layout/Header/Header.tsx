@@ -14,7 +14,12 @@ function Header() {
   const { user, logout } = useAuth();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const themeData = useContext(ThemeContext);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+
+  const closeMobileMenu = () => setIsMobileMenuOpen(false);
+
   const handleDashboardClick = () => {
+    closeMobileMenu();
     if (location.pathname === "/home") {
       const element = document.getElementById("dashboard-top");
       element?.scrollIntoView({ behavior: "smooth" });
@@ -23,6 +28,7 @@ function Header() {
     }
   };
   const handleTransactionsClick = () => {
+    closeMobileMenu();
     if (location.pathname === "/home") {
       const element = document.getElementById("transactions-section");
       if (element) {
@@ -33,15 +39,26 @@ function Header() {
     }
   };
   if (!themeData) return null;
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   return (
     <header className="main-header">
-      <div className="main-header__left">
+      <div
+        className="main-header__left"
+        onClick={() => navigate(user ? "/home" : "/login")}
+      >
         <img src={logo} alt="Budget Logo" />
         <div className="main-header__brand">Budget Management</div>
       </div>
+      <button
+        className={`main-header__mobile-toggle ${isMobileMenuOpen ? "active" : ""}`}
+        onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+        aria-label="Toggle menu"
+      >
+        <span />
+        <span />
+        <span />
+      </button>
 
-      <div className="main-header__right">
+      <div className={`main-header__right ${isMobileMenuOpen ? "open" : ""}`}>
         <div className="main-header__nav">
           {user ? (
             <>
@@ -54,12 +71,18 @@ function Header() {
             </>
           ) : (
             <>
-              <Button variant="link">{t("nav.features")}</Button>
-              <Button variant="link">{t("nav.how_it_works")}</Button>
+              <Button variant="link" onClick={closeMobileMenu}>
+                {t("nav.features")}
+              </Button>
+              <Button variant="link" onClick={closeMobileMenu}>
+                {t("nav.how_it_works")}
+              </Button>
             </>
           )}
         </div>
-        <div className="main-header__divider"></div>
+
+        <div className="main-header__divider" />
+
         <div className="main-header__settings">
           <Select
             label=""
@@ -76,6 +99,7 @@ function Header() {
             onClick={() =>
               themeData.setTheme(themeData.theme === "light" ? "dark" : "light")
             }
+            aria-label="Toggle theme"
           >
             {themeData.theme === "light" ? "🌙" : "☀️"}
           </button>
@@ -86,7 +110,7 @@ function Header() {
             <div className="main-header__profile-zone">
               <div
                 className={`main-header__user-trigger ${isDropdownOpen ? "active" : ""}`}
-                onClick={toggleDropdown}
+                onClick={() => setIsDropdownOpen((prev) => !prev)}
               >
                 <img
                   src={
@@ -111,11 +135,20 @@ function Header() {
                   <hr />
                   <button
                     className="dropdown-item"
-                    onClick={() => navigate("/profile")}
+                    onClick={() => {
+                      closeMobileMenu();
+                      navigate("/profile");
+                    }}
                   >
                     {t("profile")}
                   </button>
-                  <button className="dropdown-item logout" onClick={logout}>
+                  <button
+                    className="dropdown-item logout"
+                    onClick={() => {
+                      closeMobileMenu();
+                      logout();
+                    }}
+                  >
                     {t("logout")}
                   </button>
                 </div>
@@ -123,10 +156,22 @@ function Header() {
             </div>
           ) : (
             <div className="main-header__auth-buttons">
-              <Button variant="link" onClick={() => navigate("/login")}>
+              <Button
+                variant="link"
+                onClick={() => {
+                  closeMobileMenu();
+                  navigate("/login");
+                }}
+              >
                 {t("login")}
               </Button>
-              <Button variant="primary" onClick={() => navigate("/register")}>
+              <Button
+                variant="primary"
+                onClick={() => {
+                  closeMobileMenu();
+                  navigate("/register");
+                }}
+              >
                 {t("register")}
               </Button>
             </div>
