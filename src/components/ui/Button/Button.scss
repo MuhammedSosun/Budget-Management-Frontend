@@ -1,0 +1,65 @@
+.my-custom-button {
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  color: var(--text-main);
+
+  &.primary {
+    background-color: #24a96b;
+    color: white;
+
+    &:hover {
+      background-color: #14bd6e;
+    }
+  }
+
+  &.success {
+    background-color: #22c55e;
+    color: white;
+
+    &:hover {
+      background-color: #16a34a;
+    }
+  }
+
+  &.link {
+    background-color: transparent;
+    color: #24a96b;
+    padding: 0 5px;
+    text-decoration: none;
+    display: inline;
+
+    &:hover {
+      background-color: transparent;
+      color: #14bd6e;
+      text-decoration: underline;
+    }
+
+    &:active {
+      background-color: transparent;
+      color: var(--text-muted);
+    }
+  }
+
+  &.danger {
+    background-color: #ef4444;
+    color: white;
+
+    &:hover {
+      background-color: #dc2626;
+    }
+
+    &:active {
+      background-color: #b91c1c;
+    }
+  }
+
+  &.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    filter: grayscale(0.5);
+  }
+}

@@ -1,0 +1,68 @@
+@use "sass:map";
+@use "sass:meta";
+$themes: (
+  light: (
+    bg-body: #f9fafb,
+    bg-card: #ffffff,
+    text-main: #1f2937,
+    text-muted: #6b7280,
+    border: #e5e7eb,
+    shadow: (
+      0 4px 6px -1px rgba(0, 0, 0, 0.05),
+    ),
+    primary: #10b981,
+    primary-shades: (
+      #10b981,
+      #34d399,
+      #6ee7b7,
+      #a7f3d0,
+      #d1fae5,
+    ),
+    primary-dark: #059669,
+    primary-light: #a7f3d0,
+
+    danger: #ef4444,
+    danger-text: #b91c1c,
+    bg-income-grad: linear-gradient(180deg, #ffffff 0%, #d1fae5 100%),
+    bg-expense-grad: linear-gradient(180deg, #ffffff 0%, #fee2e2 100%),
+  ),
+  dark: (
+    bg-body: #111827,
+    bg-card: #1f2937,
+    text-main: #f9fafb,
+    text-muted: #9ca3af,
+    border: #374151,
+    shadow: (
+      0 10px 15px -3px rgba(0, 0, 0, 0.4),
+    ),
+    primary: #34d399,
+    primary-dark: #10b981,
+    primary-light: #a7f3d0,
+
+    danger: #f87171,
+    danger-text: #ef4444,
+
+    bg-income-grad: linear-gradient(180deg, #1f2937 0%, #064e3b 100%),
+    bg-expense-grad: linear-gradient(180deg, #1f2937 0%, #7f1d1d 100%),
+  ),
+);
+
+@mixin generate-variables($theme-name) {
+  $theme: map.get($themes, $theme-name);
+
+  @each $key, $value in $theme {
+    @if meta.type-of($value) == "list" {
+      --#{$key}: #{$value};
+    } @else {
+      --#{$key}: #{$value};
+    }
+  }
+}
+
+:root {
+  @include generate-variables(light);
+}
+
+[data-theme="dark"] {
+  @include generate-variables(dark);
+}

@@ -1,0 +1,52 @@
+.transaction-form {
+  &__amount-group {
+    display: grid;
+    grid-template-columns: 2.5fr 1fr;
+    gap: 1rem;
+    align-items: end;
+  }
+}
+
+.custom-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(0, 0, 0, 0.72);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+
+  &__content {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    box-shadow: var(--shadow);
+  }
+
+  &__content h3 {
+    margin: 0 0 1rem;
+    color: var(--text-main);
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  &__error {
+    color: var(--red);
+    margin-top: 0.25rem;
+    font-size: 0.875rem;
+  }
+
+  &__amount-group {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 1rem;
+  }
+}
