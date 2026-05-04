@@ -1,22 +1,24 @@
-import React from "react";
 import { useSearchParams } from "react-router-dom";
 import LoginForm from "../../components/Auth/LoginForm";
 import Header from "../../components/Layout/Header/Header";
-import "./Login.scss";
+import "./AuthPage.scss";
+import Container from "../../components/ui/Container/PageContainer";
 
 function LoginPage() {
   const [searchParams] = useSearchParams();
   const returnUrl = searchParams.get("returnUrl") || "/home";
 
   return (
-    <div className="login-page-wrapper">
-      <Header />
+    <div className="auth-page-wrapper">
+      <Container size="large">
+        <Header />
 
-      <div className="brand-logo">Bütçem.</div>
+        <div className="auth-page-wrapper__content">
+          <div className="brand-logo">Bütçem.</div>
 
-      <div className="login-card-container">
-        <LoginForm onSuccessRedirect={returnUrl} />
-      </div>
+          <LoginForm onSuccessRedirect={returnUrl} />
+        </div>
+      </Container>
     </div>
   );
 }

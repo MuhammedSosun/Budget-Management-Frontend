@@ -7,7 +7,10 @@ import Select from "../../ui/Select/Select";
 import { getTransactionSchema } from "../../../schema/TransactionSchema";
 import { useTranslation } from "react-i18next";
 import { z } from "zod";
+import { toast } from "sonner";
 import "./TransactionForm.scss";
+import { Controller, useForm, useWatch } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 interface TransactionFormProps {
   onSuccess?: () => void;
@@ -43,81 +46,74 @@ function TransactionForm({
   const [customCategories, setCustomCategories] = useState<
     { label: string; value: string }[]
   >([]);
-  const [errors, setErrors] = useState<Record<string, string>>({});
   const [isCustomModalOpen, setIsCustomModalOpen] = useState(false);
+  const TransactionSchema = getTransactionSchema(t);
+
+  type TransactionFormInput = z.input<typeof TransactionSchema>;
+  type TransactionFormOutput = z.output<typeof TransactionSchema>;
   const [customCategory, setCustomCategory] = useState("");
 
-  const [formData, setFormData] = useState<Transaction>(() => {
-    if (initialData) return initialData;
-    return {
-      title: "",
-      input_details: { amount: 0, currency: "TRY" },
-      type: "expense",
-      category: "market",
-      date: new Date().toISOString().split("T")[0],
-      description: "",
-    } as Transaction;
-  });
+  const {
+    control,
+    handleSubmit,
+    setValue,
+    formState: { errors },
+  } = useForm<TransactionFormInput, unknown, TransactionFormOutput>({
+    resolver: zodResolver(TransactionSchema),
+    defaultValues: {
+      title: initialData?.title ?? "",
+      input_details: initialData?.input_details ?? {
+        amount: 0,
+        currency: "TRY",
+      },
+      type: initialData?.type ?? "expense",
+      category: initialData?.category ?? "market",
 
-  // 2. Dinamik Seçenekleri Buradan Alıyoruz
+      date: initialData?.date
+        ? initialData.date.split("T")[0]
+        : new Date().toISOString().split("T")[0],
+
+      description: initialData?.description ?? "",
+    },
+  });
+  const selectedType =
+    useWatch({
+      control,
+      name: "type",
+    }) ?? "expense";
+
   const currentCategoryOptions = [
-    ...CATEGORY_MAP[formData.type],
+    ...CATEGORY_MAP[selectedType],
     ...customCategories,
     { label: t("categories.custom"), value: "custom" },
   ];
 
-  const handleChange = (name: string, value: string) => {
-    if (name === "amount" || name === "currency") {
-      setFormData({
-        ...formData,
-        input_details: {
-          ...formData.input_details,
-          [name]: name === "amount" ? Number(value) : value,
-        },
-      });
-    } else if (name === "type") {
-      const nextType = value as "income" | "expense";
-      setFormData({
-        ...formData,
-        type: nextType,
-        category: CATEGORY_MAP[nextType][0].value,
-      });
-    } else {
-      setFormData({ ...formData, [name]: value });
-    }
-
-    if (errors[name] || errors[`input_details.${name}`]) {
-      const newErrors = { ...errors };
-      delete newErrors[name];
-      delete newErrors[`input_details.${name}`];
-      setErrors(newErrors);
-    }
-  };
-
-  const handleSubmit = async () => {
+  const onSubmit = async (validatedData: TransactionFormOutput) => {
     try {
-      const TransactionSchema = getTransactionSchema(t);
-      const validatedData = TransactionSchema.parse(formData);
-      const payload = {
+      const payload: Transaction = {
         ...validatedData,
+        amount: validatedData.input_details.amount,
+        currency: validatedData.input_details.currency,
         date: validatedData.date.toISOString(),
       };
 
       if (initialData?._id) {
-        await transactionService.update(initialData._id, payload as any);
-      } else {
-        await transactionService.create(payload as any);
-      }
-      onSuccess?.();
-    } catch (error) {
-      if (error instanceof z.ZodError) {
-        const formattedErrors: Record<string, string> = {};
-        error.issues.forEach((err) => {
-          const fullPath = err.path.join(".");
-          formattedErrors[fullPath] = err.message;
+        await transactionService.update(initialData._id, payload);
+        toast.success(t("toast.transaction_updated"), {
+          description: t("toast.transaction_updated_desc"),
         });
-        setErrors(formattedErrors);
+      } else {
+        await transactionService.create(payload);
+        toast.success(t("toast.transaction_created"), {
+          description: t("toast.transaction_created_desc"),
+        });
       }
+
+      onSuccess?.();
+    } catch {
+      toast.error(t("toast.transaction_error"), {
+        description: t("toast.transaction_error_desc"),
+      });
     }
   };
 
@@ -125,76 +121,113 @@ function TransactionForm({
     <>
       <div className="transaction-form">
         <div className="transaction-form__inputs">
-          {/* İşlem Tipi */}
-          <Select
-            label={t("transaction_type")}
-            options={[
-              { label: t("income"), value: "income" },
-              { label: t("expense"), value: "expense" },
-            ]}
-            value={formData.type}
-            onChange={(val) => handleChange("type", val)}
-            error={errors.type}
+          <Controller
+            name="type"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label={t("transaction_type")}
+                options={[
+                  { label: t("income"), value: "income" },
+                  { label: t("expense"), value: "expense" },
+                ]}
+                value={field.value}
+                onChange={(val) => {
+                  const nextType = val as "income" | "expense";
+                  field.onChange(nextType);
+                  setValue("category", CATEGORY_MAP[nextType][0].value);
+                }}
+                error={errors.type?.message}
+              />
+            )}
           />
 
-          {/* Başlık */}
-          <Input
-            label={t("title")}
-            placeholder={t("title_placeholder")}
-            value={formData.title}
-            onChange={(val) => handleChange("title", val)}
-            error={errors.title}
+          <Controller
+            name="title"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label={t("title")}
+                placeholder={t("title_placeholder")}
+                value={field.value}
+                onChange={(val) => field.onChange(val)}
+                error={errors.title?.message}
+              />
+            )}
           />
 
-          {/* Miktar ve Para Birimi Grubu */}
           <div className="transaction-form__amount-group">
-            <Input
-              label={t("amount")}
-              type="number"
-              placeholder="0"
-              value={formData.input_details.amount}
-              onChange={(val) => handleChange("amount", val)}
-              error={errors["input_details.amount"]}
+            <Controller
+              name="input_details.amount"
+              control={control}
+              render={({ field }) => (
+                <Input
+                  label={t("amount")}
+                  type="number"
+                  placeholder="0"
+                  value={field.value}
+                  onChange={(val) => field.onChange(Number(val))}
+                  error={errors.input_details?.amount?.message}
+                />
+              )}
             />
-            <Select
-              label={t("currency")}
-              options={[
-                { label: "₺ TRY", value: "TRY" },
-                { label: "$ USD", value: "USD" },
-                { label: "€ EUR", value: "EUR" },
-              ]}
-              value={formData.input_details.currency}
-              onChange={(val) => handleChange("currency", val)}
+            <Controller
+              name="input_details.currency"
+              control={control}
+              render={({ field }) => (
+                <Select
+                  label={t("currency")}
+                  options={[
+                    { label: "₺ TRY", value: "TRY" },
+                    { label: "$ USD", value: "USD" },
+                    { label: "€ EUR", value: "EUR" },
+                  ]}
+                  value={field.value}
+                  onChange={(val) =>
+                    field.onChange(val as "TRY" | "USD" | "EUR")
+                  }
+                  error={errors.input_details?.currency?.message}
+                />
+              )}
             />
           </div>
+          <Controller
+            name="category"
+            control={control}
+            render={({ field }) => (
+              <Select
+                label={t("category")}
+                options={currentCategoryOptions}
+                value={field.value}
+                onChange={(val) => {
+                  if (val === "custom") {
+                    setIsCustomModalOpen(true);
+                    return;
+                  }
 
-          {/* Kategori - Dinamik */}
-          <Select
-            label={t("category")}
-            options={currentCategoryOptions}
-            value={formData.category}
-            onChange={(val) => {
-              if (val === "custom") {
-                setIsCustomModalOpen(true);
-                return;
-              }
-              handleChange("category", val);
-            }}
-            error={errors.category}
+                  field.onChange(val);
+                }}
+                error={errors.category?.message}
+              />
+            )}
           />
-
-          {/* Tarih */}
-          <Input
-            label={t("date")}
-            type="date"
-            value={formData.date}
-            onChange={(val) => handleChange("date", val)}
-            error={errors.date}
+          <Controller
+            name="date"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label={t("date")}
+                type="date"
+                value={field.value}
+                onChange={field.onChange}
+                error={errors.date?.message}
+              />
+            )}
           />
         </div>
 
         <div className="transaction-form__actions">
-          <Button variant="primary" onClick={handleSubmit}>
+          <Button variant="primary" onClick={handleSubmit(onSubmit)}>
             {initialData
               ? t("edit_transaction_this")
               : t("add_transaction_this")}
@@ -205,7 +238,6 @@ function TransactionForm({
         </div>
       </div>
 
-      {/* Custom Kategori Modalı */}
       {isCustomModalOpen && (
         <div className="custom-modal">
           <div className="custom-modal__content">
@@ -222,11 +254,13 @@ function TransactionForm({
                 onClick={() => {
                   const value = customCategory.trim();
                   if (!value) return;
+
                   setCustomCategories((prev) => [
                     ...prev,
                     { label: value, value },
                   ]);
-                  handleChange("category", value);
+
+                  setValue("category", value);
                   setCustomCategory("");
                   setIsCustomModalOpen(false);
                 }}

@@ -22,4 +22,8 @@ export interface TransactionFilters {
   startDate?: string;
   endDate?: string;
   category?: string;
+  search?: string;
+  filter?: "" | "newest" | "oldest" | "7days" | "30days";
 }
+
+export type TransactionPayload = Omit<Transaction, "_id" | "conversions">;

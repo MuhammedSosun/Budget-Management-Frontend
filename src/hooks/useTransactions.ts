@@ -1,15 +1,21 @@
 import { useState, useEffect, useCallback } from "react";
 import { transactionService } from "../services/transaction.service";
 import { useLoading } from "./useLoading";
-import type { Transaction } from "../types/transaction";
+import type { Transaction, TransactionFilters } from "../types/transaction";
 
 export const useTransactions = (initialPageSize = 10) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
-  const [filters, setFilters] = useState({
+  const [searchValue, setSearchValue] = useState("");
+
+  const [filters, setFilters] = useState<TransactionFilters>({
     type: "",
     startDate: "",
     endDate: "",
+    category: "",
+    search: "",
+    filter: "",
   });
+
   const [pagination, setPagination] = useState({
     currentPage: 1,
     totalPages: 1,
@@ -19,7 +25,7 @@ export const useTransactions = (initialPageSize = 10) => {
   const { showLoading, hideLoading } = useLoading();
 
   const fetchTransactions = useCallback(
-    async (page: number, currentFilters: typeof filters) => {
+    async (page: number, currentFilters: TransactionFilters) => {
       try {
         showLoading("Loading...");
 
@@ -60,8 +66,30 @@ export const useTransactions = (initialPageSize = 10) => {
   );
 
   useEffect(() => {
+    const timer = setTimeout(() => {
+      setFilters((prev) => {
+        if (prev.search === searchValue) {
+          return prev;
+        }
+
+        return {
+          ...prev,
+          search: searchValue,
+        };
+      });
+
+      setPagination((prev) => ({
+        ...prev,
+        currentPage: 1,
+      }));
+    }, 500);
+
+    return () => clearTimeout(timer);
+  }, [searchValue]);
+
+  useEffect(() => {
     fetchTransactions(pagination.currentPage, filters);
-  }, [pagination.currentPage, filters]);
+  }, [pagination.currentPage, filters, fetchTransactions]);
 
   return {
     transactions,
@@ -69,6 +97,8 @@ export const useTransactions = (initialPageSize = 10) => {
     setPagination,
     filters,
     setFilters,
-    refresh: fetchTransactions,
+    searchValue,
+    setSearchValue,
+    refresh: () => fetchTransactions(pagination.currentPage, filters),
   };
 };

@@ -61,12 +61,15 @@ const CustomTooltip = ({
   payload,
   label,
   currencySymbol,
-}: CustomTooltipProps & { currencySymbol: string }) => {
+  t,
+}: CustomTooltipProps & { currencySymbol: string; t: any }) => {
   if (!active || !payload?.length) return null;
+
+  const formattedDate = label ? t(`days.${label?.toLowerCase()}`) : "";
 
   return (
     <div className="trend-chart__tooltip">
-      <p className="trend-chart__tooltip-date">{label}</p>
+      <p className="trend-chart__tooltip-date">{formattedDate}</p>
       <p className="trend-chart__tooltip-amount">
         {currencySymbol} {payload[0].value.toLocaleString("tr-TR")}
       </p>
@@ -152,6 +155,7 @@ export const TrendChart = ({ currency }: TrendChartProps) => {
               axisLine={false}
               tickLine={false}
               tick={{ fontSize: 12, fill: "var(--text-muted)" }}
+              tickFormatter={(tick) => t(`chart.${tick.toLowerCase()}`)}
             />
 
             <YAxis
@@ -163,7 +167,7 @@ export const TrendChart = ({ currency }: TrendChartProps) => {
             />
 
             <Tooltip
-              content={<CustomTooltip currencySymbol={currencySymbol} />}
+              content={<CustomTooltip currencySymbol={currencySymbol} t={t} />}
               cursor={{ stroke: "var(--border)", strokeDasharray: "5 5" }}
             />
 

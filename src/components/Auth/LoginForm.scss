@@ -3,11 +3,12 @@
   padding: 40px;
   border-radius: 16px;
   box-shadow: var(--shadow);
+  border: 1px solid var(--border);
   display: flex;
   flex-direction: column;
   width: 100%;
   box-sizing: border-box;
-  margin-top: 50px;
+  margin-top: 0;
 
   &__title {
     font-size: 28px;

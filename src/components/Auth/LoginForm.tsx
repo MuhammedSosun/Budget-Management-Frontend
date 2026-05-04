@@ -10,6 +10,7 @@ import { useLoading } from "../../hooks/useLoading";
 import { useAuth } from "../../hooks/useAuth";
 import "./LoginForm.scss";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 
 interface ApiError {
   message: string;
@@ -44,25 +45,37 @@ function LoginForm({ onSuccessRedirect }: { onSuccessRedirect: string }) {
         formattedErrors[fieldName] = issue.message;
       });
       setErrors(formattedErrors);
+      toast.error(t("toast.login_failed"), {
+        description: t("toast.login_failed_description"),
+      });
       return;
     }
-    showLoading("Keep Going, Please Wait...");
+    showLoading(t("loading.keep_going"));
     try {
       const response = await login(formData);
       setAuthUser(response.user, response.accessToken);
+      toast.success(t("toast.login_success"), {
+        description: t("toast.login_welcome"),
+      });
       setTimeout(() => {
         navigate(onSuccessRedirect);
-      }, 100);
+      }, 300);
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const serverError = error.response?.data as ApiError;
         const message = serverError?.message || t("errors.general");
         setErrors((prev) => ({ ...prev, general: message }));
       } else {
+        const message = t("errors.system");
+
         setErrors((prev) => ({
           ...prev,
-          general: t("errors.system"),
+          general: message,
         }));
+
+        toast.error(t("toast.system_error"), {
+          description: t("toast.system_error_description"),
+        });
       }
     } finally {
       hideLoading();

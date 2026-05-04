@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import "./TransactionList.scss";
-import { type Transaction } from "../../../types/transaction";
+import {
+  type Transaction,
+  type TransactionFilters,
+} from "../../../types/transaction";
 import TransactionItem from "../TransactionItem/TransactionItem";
 import Button from "../../ui/Button/Button";
 import TransactionForm from "../TransactionForm/TransactionForm";
@@ -10,6 +13,8 @@ import Select from "../../ui/Select/Select";
 import { transactionService } from "../../../services/transaction.service";
 import { Modal } from "../../ui/Modal/Modal";
 import { useTranslation } from "react-i18next";
+import Input from "../../ui/Input/Input";
+import { toast } from "sonner";
 
 function TransactionList() {
   const { t } = useTranslation();
@@ -20,6 +25,8 @@ function TransactionList() {
     refresh,
     filters,
     setFilters,
+    searchValue,
+    setSearchValue,
   } = useTransactions(10);
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -64,9 +71,19 @@ function TransactionList() {
       </div>
 
       <div className="transaction-filters">
+        <div className="search-group">
+          <Input
+            label={t("search")}
+            value={searchValue}
+            placeholder="Search..."
+            onChange={(value) => {
+              setSearchValue(value);
+            }}
+          />
+        </div>
         <Select
           label={t("transaction_type")}
-          value={filters.type}
+          value={filters.type ?? ""}
           options={[
             { label: t("all"), value: "" },
             { label: t("income"), value: "income" },
@@ -79,35 +96,63 @@ function TransactionList() {
         />
 
         <div className="filter-group">
-          <label>{t("start_date")}</label>
-          <input
+          <Input
+            label={t("start_date")}
             type="date"
-            value={filters.startDate}
-            onChange={(e) => {
-              setFilters({ ...filters, startDate: e.target.value });
+            value={filters.startDate || ""}
+            onChange={(value) => {
+              setFilters({ ...filters, startDate: value });
               setPagination((prev) => ({ ...prev, currentPage: 1 }));
             }}
           />
         </div>
 
         <div className="filter-group">
-          <label>{t("end_date")}</label>
-          <input
+          <Input
+            label={t("end_date")}
             type="date"
-            value={filters.endDate}
-            onChange={(e) => {
-              setFilters({ ...filters, endDate: e.target.value });
+            value={filters.endDate || ""}
+            onChange={(value) => {
+              setFilters({ ...filters, endDate: value });
               setPagination((prev) => ({ ...prev, currentPage: 1 }));
             }}
           />
         </div>
+        <div className="filter-group">
+          <div className="filter-group__select">
+            <Select
+              label={t("filters")}
+              value={filters.filter ?? ""}
+              options={[
+                { label: t("all"), value: "" },
+                { label: t("newest_to_oldest"), value: "newest" },
+                { label: t("oldest_to_newest"), value: "oldest" },
+                { label: t("last_7_days"), value: "7days" },
+                { label: t("last_30_days"), value: "30days" },
+              ]}
+              onChange={(value) => {
+                setFilters((prev) => ({
+                  ...prev,
+                  filter: value as TransactionFilters["filter"],
+                }));
 
-        <Button
-          variant="danger"
-          onClick={() => setFilters({ type: "", startDate: "", endDate: "" })}
-        >
-          {t("reset")}
-        </Button>
+                setPagination((prev) => ({
+                  ...prev,
+                  currentPage: 1,
+                }));
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="transaction-filters__reset">
+          <Button
+            variant="danger"
+            onClick={() => setFilters({ type: "", startDate: "", endDate: "" })}
+          >
+            {t("reset")}
+          </Button>
+        </div>
       </div>
 
       <div className="transaction-list__items">
@@ -145,7 +190,7 @@ function TransactionList() {
           initialData={selectedTransaction}
           onCancel={handleCloseForm}
           onSuccess={() => {
-            refresh(pagination.currentPage);
+            refresh();
             handleCloseForm();
           }}
         />
@@ -163,10 +208,22 @@ function TransactionList() {
             <Button
               variant="danger"
               onClick={async () => {
-                if (idToDelete) {
+                if (!idToDelete) return;
+
+                try {
                   await transactionService.delete(idToDelete);
+
+                  toast.success(t("toast.transaction_deleted"), {
+                    description: t("toast.transaction_deleted_desc"),
+                  });
+
                   setIsDeleteModalOpen(false);
-                  refresh(pagination.currentPage);
+                  setIdToDelete(null);
+                  refresh();
+                } catch {
+                  toast.error(t("toast.transaction_delete_failed"), {
+                    description: t("toast.transaction_delete_failed_desc"),
+                  });
                 }
               }}
             >

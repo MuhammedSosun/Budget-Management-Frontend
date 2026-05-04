@@ -9,6 +9,7 @@ import axios from "axios";
 import "./RegisterForm.scss";
 import { useLoading } from "../../hooks/useLoading";
 import { useTranslation } from "react-i18next";
+import { toast } from "sonner";
 interface ApiError {
   message: string;
 }
@@ -65,12 +66,18 @@ function RegisterForm() {
         formattedErrors[fieldName] = issue.message;
       });
       setErrors(formattedErrors);
+      toast.error(t("toast.register_failed"), {
+        description: t("toast.register_failed_description"),
+      });
       return;
     }
     showLoading(t("loading.register"));
 
     try {
       await register(formData);
+      toast.success(t("toast.register_success"), {
+        description: t("toast.register_success_description"),
+      });
       navigate("/login", {
         state: { message: t("loading.register_success") },
       });
@@ -78,13 +85,23 @@ function RegisterForm() {
       if (axios.isAxiosError(error)) {
         const serverError = error.response?.data as ApiError;
         const message = serverError?.message || t("errors.general");
+
         setErrors((prev) => ({ ...prev, general: message }));
+
+        toast.error(t("toast.register_failed"), {
+          description: message,
+        });
       } else {
-        console.error("Beklenmedik bir hata:", error);
+        const message = t("errors.system");
+
         setErrors((prev) => ({
           ...prev,
-          general: t("errors.system"),
+          general: message,
         }));
+
+        toast.error(t("toast.system_error"), {
+          description: message,
+        });
       }
     } finally {
       hideLoading();
