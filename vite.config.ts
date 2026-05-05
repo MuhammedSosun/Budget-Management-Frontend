@@ -14,7 +14,7 @@ export default defineConfig({
         server.middlewares.use((req, res, next) => {
           if (req.url === "/" || req.url?.startsWith("/?")) {
             res.statusCode = 302;
-            res.setHeader("Location", "http://dev.butcemx.com:3000");
+            res.setHeader("Location", "http://localhost:3000");
             res.end();
             return;
           }
@@ -29,7 +29,7 @@ export default defineConfig({
     port: 5173,
     strictPort: true,
     cors: true,
-    open: "http://dev.butcemx.com:5173",
+    open: "http://localhost:5173",
     allowedHosts: ["dev.butcemx.com"],
   },
 });

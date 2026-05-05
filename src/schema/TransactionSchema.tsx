@@ -13,15 +13,15 @@ export const getTransactionSchema = (t: TFunction) =>
         .transform((val) => Number(val))
         .pipe(
           z
-            .number("Lütfen geçerli bir rakam giriniz")
-            .positive("Miktar 0'dan büyük olmalıdır")
-            .max(10000000, "Limit aşıldı")
+            .number(t("validation.transaction_amount_invalid"))
+            .positive(t("validation.transaction_amount_positive"))
+            .max(10000000, t("validation.transaction_amount_max"))
             .refine(
               (val) => {
                 const decimals = val.toString().split(".")[1];
                 return !decimals || decimals.length <= 2;
               },
-              { message: "En fazla 2 ondalık basamak girebilirsiniz" },
+              { message: t("validation.transaction_amount_decimal") },
             ),
         ),
       currency: z.enum(["TRY", "USD", "EUR"]),

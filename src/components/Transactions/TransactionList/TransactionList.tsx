@@ -124,7 +124,6 @@ function TransactionList() {
               label={t("filters")}
               value={filters.filter ?? ""}
               options={[
-                { label: t("all"), value: "" },
                 { label: t("newest_to_oldest"), value: "newest" },
                 { label: t("oldest_to_newest"), value: "oldest" },
                 { label: t("last_7_days"), value: "7days" },

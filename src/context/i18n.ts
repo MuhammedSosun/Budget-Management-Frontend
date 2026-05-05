@@ -171,16 +171,20 @@ const resources = {
       },
       validation: {
         transaction_title_min_length: "Title must be at least 3 characters.",
-        transaction_title_max_length: "Title must be at most 50 characters.",
-        transaction_amount_invalid: "Please enter a valid amount.",
-        transaction_amount_positive: "Amount must be positive.",
-        transaction_amount_max: "Amount must be at most 10000000.",
-        transaction_amount_decimals: "Amount must be at most 2 decimal places.",
+        transaction_title_max_length: "Title can be at most 50 characters.",
+
+        transaction_amount_invalid: "Please enter a valid number.",
+        transaction_amount_positive: "Amount must be greater than 0.",
+        transaction_amount_max: "Limit exceeded.",
+        transaction_amount_decimal: "You can enter up to 2 decimal places.",
+
         transaction_category_min_length:
           "Category must be at least 3 characters.",
+
         transaction_date_required: "Date is required.",
+
         transaction_description_max_length:
-          "Description must be at most 200 characters.",
+          "Description can be at most 200 characters.",
       },
 
       errors: {
@@ -274,17 +278,21 @@ const resources = {
         next: "İleri",
       },
       validation: {
-        transaction_title_min_length: "Başlık en az 3 kelime olmalı",
-        transaction_title_max_length: "Başlık en fazla 50 karakter olmalı",
-        transaction_amount_invalid: "Lütfen geçerli bir rakam giriniz",
-        transaction_amount_positive: "Miktar 0'dan büyük olmalıdır",
-        transaction_amount_max:
-          "Tek seferde 10 milyondan fazla işlem girişi yapılamaz",
-        transaction_amount_decimals:
-          "En fazla 2 ondalık basamak (kuruş) girebilirsiniz",
-        transaction_category_min_length: "Kategori seçimi zorunludur",
-        transaction_date_required: "Tarih seçimi zorunludur",
-        transaction_description_max_length: "Açıklama 200 karakteri geçemez",
+        transaction_title_min_length: "Başlık en az 3 karakter olmalıdır.",
+        transaction_title_max_length: "Başlık en fazla 50 karakter olabilir.",
+
+        transaction_amount_invalid: "Lütfen geçerli bir rakam giriniz.",
+        transaction_amount_positive: "Miktar 0'dan büyük olmalıdır.",
+        transaction_amount_max: "Limit aşıldı.",
+        transaction_amount_decimal:
+          "En fazla 2 ondalık basamak girebilirsiniz.",
+
+        transaction_category_min_length: "Kategori en az 3 karakter olmalıdır.",
+
+        transaction_date_required: "Tarih alanı zorunludur.",
+
+        transaction_description_max_length:
+          "Açıklama en fazla 200 karakter olabilir.",
       },
       categories: {
         market: "Market",
