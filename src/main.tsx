@@ -8,6 +8,7 @@ import { AxiosInterceptors } from "./api/AxiosInterceptor.tsx";
 import { LoadingProvider } from "./context/LoadingContext.tsx";
 import "./context/i18n";
 import i18n from "./context/i18n";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const params = new URLSearchParams(window.location.search);
 
@@ -29,15 +30,21 @@ if (theme || lang) {
 }
 
 createRoot(document.getElementById("root")!).render(
-  <LoadingProvider>
-    <BrowserRouter>
-      <ThemeProvider>
-        <AuthProvider>
-          <AxiosInterceptors>
-            <App />
-          </AxiosInterceptors>
-        </AuthProvider>
-      </ThemeProvider>
-    </BrowserRouter>
-  </LoadingProvider>,
+  <GoogleOAuthProvider
+    clientId={
+      "95199041090-u6p9ullacueesvfi1frhjbggja50r2bm.apps.googleusercontent.com"
+    }
+  >
+    <LoadingProvider>
+      <BrowserRouter>
+        <ThemeProvider>
+          <AuthProvider>
+            <AxiosInterceptors>
+              <App />
+            </AxiosInterceptors>
+          </AuthProvider>
+        </ThemeProvider>
+      </BrowserRouter>
+    </LoadingProvider>
+  </GoogleOAuthProvider>,
 );

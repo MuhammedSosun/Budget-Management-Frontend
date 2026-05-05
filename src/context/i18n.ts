@@ -113,25 +113,44 @@ const resources = {
       toast: {
         login_success: "Login successful",
         login_failed: "Login failed",
-        register_success: "Register successful",
-        register_failed: "Register failed",
-        system_error: "System error",
+        register_success: "Account created",
+        register_failed: "Registration failed",
+        system_error: "Something went wrong",
+
         login_welcome: "Welcome back!",
-        register_welcome: "You can now log in.",
-        general: "Server connection failed.",
+        register_welcome: "Your account is ready. You can now log in.",
+
+        general: "Could not connect to the server.",
         login_failed_description: "Please check your email and password.",
-        register_failed_description: "Please check the required fields.",
-        system_error_description: "Please try again later.",
-        transaction_updated: "Transaction is updated",
-        transaction_updated_desc: "Transaction is updated successfully.",
-        transaction_created: "Transaction is created",
-        transaction_created_desc: "Transaction is created successfully.",
-        transaction_error: "Transaction error",
-        transaction_error_desc: "Transaction error",
-        transaction_deleted: "Transaction is deleted",
-        transaction_deleted_desc: "Transaction is deleted successfully.",
-        transaction_delete_failed: "Transaction delete failed",
-        transaction_delete_failed_desc: "Transaction delete failed",
+        register_failed_description: "Please review the form and try again.",
+        system_error_description: "Please try again in a few moments.",
+
+        transaction_updated: "Transaction updated",
+        transaction_updated_desc:
+          "Your transaction has been updated successfully.",
+        transaction_created: "Transaction created",
+        transaction_created_desc:
+          "Your transaction has been created successfully.",
+        transaction_error: "Transaction failed",
+        transaction_error_desc:
+          "We could not complete this transaction. Please try again.",
+        transaction_deleted: "Transaction deleted",
+        transaction_deleted_desc:
+          "Your transaction has been deleted successfully.",
+        transaction_delete_failed: "Delete failed",
+        transaction_delete_failed_desc:
+          "We could not delete this transaction. Please try again.",
+
+        google_login_failed: "Google sign-in failed",
+        google_login_failed_desc:
+          "We could not sign you in with Google. Please try again.",
+
+        register_success_desc:
+          "Your account has been created successfully. Please log in.",
+
+        email_or_password_failed: "Invalid email or password",
+        email_or_password_failed_desc:
+          "Please check your credentials and try again.",
       },
       filters: "Filters",
       newest_to_oldest: "Newest to oldest",
@@ -332,6 +351,14 @@ const resources = {
         transaction_deleted_desc: "İşlem başarıyla silindi.",
         transaction_delete_failed_desc: "İşlem silme hatası",
         transaction_updated_failed_desc: "İşlem güncelleme hatası",
+        google_login_failed: "Google ile giriş başarısız",
+        google_login_failed_desc:
+          "Google ile giriş başarısız, Lütfen tekrar deneyin.",
+        register_success_desc:
+          "Hesabınız başarıyla oluşturuldu. Lütfen giriş yapın.",
+        email_or_password_failed: "Kullanıcı adı veya şifre hatalı",
+        email_or_password_failed_desc:
+          "Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyin.",
       },
       filters: "Filtreler",
       newest_to_oldest: "En yeniden eskiye",

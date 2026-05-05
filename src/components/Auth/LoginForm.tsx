@@ -11,6 +11,8 @@ import { useAuth } from "../../hooks/useAuth";
 import "./LoginForm.scss";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
+import { GoogleLogin } from "@react-oauth/google";
+import { googleLogin } from "../../services/auth.service";
 
 interface ApiError {
   message: string;
@@ -36,6 +38,62 @@ function LoginForm({ onSuccessRedirect }: { onSuccessRedirect: string }) {
     email: "",
     password: "",
   });
+  const handleGoogleLogin = async (credential: string) => {
+    if (!credential) {
+      toast.error(t("toast.google_login_failed"), {
+        description: t("toast.google_login_failed_desc"),
+      });
+      return;
+    }
+    showLoading(t("loading.keep_going"));
+    try {
+      const response = await googleLogin(credential);
+      setAuthUser(response.user, response.accessToken);
+
+      toast.success(t("toast.login_success"), {
+        description: t("toast.login_welcome"),
+      });
+      setTimeout(() => {
+        navigate(onSuccessRedirect);
+      }, 300);
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        if (error.response) {
+          const status = error.response.status;
+
+          if (status === 401 || status === 404) {
+            setErrors((prev) => ({
+              ...prev,
+              general: t("toast.email_or_password_failed"),
+            }));
+
+            toast.error(t("toast.email_or_password_failed"), {
+              description: t("toast.email_or_password_failed_desc"),
+            });
+
+            return;
+          }
+        }
+
+        setErrors((prev) => ({
+          ...prev,
+          general: t("toast.general"),
+        }));
+
+        toast.error(t("toast.system_error"), {
+          description: t("toast.general"),
+        });
+
+        return;
+      }
+
+      toast.error(t("toast.system_error"), {
+        description: t("toast.system_error_description"),
+      });
+    } finally {
+      hideLoading();
+    }
+  };
   const handleLogin = async () => {
     const result = loginSchema.safeParse(formData);
     if (!result.success) {
@@ -130,6 +188,27 @@ function LoginForm({ onSuccessRedirect }: { onSuccessRedirect: string }) {
             {t("login")}
           </Button>
         </form>
+        <div className="login-card__divider">
+          <span>or</span>
+        </div>
+
+        <div className="login-card__google">
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              if (!credentialResponse.credential) {
+                toast.error(t("toast.google_login_failed"), {
+                  description: t("toast.google_login_failed_desc"),
+                });
+                return;
+              }
+
+              handleGoogleLogin(credentialResponse.credential);
+            }}
+            onError={() => {
+              toast.error("Google login failed");
+            }}
+          />
+        </div>
 
         <div className="login-card__footer">
           {t("dont_have_account")}

@@ -20,6 +20,17 @@ export const login = async (credentials: {
   });
   return response.data;
 };
+export const googleLogin = async (credential: string) => {
+  const response = await api.post(
+    "/auth/google",
+    { credential },
+    {
+      headers: { "x-idempotency-key": uuidv4() },
+    },
+  );
+
+  return response.data;
+};
 
 export const logout = async () => {
   const response = await api.post("/auth/logout");
