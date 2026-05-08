@@ -115,7 +115,7 @@ function Header() {
                 <img
                   src={
                     user.avatarUrl ||
-                    "https://ui-avatars.com/api/?name=" + user.firstName
+                    `https://ui-avatars.com/api/?name=${user.firstName}+${user.lastName}`
                   }
                   alt="Profile"
                   className="main-header__avatar"
@@ -132,16 +132,19 @@ function Header() {
                     </p>
                     <small>{user.email}</small>
                   </div>
+
                   <hr />
+
                   <button
                     className="dropdown-item"
                     onClick={() => {
                       closeMobileMenu();
-                      navigate("/profile");
+                      navigate("/settings");
                     }}
                   >
-                    {t("profile")}
+                    {t("settings")}
                   </button>
+
                   <button
                     className="dropdown-item logout"
                     onClick={() => {

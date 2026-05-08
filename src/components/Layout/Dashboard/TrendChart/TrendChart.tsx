@@ -65,7 +65,7 @@ const CustomTooltip = ({
 }: CustomTooltipProps & { currencySymbol: string; t: any }) => {
   if (!active || !payload?.length) return null;
 
-  const formattedDate = label ? t(`days.${label?.toLowerCase()}`) : "";
+  const formattedDate = label ? t(`chart.${label?.toLowerCase()}`) : "";
 
   return (
     <div className="trend-chart__tooltip">

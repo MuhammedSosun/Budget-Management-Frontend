@@ -1,0 +1,144 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 280px;
+  height: 100vh;
+  padding: 1.5rem 1.25rem;
+  background: var(--bg-card);
+  border-right: 1px solid var(--border);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  overflow-y: auto;
+  z-index: 100;
+
+  &__brand {
+    padding: 0.5rem 0.75rem 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  &__logo {
+    margin: 0;
+    color: var(--primary);
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: -0.05em;
+  }
+
+  &__subtitle {
+    margin: 0.25rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  &__nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.55rem;
+  }
+
+  &__link {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.95rem 1rem;
+    border-radius: 14px;
+    color: var(--text-main);
+    background: transparent;
+    border: none;
+    text-decoration: none;
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    text-align: left;
+    transition:
+      background 0.2s ease,
+      color 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      background: color-mix(in srgb, var(--primary) 10%, transparent);
+      color: var(--primary);
+      transform: translateX(3px);
+    }
+
+    &--active {
+      background: color-mix(in srgb, var(--primary) 16%, transparent);
+      color: var(--primary);
+    }
+
+    &--button {
+      font-family: inherit;
+    }
+  }
+
+  &__icon {
+    width: 24px;
+    display: grid;
+    place-items: center;
+    font-size: 1.15rem;
+  }
+
+  &__footer {
+    margin-top: auto;
+    padding-top: 1rem;
+    border-top: 1px solid var(--border);
+  }
+
+  &__logout {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.9rem;
+    padding: 0.95rem 1rem;
+    border-radius: 14px;
+    background: transparent;
+    border: none;
+    color: var(--danger);
+    font: inherit;
+    font-weight: 800;
+    cursor: pointer;
+    transition:
+      background 0.2s ease,
+      transform 0.2s ease;
+
+    &:hover {
+      background: color-mix(in srgb, var(--danger) 12%, transparent);
+      transform: translateX(3px);
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .sidebar {
+    width: 90px;
+    padding: 1rem 0.75rem;
+
+    &__brand {
+      padding: 0.5rem 0.25rem 1rem;
+      text-align: center;
+    }
+
+    &__logo {
+      font-size: 1.2rem;
+    }
+
+    &__subtitle {
+      display: none;
+    }
+
+    &__link,
+    &__logout {
+      justify-content: center;
+      padding: 0.95rem 0.5rem;
+
+      span:last-child {
+        display: none;
+      }
+    }
+  }
+}

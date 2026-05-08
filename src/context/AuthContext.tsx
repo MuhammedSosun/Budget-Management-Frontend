@@ -16,6 +16,7 @@ interface User {
   email: string;
   firstName: string;
   lastName: string;
+  avatarUrl?: string;
 }
 
 interface AuthContextType {
@@ -23,6 +24,7 @@ interface AuthContextType {
   login: (userData: User, accessToken: string) => void;
   logout: () => Promise<void>;
   clearAuth: () => void;
+  updateUser: (updatedFields: Partial<User>) => void;
   isChecking: boolean;
 }
 
@@ -80,7 +82,16 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     api.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
     setUser(userData);
   };
+  const updateUser = useCallback((updatedFields: Partial<User>) => {
+    setUser((prevUser) => {
+      if (!prevUser) return prevUser;
 
+      return {
+        ...prevUser,
+        ...updatedFields,
+      };
+    });
+  }, []);
   const logout = async () => {
     try {
       await api.post("/auth/logout");
@@ -92,7 +103,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
   return (
     <AuthContext.Provider
-      value={{ user, login, logout, clearAuth, isChecking }}
+      value={{ user, login, logout, clearAuth, updateUser, isChecking }}
     >
       {children}
     </AuthContext.Provider>

@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-
+// birden çok dil olunca ne yapılabilir
 const resources = {
   en: {
     translation: {
@@ -36,7 +36,7 @@ const resources = {
       transactions: "Transactions",
       edit: "Edit",
       delete: "Delete",
-
+      settings: "Settings",
       login_subtitle: "Enter your information to access your account",
       register_subtitle: "Create an account to start managing your budget.",
       dont_have_account: "Don't have an account?",
@@ -89,6 +89,67 @@ const resources = {
         add_custom_title: "Add custom category",
         custom_placeholder: "Ex: Coffee, Sport, Education",
       },
+      profile: {
+        profile: "Profile",
+        active_account: "Active account",
+        user: "Budget Management user",
+
+        photo_change: "Change photo",
+        profile_photo_updated: "Profile photo updated",
+        profile_photo_update_failed: "Profile photo update failed",
+
+        personal_info: "Personal information",
+        personal_info_description:
+          "Basic user information displayed on your profile.",
+        edit: "Edit",
+        cancel: "Cancel",
+        save: "Save",
+
+        first_name: "First name",
+        last_name: "Last name",
+        email: "Email",
+        email_info: "Email address cannot be changed from this screen.",
+        first_name_placeholder: "Enter your first name",
+        last_name_placeholder: "Enter your last name",
+
+        profile_info_updated: "Profile information updated",
+        profile_info_update_failed: "Profile information update failed",
+        first_last_name_required: "First name and last name are required.",
+
+        password: "Password",
+        change_password: "Change password",
+        update_info: "Update information",
+        logout: "Logout",
+
+        security: "Account security",
+        security_description:
+          "Manage your password and security settings here.",
+
+        current_password: "Current password",
+        current_password_placeholder: "Enter your current password",
+        new_password: "New password",
+        new_password_placeholder: "Enter your new password",
+        confirm_password: "Confirm password",
+        confirm_password_placeholder: "Confirm your new password",
+
+        all_password_fields: "All password fields must be filled.",
+        new_password_min_length: "New password must be at least 6 characters.",
+        new_password_not_match: "New passwords do not match.",
+        new_password_same_as_current:
+          "New password cannot be the same as your current password.",
+
+        password_updated: "Password updated",
+        password_updated_desc: "Your password has been updated successfully.",
+        password_update_failed: "Password update failed",
+        password_update_failed_desc:
+          "We could not update your password. Please check your current password.",
+
+        session: "Session",
+        session_description:
+          "Your active session information is protected by the system.",
+        secure: "Secure",
+        password_description: "Change password or manage session settings.",
+      },
       chart: {
         pzt: "Mon",
         sal: "Tue",
@@ -110,6 +171,7 @@ const resources = {
         kas: "Nov",
         ara: "Dec",
       },
+
       toast: {
         login_success: "Login successful",
         login_failed: "Login failed",
@@ -214,6 +276,7 @@ const resources = {
       edit_transaction_this: "İşlemi Güncelle",
       title: "Başlık",
       amount: "Miktar",
+      settings: "Ayarlar",
       transaction_list__title: "Son İşlemler",
       category: "Kategori",
       date: "Tarih",
@@ -312,6 +375,66 @@ const resources = {
         custom: "Özel Kategori Ekle",
         add_custom_title: "Özel Kategori Ekle",
         custom_placeholder: "Örn: Kahve, Spor, Eğitim",
+      },
+      profile: {
+        profile: "Profil",
+        active_account: "Aktif hesap",
+        user: "Budget Management kullanıcısı",
+
+        photo_change: "Fotoğrafı değiştir",
+        profile_photo_updated: "Profil fotoğrafı güncellendi",
+        profile_photo_update_failed: "Profil fotoğrafı güncellenemedi",
+
+        personal_info: "Kişisel bilgiler",
+        personal_info_description:
+          "Profilinde görünen temel kullanıcı bilgilerin.",
+        edit: "Düzenle",
+        cancel: "İptal",
+        save: "Kaydet",
+
+        first_name: "Ad",
+        last_name: "Soyad",
+        email: "E-posta",
+        email_info: "E-posta adresi bu ekrandan değiştirilemez.",
+        first_name_placeholder: "Adını gir",
+        last_name_placeholder: "Soyadını gir",
+
+        profile_info_updated: "Profil bilgileri güncellendi",
+        profile_info_update_failed: "Profil bilgileri güncellenemedi",
+        first_last_name_required: "Ad ve soyad zorunludur.",
+
+        password: "Şifre",
+        change_password: "Şifre değiştir",
+        update_info: "Bilgileri güncelle",
+        logout: "Çıkış yap",
+
+        security: "Hesap güvenliği",
+        security_description:
+          "Şifre ve güvenlik ayarlarını buradan yönetebilirsin.",
+
+        current_password: "Mevcut şifre",
+        current_password_placeholder: "Mevcut şifreni gir",
+        new_password: "Yeni şifre",
+        new_password_placeholder: "Yeni şifreni gir",
+        confirm_password: "Şifre tekrarı",
+        confirm_password_placeholder: "Yeni şifreni tekrar gir",
+
+        all_password_fields: "Tüm şifre alanları doldurulmalıdır.",
+        new_password_min_length: "Yeni şifre en az 6 karakter olmalıdır.",
+        new_password_not_match: "Yeni şifreler eşleşmiyor.",
+        new_password_same_as_current: "Yeni şifre mevcut şifrenle aynı olamaz.",
+
+        password_updated: "Şifre güncellendi",
+        password_updated_desc: "Şifren başarıyla güncellendi.",
+        password_update_failed: "Şifre güncellenemedi",
+        password_update_failed_desc:
+          "Şifren güncellenemedi. Lütfen mevcut şifreni kontrol et.",
+
+        session: "Oturum",
+        session_description:
+          "Aktif oturum bilgilerin sistem tarafından korunur.",
+        secure: "Güvende",
+        password_description: "Şifreni değiştir veya oturum ayarlarını yönet.",
       },
 
       chart: {
