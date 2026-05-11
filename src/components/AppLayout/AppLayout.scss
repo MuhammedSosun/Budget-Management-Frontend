@@ -1,11 +1,33 @@
 .app-layout {
   min-height: 100vh;
+  width: 100%;
   background: var(--bg-body);
   color: var(--text-main);
+  overflow-x: hidden;
 
   &__main {
     min-height: 100vh;
     margin-left: 280px;
+    width: calc(100% - 280px);
+    min-width: 0;
     background: var(--bg-body);
+  }
+}
+
+@media (max-width: 900px) {
+  .app-layout {
+    &__main {
+      margin-left: 90px;
+      width: calc(100% - 90px);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .app-layout {
+    &__main {
+      margin-left: 90px;
+      width: calc(100% - 90px);
+    }
   }
 }

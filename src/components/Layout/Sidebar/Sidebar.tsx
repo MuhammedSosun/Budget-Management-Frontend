@@ -1,6 +1,6 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
-import "./ Sidebar.scss";
+import "./Sidebar.scss";
 
 const sidebarItems = [
   {
