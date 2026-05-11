@@ -212,6 +212,19 @@ function TransactionForm({
             )}
           />
           <Controller
+            name="description"
+            control={control}
+            render={({ field }) => (
+              <Input
+                label={t("description")}
+                placeholder={t("description_placeholder")}
+                value={field.value ?? ""}
+                onChange={(val) => field.onChange(val as string)}
+                error={errors.description?.message}
+              />
+            )}
+          />
+          <Controller
             name="date"
             control={control}
             render={({ field }) => (

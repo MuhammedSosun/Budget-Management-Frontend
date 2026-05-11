@@ -46,6 +46,8 @@ const resources = {
       last_name: "Last Name",
       email: "Email",
       password: "Password",
+      description: "Description",
+      description_placeholder: "Write a description",
 
       weekly: "Weekly",
       monthly: "Monthly",
@@ -308,6 +310,9 @@ const resources = {
       last_name: "Soyad",
       email: "E-posta",
       password: "Şifre",
+
+      description: "Açıklama",
+      description_placeholder: "Açıklama yaz",
 
       weekly: "Haftalık",
       monthly: "Aylık",

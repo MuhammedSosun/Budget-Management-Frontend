@@ -9,6 +9,7 @@ interface Props {
   onDelete: () => void;
   onEdit: (data: Transaction) => void;
 }
+
 function TransactionItem({ data, onDelete, onEdit }: Props) {
   const { t } = useTranslation();
   const isExpense = data.type === "expense";
@@ -23,16 +24,29 @@ function TransactionItem({ data, onDelete, onEdit }: Props) {
         >
           <span>{isExpense ? "💸" : "💰"}</span>
         </div>
+
         <div className="transaction-item__info">
           <span className="transaction-item__title">{data.title}</span>
           <span className="transaction-item__category">{data.category}</span>
         </div>
       </div>
 
+      {data.description && (
+        <div className="transaction-item__center">
+          <span className="transaction-item__description">
+            {data.description}
+          </span>
+        </div>
+      )}
+
       <div className="transaction-item__right">
         <div className="transaction-item__details">
           <span
-            className={`transaction-item__amount ${isExpense ? "transaction-item__amount--expense" : "transaction-item__amount--income"}`}
+            className={`transaction-item__amount ${
+              isExpense
+                ? "transaction-item__amount--expense"
+                : "transaction-item__amount--income"
+            }`}
           >
             {isExpense ? "-" : "+"} {data.input_details.amount}{" "}
             {data.input_details.currency}
