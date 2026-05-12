@@ -75,11 +75,15 @@ function RegisterForm() {
 
     try {
       await register(formData);
+
       toast.success(t("toast.register_success"), {
         description: t("toast.register_success_description"),
       });
-      navigate("/login", {
-        state: { message: t("loading.register_success") },
+
+      navigate("/verify-email", {
+        state: {
+          email: formData.email,
+        },
       });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {

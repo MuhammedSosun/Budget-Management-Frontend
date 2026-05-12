@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 import LanguageDetector from "i18next-browser-languagedetector";
-// birden çok dil olunca ne yapılabilir
+
 const resources = {
   en: {
     translation: {
@@ -41,14 +41,12 @@ const resources = {
       register_subtitle: "Create an account to start managing your budget.",
       dont_have_account: "Don't have an account?",
       already_have_account: "Already have an account?",
-
       first_name: "First Name",
       last_name: "Last Name",
       email: "Email",
       password: "Password",
       description: "Description",
       description_placeholder: "Write a description",
-
       weekly: "Weekly",
       monthly: "Monthly",
       all: "All",
@@ -58,20 +56,17 @@ const resources = {
       end_date: "End Date",
       reset: "Reset",
       no_transactions: "No transactions found.",
-
       confirm_delete: "Confirm Delete",
       delete_confirm:
         "Are you sure you want to delete this? This action cannot be undone.",
       yes_delete: "Yes, Delete",
       no_delete: "Cancel",
-
       loading: {
         keep_going: "Entering Account, Please wait...",
         register: "Creating your account...",
         register_success: "Registration successful! Please login.",
         login: "Logging in...",
       },
-
       categories: {
         market: "Grocery",
         health: "Health",
@@ -95,57 +90,47 @@ const resources = {
         profile: "Profile",
         active_account: "Active account",
         user: "Budget Management user",
-
         photo_change: "Change photo",
         profile_photo_updated: "Profile photo updated",
         profile_photo_update_failed: "Profile photo update failed",
-
         personal_info: "Personal information",
         personal_info_description:
           "Basic user information displayed on your profile.",
         edit: "Edit",
         cancel: "Cancel",
         save: "Save",
-
         first_name: "First name",
         last_name: "Last name",
         email: "Email",
         email_info: "Email address cannot be changed from this screen.",
         first_name_placeholder: "Enter your first name",
         last_name_placeholder: "Enter your last name",
-
         profile_info_updated: "Profile information updated",
         profile_info_update_failed: "Profile information update failed",
         first_last_name_required: "First name and last name are required.",
-
         password: "Password",
         change_password: "Change password",
         update_info: "Update information",
         logout: "Logout",
-
         security: "Account security",
         security_description:
           "Manage your password and security settings here.",
-
         current_password: "Current password",
         current_password_placeholder: "Enter your current password",
         new_password: "New password",
         new_password_placeholder: "Enter your new password",
         confirm_password: "Confirm password",
         confirm_password_placeholder: "Confirm your new password",
-
         all_password_fields: "All password fields must be filled.",
         new_password_min_length: "New password must be at least 6 characters.",
         new_password_not_match: "New passwords do not match.",
         new_password_same_as_current:
           "New password cannot be the same as your current password.",
-
         password_updated: "Password updated",
         password_updated_desc: "Your password has been updated successfully.",
         password_update_failed: "Password update failed",
         password_update_failed_desc:
           "We could not update your password. Please check your current password.",
-
         session: "Session",
         session_description:
           "Your active session information is protected by the system.",
@@ -173,22 +158,18 @@ const resources = {
         kas: "Nov",
         ara: "Dec",
       },
-
       toast: {
         login_success: "Login successful",
         login_failed: "Login failed",
         register_success: "Account created",
         register_failed: "Registration failed",
         system_error: "Something went wrong",
-
         login_welcome: "Welcome back!",
         register_welcome: "Your account is ready. You can now log in.",
-
         general: "Could not connect to the server.",
         login_failed_description: "Please check your email and password.",
         register_failed_description: "Please review the form and try again.",
         system_error_description: "Please try again in a few moments.",
-
         transaction_updated: "Transaction updated",
         transaction_updated_desc:
           "Your transaction has been updated successfully.",
@@ -204,14 +185,11 @@ const resources = {
         transaction_delete_failed: "Delete failed",
         transaction_delete_failed_desc:
           "We could not delete this transaction. Please try again.",
-
         google_login_failed: "Google sign-in failed",
         google_login_failed_desc:
           "We could not sign you in with Google. Please try again.",
-
         register_success_desc:
           "Your account has been created successfully. Please log in.",
-
         email_or_password_failed: "Invalid email or password",
         email_or_password_failed_desc:
           "Please check your credentials and try again.",
@@ -224,44 +202,55 @@ const resources = {
       search_placeholder: "Search...",
       sort_created_at: "Last Added",
       this_month: "This Month",
-
-      nav: {
-        features: "Features",
-        how_it_works: "How It Works",
-      },
-      pagination: {
-        previous: "Previous",
-        next: "Next",
-      },
+      nav: { features: "Features", how_it_works: "How It Works" },
+      pagination: { previous: "Previous", next: "Next" },
       validation: {
         transaction_title_min_length: "Title must be at least 3 characters.",
         transaction_title_max_length: "Title can be at most 50 characters.",
-
         transaction_amount_invalid: "Please enter a valid number.",
         transaction_amount_positive: "Amount must be greater than 0.",
         transaction_amount_max: "Limit exceeded.",
         transaction_amount_decimal: "You can enter up to 2 decimal places.",
-
         transaction_category_min_length:
           "Category must be at least 3 characters.",
-
         transaction_date_required: "Date is required.",
-
         transaction_description_max_length:
           "Description can be at most 200 characters.",
       },
-
-      errors: {
-        email_required: "Email is required.",
-        email_invalid: "Please enter a valid email address.",
-        password_required: "Password is required.",
-        password_min: "Password must be at least 6 characters.",
-        first_name_required: "First name is required.",
-        last_name_required: "Last name is required.",
-        first_name_min: "First name must be at least 3 characters.",
-        last_name_min: "Last name must be at least 3 characters.",
-        general: "Server connection failed.",
-        system: "A system error occurred.",
+      verifyEmail: {
+        title: "Verify your email",
+        description:
+          "Before you start using your account, you need to enter the 6-digit verification code sent to your email address.",
+        emailLabel: "Email sent to",
+        inputLabel: "Verification Code",
+        inputPlaceholder: "6-digit code",
+        codeHint: "Code is valid for 5 minutes.",
+        buttonVerify: "Verify",
+        resendCode: "Resend code",
+        resending: "Sending code...",
+        alreadyVerified: "Already verified?",
+        loginLink: "Login",
+        badges: {
+          verification: "Email Verification",
+          required: "Verification Required",
+        },
+        errors: {
+          emailNotFound: "Email information not found.",
+          invalidCodeLength: "Please enter a 6-digit verification code.",
+          wrongCode: "Verification code is incorrect or expired.",
+          resendFailed: "Could not resend the code.",
+          notRegistered:
+            "You need to complete the registration process before coming to the verification screen.",
+        },
+        success: {
+          verified: "Email address verified successfully.",
+          codeSent: "New verification code has been sent.",
+        },
+        emptyState: {
+          title: "Email information not found",
+          backToRegister: "Back to register",
+          backToLogin: "Already have an account? Login",
+        },
       },
     },
   },
@@ -299,21 +288,17 @@ const resources = {
       edit: "Düzenle",
       delete: "Sil",
       cancel: "İptal",
-
       login_subtitle: "Hesabınıza erişmek için bilgilerinizi girin.",
       register_subtitle:
         "Bütçenizi yönetmeye başlamak için bir hesap oluşturun.",
       dont_have_account: "Hesabınız yok mu?",
       already_have_account: "Zaten bir hesabınız var mı?",
-
       first_name: "Ad",
       last_name: "Soyad",
       email: "E-posta",
       password: "Şifre",
-
       description: "Açıklama",
       description_placeholder: "Açıklama yaz",
-
       weekly: "Haftalık",
       monthly: "Aylık",
       all: "Tümü",
@@ -329,36 +314,24 @@ const resources = {
         "Bu harcamayı silmek istediğine emin misin? Bu işlem geri alınamaz.",
       yes_delete: "Evet, Sil",
       no_delete: "Vazgeç",
-
       loading: {
         keep_going: "Hesabınıza Giriş yapılıyor, Lütfen bekle...",
         register: "Hesabınız oluşturuluyor...",
         register_success: "Kayıt başarılı! Lütfen giriş yapın.",
         login: "Giriş yapılıyor...",
       },
-
-      nav: {
-        features: "Özellikler",
-        how_it_works: "Nasıl Çalışır?",
-      },
-      pagination: {
-        previous: "Geri",
-        next: "İleri",
-      },
+      nav: { features: "Özellikler", how_it_works: "Nasıl Çalışır?" },
+      pagination: { previous: "Geri", next: "İleri" },
       validation: {
         transaction_title_min_length: "Başlık en az 3 karakter olmalıdır.",
         transaction_title_max_length: "Başlık en fazla 50 karakter olabilir.",
-
         transaction_amount_invalid: "Lütfen geçerli bir rakam giriniz.",
         transaction_amount_positive: "Miktar 0'dan büyük olmalıdır.",
         transaction_amount_max: "Limit aşıldı.",
         transaction_amount_decimal:
           "En fazla 2 ondalık basamak girebilirsiniz.",
-
         transaction_category_min_length: "Kategori en az 3 karakter olmalıdır.",
-
         transaction_date_required: "Tarih alanı zorunludur.",
-
         transaction_description_max_length:
           "Açıklama en fazla 200 karakter olabilir.",
       },
@@ -385,63 +358,52 @@ const resources = {
         profile: "Profil",
         active_account: "Aktif hesap",
         user: "Budget Management kullanıcısı",
-
         photo_change: "Fotoğrafı değiştir",
         profile_photo_updated: "Profil fotoğrafı güncellendi",
         profile_photo_update_failed: "Profil fotoğrafı güncellenemedi",
-
         personal_info: "Kişisel bilgiler",
         personal_info_description:
           "Profilinde görünen temel kullanıcı bilgilerin.",
         edit: "Düzenle",
         cancel: "İptal",
         save: "Kaydet",
-
         first_name: "Ad",
         last_name: "Soyad",
         email: "E-posta",
         email_info: "E-posta adresi bu ekrandan değiştirilemez.",
         first_name_placeholder: "Adını gir",
         last_name_placeholder: "Soyadını gir",
-
         profile_info_updated: "Profil bilgileri güncellendi",
         profile_info_update_failed: "Profil bilgileri güncellenemedi",
         first_last_name_required: "Ad ve soyad zorunludur.",
-
         password: "Şifre",
         change_password: "Şifre değiştir",
         update_info: "Bilgileri güncelle",
         logout: "Çıkış yap",
-
         security: "Hesap güvenliği",
         security_description:
           "Şifre ve güvenlik ayarlarını buradan yönetebilirsin.",
-
         current_password: "Mevcut şifre",
         current_password_placeholder: "Mevcut şifreni gir",
         new_password: "Yeni şifre",
         new_password_placeholder: "Yeni şifreni gir",
         confirm_password: "Şifre tekrarı",
         confirm_password_placeholder: "Yeni şifreni tekrar gir",
-
         all_password_fields: "Tüm şifre alanları doldurulmalıdır.",
         new_password_min_length: "Yeni şifre en az 6 karakter olmalıdır.",
         new_password_not_match: "Yeni şifreler eşleşmiyor.",
         new_password_same_as_current: "Yeni şifre mevcut şifrenle aynı olamaz.",
-
         password_updated: "Şifre güncellendi",
         password_updated_desc: "Şifren başarıyla güncellendi.",
         password_update_failed: "Şifre güncellenemedi",
         password_update_failed_desc:
           "Şifren güncellenemedi. Lütfen mevcut şifreni kontrol et.",
-
         session: "Oturum",
         session_description:
           "Aktif oturum bilgilerin sistem tarafından korunur.",
         secure: "Güvende",
         password_description: "Şifreni değiştir veya oturum ayarlarını yönet.",
       },
-
       chart: {
         pzt: "Pzt",
         sal: "Sal",
@@ -516,6 +478,41 @@ const resources = {
         last_name_min: "Soyad en az 3 karakter olmalıdır.",
         general: "Sunucuyla bağlantı kurulamadı.",
         system: "Bir sistem hatası oluştu.",
+      },
+      verifyEmail: {
+        title: "E-posta adresini doğrula",
+        description:
+          "Hesabını kullanmaya başlamadan önce e-posta adresine gönderilen 6 haneli doğrulama kodunu girmen gerekiyor.",
+        emailLabel: "Kod gönderilen e-posta",
+        inputLabel: "Doğrulama Kodu",
+        inputPlaceholder: "6 haneli kod",
+        codeHint: "Kod geçerlilik süresi 5 dakikadır.",
+        buttonVerify: "Doğrula",
+        resendCode: "Kodu tekrar gönder",
+        resending: "Kod gönderiliyor...",
+        alreadyVerified: "Hesabın zaten doğrulandı mı?",
+        loginLink: "Giriş yap",
+        badges: {
+          verification: "E-posta Doğrulama",
+          required: "Doğrulama Gerekli",
+        },
+        errors: {
+          emailNotFound: "E-posta bilgisi bulunamadı.",
+          invalidCodeLength: "Lütfen 6 haneli doğrulama kodunu girin.",
+          wrongCode: "Doğrulama kodu hatalı veya süresi dolmuş.",
+          resendFailed: "Kod tekrar gönderilemedi.",
+          notRegistered:
+            "Doğrulama ekranına gelmeden önce kayıt işlemini tamamlaman gerekiyor.",
+        },
+        success: {
+          verified: "E-posta adresi başarıyla doğrulandı.",
+          codeSent: "Yeni doğrulama kodu gönderildi.",
+        },
+        emptyState: {
+          title: "E-posta bilgisi bulunamadı",
+          backToRegister: "Kayıt sayfasına dön",
+          backToLogin: "Zaten hesabın var mı? Giriş yap",
+        },
       },
     },
   },
