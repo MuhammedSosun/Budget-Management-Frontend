@@ -1,0 +1,107 @@
+.my-pending-invitations {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__empty {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 14px;
+    background: var(--bg-body);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+  }
+
+  &__header {
+    display: grid;
+    grid-template-columns: 1.8fr 0.8fr 1fr 1.4fr;
+    gap: 1rem;
+    padding: 0 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: 1.8fr 0.8fr 1fr 1.4fr;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0.75rem;
+    border-radius: 14px;
+    background: var(--bg-body);
+    border: 1px solid var(--border);
+  }
+
+  &__workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+
+    strong {
+      color: var(--text-main);
+      font-size: 0.95rem;
+    }
+
+    small {
+      color: var(--text-muted);
+      font-size: 0.8rem;
+    }
+  }
+
+  &__date {
+    color: var(--text-muted);
+    font-size: 0.85rem;
+  }
+
+  &__role {
+    display: inline-flex;
+    width: fit-content;
+    padding: 0.25rem 0.6rem;
+    border-radius: 999px;
+    font-size: 0.7rem;
+    font-weight: 700;
+
+    &--editor {
+      background: rgba(59, 130, 246, 0.15);
+      color: #2563eb;
+    }
+
+    &--viewer {
+      background: rgba(107, 114, 128, 0.15);
+      color: #6b7280;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+  }
+}
+
+@media (max-width: 760px) {
+  .my-pending-invitations {
+    &__header {
+      display: none;
+    }
+
+    &__item {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    &__actions {
+      justify-content: flex-start;
+      flex-wrap: wrap;
+    }
+  }
+}

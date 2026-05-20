@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
 import { FiEdit2, FiMail, FiUser, FiSave, FiX } from "react-icons/fi";
-
+import "./ProfileInfoCard.scss";
 interface User {
   id: string;
   email: string;

@@ -7,23 +7,31 @@ import { transactionService } from "../../../services/transaction.service";
 import { useLoading } from "../../../hooks/useLoading";
 import { useTranslation } from "react-i18next";
 import Select from "../../ui/Select/Select";
+import { useWorkspace } from "../../../hooks/useWorkspace";
 function Dashboard() {
   const { t } = useTranslation();
+  const { activeWorkspace } = useWorkspace();
+
   const [income, setIncome] = useState<number>(0);
   const [expense, setExpense] = useState<number>(0);
-  const isFetchingRef = useRef(false);
   const [currency, setCurrency] = useState<"TRY" | "USD" | "EUR">("TRY");
+
+  const isFetchingRef = useRef(false);
   const { showLoading, hideLoading } = useLoading();
+
+  const activeWorkspaceId = activeWorkspace?.id;
 
   useEffect(() => {
     const fetchTotals = async () => {
+      if (!activeWorkspaceId) return;
       if (isFetchingRef.current) return;
+
       isFetchingRef.current = true;
       try {
         showLoading(t("loading_data"));
         const [incomeResponse, expenseResponse] = await Promise.all([
-          transactionService.totalIncome(currency),
-          transactionService.totalExpense(currency),
+          transactionService.totalIncome(activeWorkspaceId, currency),
+          transactionService.totalExpense(activeWorkspaceId, currency),
         ]);
         setIncome(incomeResponse.data || 0);
         setExpense(expenseResponse.data || 0);
@@ -36,15 +44,23 @@ function Dashboard() {
     };
 
     fetchTotals();
+
     const handleRefresh = () => fetchTotals();
     window.addEventListener("refresh-dashboard", handleRefresh);
 
     return () => {
       window.removeEventListener("refresh-dashboard", handleRefresh);
     };
-  }, [currency, t, showLoading, hideLoading]);
+  }, [activeWorkspaceId, currency, t, showLoading, hideLoading]);
   const currencySymbol =
     currency === "TRY" ? "₺" : currency === "USD" ? "$" : "€";
+  if (!activeWorkspaceId) {
+    return (
+      <div className="dashboard">
+        <p>Aktif workspace bulunamadı.</p>
+      </div>
+    );
+  }
   return (
     <div className="dashboard">
       <div className="dashboard__header">
@@ -82,8 +98,8 @@ function Dashboard() {
       </div>
 
       <div className="dashboard__charts">
-        <SpendingChart currency={currency} />
-        <TrendChart currency={currency} />
+        <SpendingChart workspaceId={activeWorkspaceId} currency={currency} />
+        <TrendChart workspaceId={activeWorkspaceId} currency={currency} />
       </div>
     </div>
   );

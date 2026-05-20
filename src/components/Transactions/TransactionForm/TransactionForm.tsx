@@ -2,7 +2,10 @@ import React, { useState } from "react";
 import Input from "../../ui/Input/Input";
 import Button from "../../ui/Button/Button";
 import { transactionService } from "../../../services/transaction.service";
-import type { Transaction } from "../../../types/transaction";
+import type {
+  Transaction,
+  TransactionPayload,
+} from "../../../types/transaction";
 import Select from "../../ui/Select/Select";
 import { getTransactionSchema } from "../../../schema/TransactionSchema";
 import { useTranslation } from "react-i18next";
@@ -11,6 +14,7 @@ import { toast } from "sonner";
 import "./TransactionForm.scss";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useWorkspace } from "../../../hooks/useWorkspace";
 
 interface TransactionFormProps {
   onSuccess?: () => void;
@@ -23,6 +27,7 @@ function TransactionForm({
   onCancel,
   initialData,
 }: TransactionFormProps) {
+  const { activeWorkspaceId } = useWorkspace();
   const { t } = useTranslation();
 
   const CATEGORY_MAP = {
@@ -89,21 +94,33 @@ function TransactionForm({
   ];
 
   const onSubmit = async (validatedData: TransactionFormOutput) => {
+    if (!activeWorkspaceId) {
+      toast.error("Aktif workspace bulunamadı", {
+        description: "İşlem eklemek için önce bir workspace seçmelisiniz.",
+      });
+      return;
+    }
     try {
-      const payload: Transaction = {
-        ...validatedData,
-        amount: validatedData.input_details.amount,
-        currency: validatedData.input_details.currency,
+      const payload: TransactionPayload = {
+        title: validatedData.title,
+        input_details: validatedData.input_details,
+        type: validatedData.type,
+        category: validatedData.category,
         date: validatedData.date.toISOString(),
+        description: validatedData.description,
       };
 
       if (initialData?._id) {
-        await transactionService.update(initialData._id, payload);
+        await transactionService.update(
+          activeWorkspaceId,
+          initialData._id,
+          payload,
+        );
         toast.success(t("toast.transaction_updated"), {
           description: t("toast.transaction_updated_desc"),
         });
       } else {
-        await transactionService.create(payload);
+        await transactionService.create(activeWorkspaceId, payload);
         toast.success(t("toast.transaction_created"), {
           description: t("toast.transaction_created_desc"),
         });

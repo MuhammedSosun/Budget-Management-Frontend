@@ -76,9 +76,7 @@ function RegisterForm() {
     try {
       await register(formData);
 
-      toast.success(t("toast.register_success"), {
-        description: t("toast.register_success_description"),
-      });
+      toast.success(t("toast.register_success"));
 
       navigate("/verify-email", {
         state: {

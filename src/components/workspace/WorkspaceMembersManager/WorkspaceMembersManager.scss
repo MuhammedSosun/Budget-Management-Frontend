@@ -1,0 +1,221 @@
+.workspace-members-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  &__top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+
+    h3 {
+      margin: 0;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      font-weight: 900;
+    }
+
+    p {
+      margin: 0.35rem 0 0;
+      color: var(--text-muted);
+      font-size: 0.875rem;
+      line-height: 1.45;
+    }
+  }
+
+  &__confirm {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    p {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      line-height: 1.6;
+    }
+
+    strong {
+      color: var(--text-main);
+      font-weight: 800;
+    }
+  }
+
+  &__confirm-actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.75rem;
+    padding-top: 0.5rem;
+  }
+
+  &__empty {
+    margin: 0;
+    padding: 1rem;
+    border-radius: 14px;
+    background: var(--bg-body);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  &__header {
+    display: grid;
+    grid-template-columns: minmax(170px, 1.3fr) minmax(200px, 1.4fr) minmax(
+        130px,
+        0.8fr
+      ) minmax(90px, 0.6fr);
+    gap: 1rem;
+    padding: 0 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: minmax(170px, 1.3fr) minmax(200px, 1.4fr) minmax(
+        130px,
+        0.8fr
+      ) minmax(90px, 0.6fr);
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 0.75rem;
+    border-radius: 14px;
+    background: var(--bg-body);
+    border: 1px solid var(--border);
+  }
+
+  &__user {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+
+    img {
+      width: 42px;
+      height: 42px;
+      min-width: 42px;
+      max-width: 42px;
+      border-radius: 999px;
+      object-fit: cover;
+      border: 2px solid var(--primary);
+      background: var(--bg-card);
+      display: block;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      min-width: 0;
+    }
+
+    strong {
+      color: var(--text-main);
+      font-size: 0.9rem;
+      font-weight: 800;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    small {
+      color: var(--text-muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+  }
+
+  &__email {
+    min-width: 0;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+    font-weight: 700;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__role-area {
+    display: flex;
+    align-items: center;
+    min-width: 0;
+
+    .select-group {
+      width: 100%;
+      margin: 0;
+    }
+  }
+
+  &__owner-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    background: rgba(245, 158, 11, 0.15);
+    color: #d97706;
+    font-size: 0.7rem;
+    font-weight: 900;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .my-custom-button {
+      min-width: 82px;
+    }
+  }
+}
+
+@media (max-width: 820px) {
+  .workspace-members-manager {
+    &__confirm-actions {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+
+      .my-custom-button {
+        width: 100%;
+      }
+    }
+
+    &__top {
+      flex-direction: column;
+    }
+
+    &__header {
+      display: none;
+    }
+
+    &__item {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    &__email {
+      white-space: normal;
+      word-break: break-word;
+    }
+
+    &__actions {
+      justify-content: flex-start;
+
+      .my-custom-button {
+        width: 100%;
+      }
+    }
+  }
+}

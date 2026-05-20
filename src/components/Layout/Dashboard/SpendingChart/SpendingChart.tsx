@@ -10,6 +10,7 @@ interface StatData {
   value: number;
 }
 interface SpendingChartProps {
+  workspaceId: string;
   currency: "TRY" | "USD" | "EUR";
 }
 const COLORS = [
@@ -20,7 +21,10 @@ const COLORS = [
   "#A7F3D0",
   "#14B8A6",
 ];
-export const SpendingChart = ({ currency }: SpendingChartProps) => {
+export const SpendingChart = ({
+  workspaceId,
+  currency,
+}: SpendingChartProps) => {
   const { t } = useTranslation();
   const [data, setData] = useState<StatData[]>([]);
   const { showLoading, hideLoading } = useLoading();
@@ -29,7 +33,10 @@ export const SpendingChart = ({ currency }: SpendingChartProps) => {
     const fetchStats = async () => {
       try {
         showLoading();
-        const response = await transactionService.getCategoryStats(currency);
+        const response = await transactionService.getCategoryStats(
+          workspaceId,
+          currency,
+        );
         const rawData: StatData[] = response.data;
 
         rawData.sort((a, b) => b.value - a.value);
@@ -52,7 +59,7 @@ export const SpendingChart = ({ currency }: SpendingChartProps) => {
     };
 
     fetchStats();
-  }, [currency, t, showLoading, hideLoading]);
+  }, [workspaceId, currency, t, showLoading, hideLoading]);
   const currencySymbol =
     currency === "TRY" ? "₺" : currency === "USD" ? "$" : "€";
   let total = 0;

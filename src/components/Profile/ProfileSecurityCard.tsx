@@ -5,6 +5,7 @@ import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
 import { userService } from "../../services/user.service";
 import { useTranslation } from "react-i18next";
+import "./ProfileSecurityCard.scss";
 
 function ProfileSecurityCard() {
   const { t } = useTranslation();

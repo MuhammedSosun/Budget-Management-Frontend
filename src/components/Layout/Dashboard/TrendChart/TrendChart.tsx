@@ -23,6 +23,7 @@ interface CustomTooltipProps {
   label?: string;
 }
 interface TrendChartProps {
+  workspaceId: string;
   currency: Currency;
 }
 const getCurrencySymbol = (currency: Currency) => {
@@ -77,7 +78,7 @@ const CustomTooltip = ({
   );
 };
 
-export const TrendChart = ({ currency }: TrendChartProps) => {
+export const TrendChart = ({ workspaceId, currency }: TrendChartProps) => {
   const { t } = useTranslation();
   const [data, setData] = useState<{ name: string; value: number }[]>([]);
   const [period, setPeriod] = useState<Period>("weekly");
@@ -91,10 +92,15 @@ export const TrendChart = ({ currency }: TrendChartProps) => {
   ];
 
   const fetchTrendStats = useCallback(async () => {
+    if (!workspaceId) return;
     try {
       showLoading(t("loading_trend"));
 
-      const response = await transactionService.getTrendStats(period, currency);
+      const response = await transactionService.getTrendStats(
+        workspaceId,
+        period,
+        currency,
+      );
 
       setData(response.data || []);
     } catch (error) {
@@ -104,7 +110,7 @@ export const TrendChart = ({ currency }: TrendChartProps) => {
     } finally {
       hideLoading();
     }
-  }, [period, currency, showLoading, hideLoading, t]);
+  }, [workspaceId, period, currency, showLoading, hideLoading, t]);
 
   useEffect(() => {
     fetchTrendStats();

@@ -15,9 +15,13 @@ import { Modal } from "../../ui/Modal/Modal";
 import { useTranslation } from "react-i18next";
 import Input from "../../ui/Input/Input";
 import { toast } from "sonner";
+import { useWorkspace } from "../../../hooks/useWorkspace";
 
 function TransactionList() {
   const { t } = useTranslation();
+  const { activeWorkspaceId, activeWorkspace } = useWorkspace();
+  const canManageTransactions =
+    activeWorkspace?.role === "OWNER" || activeWorkspace?.role === "EDITOR";
   const {
     transactions,
     pagination,
@@ -59,15 +63,17 @@ function TransactionList() {
         <h3 className="transaction-list__title">
           {t("transaction_list__title")}
         </h3>
-        <Button
-          variant="primary"
-          onClick={() => {
-            setSelectedTransaction(null);
-            setIsFormOpen(true);
-          }}
-        >
-          {t("new_transaction")}
-        </Button>
+        {canManageTransactions && (
+          <Button
+            variant="primary"
+            onClick={() => {
+              setSelectedTransaction(null);
+              setIsFormOpen(true);
+            }}
+          >
+            {t("new_transaction")}
+          </Button>
+        )}
       </div>
 
       <div className="transaction-filters">
@@ -147,7 +153,23 @@ function TransactionList() {
         <div className="transaction-filters__reset">
           <Button
             variant="danger"
-            onClick={() => setFilters({ type: "", startDate: "", endDate: "" })}
+            onClick={() => {
+              setFilters({
+                type: "",
+                startDate: "",
+                endDate: "",
+                category: "",
+                search: "",
+                filter: "",
+              });
+
+              setSearchValue("");
+
+              setPagination((prev) => ({
+                ...prev,
+                currentPage: 1,
+              }));
+            }}
           >
             {t("reset")}
           </Button>
@@ -164,6 +186,7 @@ function TransactionList() {
               data={item}
               onDelete={() => openDeleteModal(item._id as string)}
               onEdit={handleEdit}
+              canManage={canManageTransactions}
             />
           ))
         )}
@@ -209,8 +232,18 @@ function TransactionList() {
               onClick={async () => {
                 if (!idToDelete) return;
 
+                if (!activeWorkspaceId) {
+                  toast.error(t("toast.active_workspace_not_found"), {
+                    description: t("toast.active_workspace_not_found_desc"),
+                  });
+                  return;
+                }
+
                 try {
-                  await transactionService.delete(idToDelete);
+                  await transactionService.delete(
+                    activeWorkspaceId,
+                    idToDelete,
+                  );
 
                   toast.success(t("toast.transaction_deleted"), {
                     description: t("toast.transaction_deleted_desc"),

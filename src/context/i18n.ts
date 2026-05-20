@@ -193,6 +193,149 @@ const resources = {
         email_or_password_failed: "Invalid email or password",
         email_or_password_failed_desc:
           "Please check your credentials and try again.",
+        active_workspace_not_found: "Active workspace not found",
+        active_workspace_not_found_desc:
+          "You need to select an active workspace to perform this action.",
+      },
+      created_by: "Created by",
+      workspace: {
+        loading: "Workspace loading...",
+        empty: "Workspace not found",
+        roles: {
+          owner: "Owner",
+          editor: "Editor",
+          viewer: "Viewer",
+        },
+        role_info: {
+          editor:
+            "Can add, edit, and delete transactions. Cannot manage workspace members.",
+          viewer:
+            "Can only view workspace data. Cannot add or edit transactions.",
+        },
+        invitation_create_success_desc:
+          "{{email}} has been invited with the {{role}} role.",
+        actions: {
+          create: "Create workspace",
+          manageMembers: "Manage members",
+          invitations: "Invitations",
+        },
+        management_title: "Workspace Management",
+        management_description:
+          "You can create workspaces, manage members, and track invitations.",
+        active_workspace: "Active workspace",
+        no_active_workspace: "No active workspace found.",
+        create_workspace: "Create workspace",
+        invite_member: "Invite member",
+        members: "Workspace members",
+        manage_members: "Manage members",
+        sent_invitations: "Sent invitations",
+        my_pending_invitations: "My pending invitations",
+        owner_permission_required:
+          "You cannot manage members or invitations because you are not the OWNER of this workspace.",
+        members_description:
+          "You can manage users and their roles in this workspace.",
+        refresh: "Refresh",
+        user: "User",
+        email: "Email",
+        role: "Role",
+        action: "Action",
+        remove: "Remove",
+
+        members_loading: "Loading members...",
+        members_empty: "No members found in this workspace.",
+        members_fetch_failed: "Members could not be loaded.",
+        members_fetch_failed_desc:
+          "An error occurred while loading workspace members.",
+
+        role_updated: "Role updated.",
+        role_updated_desc:
+          "The member's workspace role was updated successfully.",
+        role_update_failed: "Role could not be updated.",
+        role_update_failed_desc:
+          "The OWNER role cannot be changed or you may not have permission.",
+
+        remove_member_confirm:
+          "Are you sure you want to remove this user from the workspace?",
+        member_removed: "Member removed.",
+        member_removed_desc: "The user was removed from the workspace.",
+        member_remove_failed: "Member could not be removed.",
+        member_remove_failed_desc:
+          "The OWNER cannot be removed from the workspace or you may not have permission.",
+        invitations_description:
+          "You can track the invitations sent for this workspace and their current status.",
+        invitations_loading: "Loading invitations...",
+        invitations_empty:
+          "No invitations have been created for this workspace yet.",
+        invitations_fetch_failed: "Invitations could not be loaded.",
+        invitations_fetch_failed_desc:
+          "An error occurred while loading workspace invitations.",
+
+        status: "Status",
+        expires_at: "Expires At",
+
+        invitation_status: {
+          pending: "Pending",
+          accepted: "Accepted",
+          rejected: "Rejected",
+          expired: "Expired",
+        },
+        workspace: "Workspace",
+        accept: "Accept",
+        reject: "Reject",
+
+        pending_invitations_loading: "Loading invitations...",
+        pending_invitations_empty: "You have no pending workspace invitations.",
+
+        pending_invitations_fetch_failed: "Invitations could not be loaded.",
+        pending_invitations_fetch_failed_desc:
+          "An error occurred while loading pending workspace invitations.",
+
+        invitation_accepted: "Invitation accepted.",
+        invitation_accepted_desc: "Your workspace list has been updated.",
+
+        invitation_accept_failed: "Invitation could not be accepted.",
+        invitation_accept_failed_desc:
+          "The invitation may have expired or become invalid.",
+
+        invitation_rejected: "Invitation rejected.",
+        invitation_rejected_desc:
+          "The invitation has been removed from your pending list.",
+
+        invitation_reject_failed: "Invitation could not be rejected.",
+        invitation_reject_failed_desc:
+          "The invitation may have expired or become invalid.",
+        name: "Workspace name",
+        description: "Description",
+        name_placeholder: "Example: Family Budget",
+        description_placeholder: "Optional description",
+        create: "Create",
+
+        create_name_validation: "Workspace name must be at least 2 characters.",
+
+        create_success: "Workspace created.",
+        create_success_desc: "The new workspace was created successfully.",
+
+        create_failed: "Workspace could not be created.",
+        create_failed_desc: "Please check the information and try again.",
+        invitation_email: "Email to invite",
+        invitation_email_placeholder: "example@mail.com",
+        invitation_email_validation: "Please enter a valid email address.",
+        send_invitation: "Send Invitation",
+
+        invitation_create_success: "Invitation sent successfully.",
+
+        invitation_create_failed: "Invitation could not be sent.",
+        invitation_create_failed_desc:
+          "This user may already have a pending invitation or the operation failed.",
+
+        remove_member_title: "Remove Member",
+        remove_member_message:
+          "Are you sure you want to remove this user from the workspace?",
+        name_required: "Workspace name is required.",
+        name_min_length: "Workspace name must be at least 2 characters.",
+        name_max_length: "Workspace name can be at most 80 characters.",
+        description_max_length: "Description can be at most 250 characters.",
+        form_invalid: "Please check the workspace information.",
       },
       filters: "Filters",
       newest_to_oldest: "Newest to oldest",
@@ -457,6 +600,150 @@ const resources = {
         email_or_password_failed: "Kullanıcı adı veya şifre hatalı",
         email_or_password_failed_desc:
           "Kullanıcı adı veya şifre hatalı. Lütfen tekrar deneyin.",
+        active_workspace_not_found: "Aktif workspace bulunamadı",
+        active_workspace_not_found_desc:
+          "Bu işlemi yapmak için aktif bir workspace seçmelisiniz.",
+      },
+      created_by: "Oluşturan kişi",
+      workspace: {
+        loading: "Workspace yükleniyor...",
+        empty: "Workspace bulunamadı",
+        roles: {
+          owner: "Sahip",
+          editor: "Editör",
+          viewer: "Görüntüleyici",
+        },
+        role_info: {
+          editor:
+            "Transaction ekleyebilir, düzenleyebilir ve silebilir. Workspace üyelerini yönetemez.",
+          viewer:
+            "Sadece workspace verilerini görüntüleyebilir. Transaction ekleyemez veya düzenleyemez.",
+        },
+
+        actions: {
+          create: "Workspace oluştur",
+          manageMembers: "Üyeleri yönet",
+          invitations: "Davetler",
+        },
+        management_title: "Workspace Yönetimi",
+        management_description:
+          "Workspace oluşturabilir, üyeleri yönetebilir ve davetleri takip edebilirsin.",
+        active_workspace: "Aktif workspace",
+        no_active_workspace: "Henüz aktif workspace bulunamadı.",
+        create_workspace: "Workspace oluştur",
+        invite_member: "Üye davet et",
+        members: "Workspace üyeleri",
+        manage_members: "Üyeleri yönet",
+        sent_invitations: "Gönderilen davetler",
+        my_pending_invitations: "Bana gelen davetler",
+        owner_permission_required:
+          "Bu workspace üzerinde OWNER olmadığın için üye ve davet yönetimi yapamazsın.",
+        members_description:
+          "Bu workspace içindeki kullanıcıları ve rollerini yönetebilirsin.",
+        refresh: "Yenile",
+        user: "Kullanıcı",
+        email: "Email",
+        role: "Rol",
+        action: "İşlem",
+        remove: "Çıkar",
+
+        members_loading: "Üyeler yükleniyor...",
+        members_empty: "Bu workspace içinde üye bulunamadı.",
+        members_fetch_failed: "Üyeler getirilemedi.",
+        members_fetch_failed_desc:
+          "Workspace üyeleri yüklenirken bir hata oluştu.",
+
+        role_updated: "Rol güncellendi.",
+        role_updated_desc: "Üyenin workspace rolü başarıyla değiştirildi.",
+        role_update_failed: "Rol güncellenemedi.",
+        role_update_failed_desc:
+          "OWNER rolü değiştirilemez veya işlem yetkin olmayabilir.",
+
+        remove_member_confirm:
+          "Bu kullanıcıyı workspace'ten çıkarmak istediğine emin misin?",
+        member_removed: "Üye çıkarıldı.",
+        member_removed_desc: "Kullanıcı workspace üyeliğinden kaldırıldı.",
+        member_remove_failed: "Üye çıkarılamadı.",
+        member_remove_failed_desc:
+          "OWNER workspace'ten çıkarılamaz veya yetkin olmayabilir.",
+        invitations_description:
+          "Bu workspace için gönderilmiş davetleri ve durumlarını buradan takip edebilirsin.",
+        invitations_loading: "Davetler yükleniyor...",
+        invitations_empty: "Bu workspace için henüz davet oluşturulmamış.",
+        invitations_fetch_failed: "Davetler getirilemedi.",
+        invitations_fetch_failed_desc:
+          "Workspace davetleri yüklenirken bir hata oluştu.",
+
+        status: "Durum",
+        expires_at: "Son Geçerlilik",
+
+        invitation_status: {
+          pending: "Bekliyor",
+          accepted: "Kabul edildi",
+          rejected: "Reddedildi",
+          expired: "Süresi doldu",
+        },
+        workspace: "Workspace",
+        accept: "Kabul Et",
+        reject: "Reddet",
+
+        pending_invitations_loading: "Davetler yükleniyor...",
+        pending_invitations_empty: "Bekleyen workspace davetin yok.",
+
+        pending_invitations_fetch_failed: "Davetler getirilemedi.",
+        pending_invitations_fetch_failed_desc:
+          "Bekleyen workspace davetleri yüklenirken bir hata oluştu.",
+
+        invitation_accepted: "Davet kabul edildi.",
+        invitation_accepted_desc: "Workspace listen güncellendi.",
+
+        invitation_accept_failed: "Davet kabul edilemedi.",
+        invitation_accept_failed_desc:
+          "Davet süresi dolmuş veya geçersiz olabilir.",
+
+        invitation_rejected: "Davet reddedildi.",
+        invitation_rejected_desc: "Davet bekleyenler listesinden kaldırıldı.",
+
+        invitation_reject_failed: "Davet reddedilemedi.",
+        invitation_reject_failed_desc:
+          "Davet süresi dolmuş veya geçersiz olabilir.",
+        name: "Workspace adı",
+        description: "Açıklama",
+        name_placeholder: "Örn: Aile Bütçesi",
+        description_placeholder: "Opsiyonel açıklama",
+        create: "Oluştur",
+
+        create_name_validation: "Workspace adı en az 2 karakter olmalıdır.",
+
+        create_success: "Workspace oluşturuldu.",
+        create_success_desc: "Yeni workspace başarıyla oluşturuldu.",
+
+        create_failed: "Workspace oluşturulamadı.",
+        create_failed_desc: "Lütfen bilgileri kontrol edip tekrar deneyin.",
+
+        invitation_email: "Davet edilecek email",
+        invitation_email_placeholder: "ornek@mail.com",
+        invitation_email_validation: "Geçerli bir email adresi giriniz.",
+
+        send_invitation: "Davet Gönder",
+
+        invitation_create_success: "Davet başarıyla gönderildi.",
+        invitation_create_success_desc:
+          "{{email}} kullanıcısına {{role}} rolüyle davet gönderildi.",
+
+        invitation_create_failed: "Davet gönderilemedi.",
+        invitation_create_failed_desc:
+          "Bu kullanıcıya zaten bekleyen bir davet olabilir veya işlem başarısız oldu.",
+
+        remove_member_title: "Üyeyi çıkar",
+        remove_member_message:
+          "adlı kullanıcıyı bu workspace'ten çıkarmak istediğine emin misin?",
+
+        name_required: "Workspace adı zorunludur.",
+        name_min_length: "Workspace adı en az 2 karakter olmalıdır.",
+        name_max_length: "Workspace adı en fazla 80 karakter olabilir.",
+        description_max_length: "Açıklama en fazla 250 karakter olabilir.",
+        form_invalid: "Lütfen workspace bilgilerini kontrol edin.",
       },
       filters: "Filtreler",
       newest_to_oldest: "En yeniden eskiye",

@@ -11,10 +11,16 @@
   z-index: 1000;
   transition: background-color 0.3s ease;
 
+  &__workspace {
+    min-width: 220px;
+    max-width: 280px;
+  }
+
   &__left {
     display: flex;
     align-items: center;
     gap: 12px;
+    cursor: pointer;
 
     img {
       height: 35px;
@@ -244,6 +250,12 @@
     min-height: 70px;
     padding: 0 1rem;
     position: sticky;
+
+    &__workspace {
+      width: 100%;
+      min-width: 0;
+      max-width: none;
+    }
 
     &__brand {
       font-size: 1rem;

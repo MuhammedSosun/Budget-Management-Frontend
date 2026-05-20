@@ -35,6 +35,11 @@
     font-weight: 600;
   }
 
+  &__workspace {
+    margin-top: 1rem;
+    width: 100%;
+  }
+
   &__nav {
     display: flex;
     flex-direction: column;
@@ -129,6 +134,10 @@
     }
 
     &__subtitle {
+      display: none;
+    }
+
+    &__workspace {
       display: none;
     }
 

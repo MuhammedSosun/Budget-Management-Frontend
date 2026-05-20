@@ -1,0 +1,156 @@
+.workspace-invitations-list {
+  display: grid;
+  gap: 1rem;
+
+  &__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+
+    h3 {
+      margin: 0;
+      color: var(--text-main);
+      font-size: 1.1rem;
+      font-weight: 800;
+    }
+
+    p {
+      margin: 0.35rem 0 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  }
+
+  &__empty {
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background: var(--bg-body);
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    text-align: center;
+  }
+
+  &__header,
+  &__item {
+    display: grid;
+    grid-template-columns: minmax(180px, 1.4fr) 120px 140px 140px;
+    gap: 1rem;
+    align-items: center;
+  }
+
+  &__header {
+    padding: 0 0.75rem;
+    color: var(--text-muted);
+    font-size: 0.78rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  &__items {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  &__item {
+    padding: 1rem 0.75rem;
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    background: var(--bg-body);
+  }
+
+  &__email {
+    color: var(--text-main);
+    font-weight: 700;
+    word-break: break-word;
+  }
+
+  &__date {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  &__role,
+  &__status {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: fit-content;
+    border-radius: 999px;
+    padding: 0.35rem 0.65rem;
+    font-size: 0.72rem;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  &__role {
+    background: rgba(59, 130, 246, 0.14);
+    color: #2563eb;
+
+    &--viewer {
+      background: rgba(107, 114, 128, 0.14);
+      color: #6b7280;
+    }
+
+    &--editor {
+      background: rgba(59, 130, 246, 0.14);
+      color: #2563eb;
+    }
+  }
+
+  &__status {
+    &--pending {
+      background: rgba(245, 158, 11, 0.16);
+      color: #d97706;
+    }
+
+    &--accepted {
+      background: rgba(16, 185, 129, 0.15);
+      color: #059669;
+    }
+
+    &--rejected {
+      background: rgba(239, 68, 68, 0.14);
+      color: #dc2626;
+    }
+
+    &--expired {
+      background: rgba(107, 114, 128, 0.14);
+      color: #6b7280;
+    }
+  }
+}
+
+@media (max-width: 820px) {
+  .workspace-invitations-list {
+    &__top {
+      flex-direction: column;
+      align-items: stretch;
+
+      .my-custom-button {
+        width: 100%;
+      }
+    }
+
+    &__header {
+      display: none;
+    }
+
+    &__item {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    &__email,
+    &__date {
+      font-size: 0.9rem;
+    }
+  }
+}

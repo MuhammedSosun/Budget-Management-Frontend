@@ -9,6 +9,7 @@ import { LoadingProvider } from "./context/LoadingContext.tsx";
 import "./context/i18n";
 import i18n from "./context/i18n";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import { WorkspaceProvider } from "./context/WorkspaceContext.tsx";
 
 const params = new URLSearchParams(window.location.search);
 
@@ -39,9 +40,11 @@ createRoot(document.getElementById("root")!).render(
       <BrowserRouter>
         <ThemeProvider>
           <AuthProvider>
-            <AxiosInterceptors>
-              <App />
-            </AxiosInterceptors>
+            <WorkspaceProvider>
+              <AxiosInterceptors>
+                <App />
+              </AxiosInterceptors>
+            </WorkspaceProvider>
           </AuthProvider>
         </ThemeProvider>
       </BrowserRouter>

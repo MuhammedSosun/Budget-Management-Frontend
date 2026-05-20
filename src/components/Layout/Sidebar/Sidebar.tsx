@@ -1,6 +1,7 @@
 import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import "./Sidebar.scss";
+import WorkspaceSwitcher from "../../workspace/WorkspaceSwitcher/WorkspaceSwitcher";
 
 const sidebarItems = [
   {
@@ -38,6 +39,10 @@ function Sidebar() {
       <div className="sidebar__brand">
         <h1 className="sidebar__logo">Bütçem.</h1>
         <p className="sidebar__subtitle">Budget Management</p>
+
+        <div className="sidebar__workspace">
+          <WorkspaceSwitcher variant="compact" />
+        </div>
       </div>
 
       <nav className="sidebar__nav">

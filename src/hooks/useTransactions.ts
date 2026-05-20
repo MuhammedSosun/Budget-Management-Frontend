@@ -2,10 +2,12 @@ import { useState, useEffect, useCallback } from "react";
 import { transactionService } from "../services/transaction.service";
 import { useLoading } from "./useLoading";
 import type { Transaction, TransactionFilters } from "../types/transaction";
+import { useWorkspace } from "./useWorkspace";
 
 export const useTransactions = (initialPageSize = 10) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [searchValue, setSearchValue] = useState("");
+  const { activeWorkspaceId, isWorkspaceLoading } = useWorkspace();
 
   const [filters, setFilters] = useState<TransactionFilters>({
     type: "",
@@ -26,10 +28,15 @@ export const useTransactions = (initialPageSize = 10) => {
 
   const fetchTransactions = useCallback(
     async (page: number, currentFilters: TransactionFilters) => {
+      if (!activeWorkspaceId || isWorkspaceLoading) {
+        setTransactions([]);
+        return;
+      }
       try {
         showLoading("Loading...");
 
         const response = await transactionService.getAll(
+          activeWorkspaceId,
           page,
           initialPageSize,
           currentFilters,
@@ -62,7 +69,13 @@ export const useTransactions = (initialPageSize = 10) => {
         hideLoading();
       }
     },
-    [initialPageSize, showLoading, hideLoading],
+    [
+      activeWorkspaceId,
+      isWorkspaceLoading,
+      initialPageSize,
+      showLoading,
+      hideLoading,
+    ],
   );
 
   useEffect(() => {
@@ -88,8 +101,25 @@ export const useTransactions = (initialPageSize = 10) => {
   }, [searchValue]);
 
   useEffect(() => {
+    if (!activeWorkspaceId || isWorkspaceLoading) {
+      setTransactions([]);
+      return;
+    }
+
     fetchTransactions(pagination.currentPage, filters);
-  }, [pagination.currentPage, filters, fetchTransactions]);
+  }, [
+    activeWorkspaceId,
+    isWorkspaceLoading,
+    pagination.currentPage,
+    filters,
+    fetchTransactions,
+  ]);
+  useEffect(() => {
+    setPagination((prev) => ({
+      ...prev,
+      currentPage: 1,
+    }));
+  }, [activeWorkspaceId]);
 
   return {
     transactions,

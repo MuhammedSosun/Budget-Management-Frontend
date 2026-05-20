@@ -2,6 +2,7 @@ import type { ChangeEvent, RefObject } from "react";
 import Button from "../ui/Button/Button";
 import { FiCamera } from "react-icons/fi";
 import { useTranslation } from "react-i18next";
+import "./ProfileHero.scss";
 
 interface ProfileHeroProps {
   fullName: string;

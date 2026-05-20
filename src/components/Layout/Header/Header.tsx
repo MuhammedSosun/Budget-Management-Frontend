@@ -7,6 +7,7 @@ import Button from "../../ui/Button/Button";
 import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
 import Select from "../../ui/Select/Select";
+
 function Header() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -139,6 +140,7 @@ function Header() {
                     className="dropdown-item"
                     onClick={() => {
                       closeMobileMenu();
+                      setIsDropdownOpen(false);
                       navigate("/settings");
                     }}
                   >
@@ -149,6 +151,7 @@ function Header() {
                     className="dropdown-item logout"
                     onClick={() => {
                       closeMobileMenu();
+                      setIsDropdownOpen(false);
                       logout();
                     }}
                   >
