@@ -71,17 +71,6 @@ function CreateInvitationForm({
 
       await onSuccess?.();
     } catch (error: any) {
-      if (import.meta.env.DEV) {
-        console.error("Invitation create error:", error);
-        console.log("Backend response:", error?.response?.data);
-        console.log("Backend status:", error?.response?.status);
-        console.log("Request payload:", {
-          email: normalizedEmail,
-          role,
-        });
-        console.log("Workspace ID:", workspaceId);
-      }
-
       toast.error(t("workspace.invitation_create_failed"), {
         description:
           error?.response?.data?.message ||
