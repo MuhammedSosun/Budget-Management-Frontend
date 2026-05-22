@@ -2,31 +2,45 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import "./Sidebar.scss";
 import WorkspaceSwitcher from "../../workspace/WorkspaceSwitcher/WorkspaceSwitcher";
+import { useTranslation } from "react-i18next";
 
-const sidebarItems = [
-  {
-    label: "Dashboard",
-    path: "/home",
-    icon: "▦",
-  },
-  {
-    label: "Transactions",
-    path: "/home#transactions",
-    icon: "▤",
-  },
-  {
-    label: "Setting",
-    path: "/settings",
-    icon: "◉",
-  },
-];
+interface SidebarProps {
+  isMobileOpen?: boolean;
+  onCloseMobile?: () => void;
+}
 
-function Sidebar() {
+function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
   const { logout } = useAuth();
   const navigate = useNavigate();
 
+  const { t } = useTranslation();
+
+  const sidebarItems = [
+    {
+      label: t("dashboard"),
+      path: "/home",
+      icon: "▦",
+    },
+    {
+      label: t("transactions"),
+      path: "/home#transactions",
+      icon: "▤",
+    },
+    {
+      label: t("workspace.workspaces"),
+      path: "/workspace",
+      icon: "👥",
+    },
+    {
+      label: t("settings"),
+      path: "/settings",
+      icon: "⚙️",
+    },
+  ];
+
   const handleTransactionsClick = () => {
     navigate("/home#transactions");
+    onCloseMobile?.();
 
     setTimeout(() => {
       const element = document.getElementById("transactions-section");
@@ -34,11 +48,31 @@ function Sidebar() {
     }, 200);
   };
 
+  const handleLogout = () => {
+    onCloseMobile?.();
+    logout();
+  };
+
   return (
-    <aside className="sidebar">
+    <aside
+      className={isMobileOpen ? "sidebar sidebar--mobile-open" : "sidebar"}
+    >
       <div className="sidebar__brand">
-        <h1 className="sidebar__logo">Bütçem.</h1>
-        <p className="sidebar__subtitle">Budget Management</p>
+        <div className="sidebar__brand-top">
+          <div>
+            <h1 className="sidebar__logo">Bütçem.</h1>
+            <p className="sidebar__subtitle">Budget Management</p>
+          </div>
+
+          <button
+            type="button"
+            className="sidebar__close"
+            onClick={onCloseMobile}
+            aria-label="Close sidebar"
+          >
+            ✕
+          </button>
+        </div>
 
         <div className="sidebar__workspace">
           <WorkspaceSwitcher variant="compact" />
@@ -56,7 +90,7 @@ function Sidebar() {
                 onClick={handleTransactionsClick}
               >
                 <span className="sidebar__icon">{item.icon}</span>
-                <span>{item.label}</span>
+                <span className="sidebar__label">{item.label}</span>
               </button>
             );
           }
@@ -65,6 +99,7 @@ function Sidebar() {
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={onCloseMobile}
               className={({ isActive }) =>
                 isActive
                   ? "sidebar__link sidebar__link--active"
@@ -72,16 +107,20 @@ function Sidebar() {
               }
             >
               <span className="sidebar__icon">{item.icon}</span>
-              <span>{item.label}</span>
+              <span className="sidebar__label">{item.label}</span>
             </NavLink>
           );
         })}
       </nav>
 
       <div className="sidebar__footer">
-        <button type="button" className="sidebar__logout" onClick={logout}>
+        <button
+          type="button"
+          className="sidebar__logout"
+          onClick={handleLogout}
+        >
           <span className="sidebar__icon">↩</span>
-          <span>Logout</span>
+          <span className="sidebar__label">{t("logout")}</span>
         </button>
       </div>
     </aside>

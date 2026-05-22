@@ -8,6 +8,7 @@ import PublicRoute from "./PublicRoute";
 import AppLayout from "../components/AppLayout/AppLayout";
 import SettingsPage from "../views/SettingPage";
 import VerifyEmailPage from "../views/Auth/VerifyEmailPage";
+import WorkspacesPage from "../views/Workspace/WorkspacesPage";
 
 const AppRouter = () => {
   return (
@@ -24,6 +25,7 @@ const AppRouter = () => {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/workspace" element={<WorkspacesPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>

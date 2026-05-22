@@ -1,9 +1,33 @@
 .transaction-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  &__inputs {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
   &__amount-group {
     display: grid;
-    grid-template-columns: 2.5fr 1fr;
+    grid-template-columns: minmax(0, 2.5fr) minmax(140px, 1fr);
     gap: 1rem;
     align-items: end;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.85rem;
+    padding-top: 1rem;
+    margin-top: 0.5rem;
+    border-top: 1px solid var(--border);
+
+    button {
+      min-width: 130px;
+    }
   }
 }
 
@@ -34,8 +58,14 @@
 
   &__actions {
     display: flex;
-    gap: 1rem;
-    margin-top: 1rem;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 0.85rem;
+    margin-top: 1.25rem;
+
+    button {
+      min-width: 110px;
+    }
   }
 
   &__error {
@@ -43,10 +73,43 @@
     margin-top: 0.25rem;
     font-size: 0.875rem;
   }
+}
 
-  &__amount-group {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 1rem;
+@media (max-width: 640px) {
+  .transaction-form {
+    &__amount-group {
+      grid-template-columns: 1fr;
+    }
+
+    &__actions {
+      flex-direction: column-reverse;
+      align-items: stretch;
+
+      button {
+        width: 100%;
+        min-width: 0;
+      }
+    }
+  }
+
+  .custom-modal {
+    align-items: flex-end;
+    padding: 0;
+
+    &__content {
+      max-width: 100%;
+      border-radius: 20px 20px 0 0;
+      padding: 1.25rem;
+    }
+
+    &__actions {
+      flex-direction: column-reverse;
+      align-items: stretch;
+
+      button {
+        width: 100%;
+        min-width: 0;
+      }
+    }
   }
 }

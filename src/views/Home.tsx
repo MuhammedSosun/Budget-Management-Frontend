@@ -1,6 +1,5 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import Header from "../components/Layout/Header/Header";
 import Dashboard from "../components/Layout/Dashboard/Dashboard";
 import TransactionPage from "./Transactions/TransactionPage";
 import "./Home.scss";
@@ -12,20 +11,25 @@ function Home() {
     if (hash === "#transactions") {
       setTimeout(() => {
         const element = document.getElementById("transactions-section");
-        element?.scrollIntoView({ behavior: "smooth" });
+        element?.scrollIntoView({ behavior: "smooth", block: "start" });
       }, 200);
+    }
+
+    if (!hash) {
+      const element = document.getElementById("dashboard-top");
+      element?.scrollIntoView({ behavior: "instant", block: "start" });
     }
   }, [hash]);
 
   return (
-    <div className="home-page" id="dashboard-top">
-      <Header />
+    <div className="home-page">
+      <section id="dashboard-top" className="home-page__section">
+        <Dashboard />
+      </section>
 
-      <Dashboard />
-
-      <div id="transactions-section">
+      <section id="transactions-section" className="home-page__section">
         <TransactionPage />
-      </div>
+      </section>
     </div>
   );
 }

@@ -15,7 +15,10 @@ export interface CreateWorkspacePayload {
   name: string;
   description?: string;
 }
-
+export interface UpdateWorkspacePayload {
+  name?: string;
+  description?: string;
+}
 export interface WorkspaceMember {
   id: string;
   workspaceId: string;

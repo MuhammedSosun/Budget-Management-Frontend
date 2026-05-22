@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import "./TransactionList.scss";
 import {
   type Transaction,
@@ -32,6 +32,10 @@ function TransactionList() {
     searchValue,
     setSearchValue,
   } = useTransactions(10);
+  const refreshAfterTransactionChange = () => {
+    refresh();
+    window.dispatchEvent(new Event("refresh-dashboard"));
+  };
   const [isFormOpen, setIsFormOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [idToDelete, setIdToDelete] = useState<string | null>(null);
@@ -87,19 +91,22 @@ function TransactionList() {
             }}
           />
         </div>
-        <Select
-          label={t("transaction_type")}
-          value={filters.type ?? ""}
-          options={[
-            { label: t("all"), value: "" },
-            { label: t("income"), value: "income" },
-            { label: t("expense"), value: "expense" },
-          ]}
-          onChange={(val) => {
-            setFilters({ ...filters, type: val });
-            setPagination((prev) => ({ ...prev, currentPage: 1 }));
-          }}
-        />
+
+        <div className="filter-group">
+          <Select
+            label={t("transaction_type")}
+            value={filters.type ?? ""}
+            options={[
+              { label: t("all"), value: "" },
+              { label: t("income"), value: "income" },
+              { label: t("expense"), value: "expense" },
+            ]}
+            onChange={(val) => {
+              setFilters({ ...filters, type: val });
+              setPagination((prev) => ({ ...prev, currentPage: 1 }));
+            }}
+          />
+        </div>
 
         <div className="filter-group">
           <Input
@@ -124,30 +131,29 @@ function TransactionList() {
             }}
           />
         </div>
-        <div className="filter-group">
-          <div className="filter-group__select">
-            <Select
-              label={t("filters")}
-              value={filters.filter ?? ""}
-              options={[
-                { label: t("newest_to_oldest"), value: "newest" },
-                { label: t("oldest_to_newest"), value: "oldest" },
-                { label: t("last_7_days"), value: "7days" },
-                { label: t("last_30_days"), value: "30days" },
-              ]}
-              onChange={(value) => {
-                setFilters((prev) => ({
-                  ...prev,
-                  filter: value as TransactionFilters["filter"],
-                }));
 
-                setPagination((prev) => ({
-                  ...prev,
-                  currentPage: 1,
-                }));
-              }}
-            />
-          </div>
+        <div className="filter-group">
+          <Select
+            label={t("filters")}
+            value={filters.filter ?? ""}
+            options={[
+              { label: t("newest_to_oldest"), value: "newest" },
+              { label: t("oldest_to_newest"), value: "oldest" },
+              { label: t("last_7_days"), value: "7days" },
+              { label: t("last_30_days"), value: "30days" },
+            ]}
+            onChange={(value) => {
+              setFilters((prev) => ({
+                ...prev,
+                filter: value as TransactionFilters["filter"],
+              }));
+
+              setPagination((prev) => ({
+                ...prev,
+                currentPage: 1,
+              }));
+            }}
+          />
         </div>
 
         <div className="transaction-filters__reset">
@@ -212,7 +218,7 @@ function TransactionList() {
           initialData={selectedTransaction}
           onCancel={handleCloseForm}
           onSuccess={() => {
-            refresh();
+            refreshAfterTransactionChange();
             handleCloseForm();
           }}
         />
@@ -251,7 +257,7 @@ function TransactionList() {
 
                   setIsDeleteModalOpen(false);
                   setIdToDelete(null);
-                  refresh();
+                  refreshAfterTransactionChange();
                 } catch {
                   toast.error(t("toast.transaction_delete_failed"), {
                     description: t("toast.transaction_delete_failed_desc"),

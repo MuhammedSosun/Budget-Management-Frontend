@@ -3,7 +3,6 @@ import { useProfile } from "../../hooks/useProfile";
 import ProfileHero from "../../components/Profile/ProfileHero";
 import ProfileInfoCard from "../../components/Profile/ProfileInfoCard";
 import ProfileSecurityCard from "../../components/Profile/ProfileSecurityCard";
-import WorkspaceSettings from "../../components/workspace/WorkspaceSettings/WorkspaceSettings";
 
 function Profile() {
   const profile = useProfile();
@@ -42,7 +41,6 @@ function Profile() {
 
         <aside className="profile__side">
           <ProfileSecurityCard />
-          <WorkspaceSettings />
         </aside>
       </div>
     </section>

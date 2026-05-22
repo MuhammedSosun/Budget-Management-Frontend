@@ -2,6 +2,7 @@ import api from "../api";
 import {
   type CreateWorkspacePayload,
   type UpdateWorkspaceMemberRolePayload,
+  type UpdateWorkspacePayload,
 } from "../types/workspace";
 
 export const workspaceService = {
@@ -79,6 +80,24 @@ export const workspaceService = {
 
   getWorkspaceInvitations: async (workspaceId: string) => {
     const response = await api.get(`/workspaces/${workspaceId}/invitations`);
+
+    return response.data;
+  },
+  deleteWorkspace: async (workspaceId: string) => {
+    const response = await api.delete(`/workspaces/${workspaceId}`);
+    return response.data;
+  },
+  updateWorkspace: async (
+    workspaceId: string,
+    data: UpdateWorkspacePayload,
+  ) => {
+    const response = await api.patch(`/workspaces/${workspaceId}`, data);
+
+    return response.data;
+  },
+
+  leaveWorkspace: async (workspaceId: string) => {
+    const response = await api.delete(`/workspaces/${workspaceId}/leave`);
 
     return response.data;
   },

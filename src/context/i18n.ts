@@ -5,6 +5,22 @@ import LanguageDetector from "i18next-browser-languagedetector";
 const resources = {
   en: {
     translation: {
+      errors: {
+        email_required: "Email is required.",
+        email_invalid: "Please enter a valid email address.",
+        password_required: "Password is required.",
+        password_min: "Password must be at least 6 characters.",
+        emailNotFound: "Email information not found.",
+        invalidCodeLength: "Please enter a 6-digit verification code.",
+        wrongCode: "Verification code is incorrect or expired.",
+        resendFailed: "Could not resend the code.",
+        notRegistered:
+          "You need to complete the registration process before coming to the verification screen.",
+        general: "Something went wrong.",
+        system: "A system error occurred.",
+        firstName_min: "First name must be at least 2 characters.",
+        lastName_min: "Last name must be at least 2 characters.",
+      },
       dashboard_title: "Expense Trend",
       welcome_dashboard: "Welcome to your dashboard",
       new_transaction: "New Transaction",
@@ -13,6 +29,114 @@ const resources = {
       edit_category: "Edit Category",
       add_transaction_this: "Add Transaction",
       edit_transaction_this: "Edit Transaction",
+      transactions_subtitle:
+        "Income and expense movements can be managed here.",
+      server_errors: {
+        USER_NOT_FOUND: "Kullanıcı bulunamadı.",
+        INVALID_CREDENTIALS: "E-posta veya şifre hatalı.",
+        EMAIL_NOT_VERIFIED: "Lütfen önce e-posta adresinizi doğrulayın.",
+        USER_ALREADY_EXISTS: "Bu kullanıcı zaten mevcut.",
+
+        UNAUTHORIZED: "Yetkisiz istek.",
+        FORBIDDEN: "Erişim engellendi.",
+        NOT_FOUND: "İstenen kaynak bulunamadı.",
+        INTERNAL_SERVER_ERROR: "Sunucu hatası oluştu.",
+        VALIDATION_ERROR: "Geçersiz veri gönderildi.",
+
+        TOKEN_NOT_FOUND: "Token bulunamadı.",
+        INVALID_OR_EXPIRED_TOKEN: "Token geçersiz veya süresi dolmuş.",
+        ACCESS_TOKEN_EXPIRED:
+          "Oturum süreniz doldu. Lütfen tekrar giriş yapın.",
+        ACCESS_TOKEN_INVALID: "Oturum bilginiz geçersiz.",
+        REFRESH_TOKEN_NOT_FOUND: "Refresh token bulunamadı.",
+        REFRESH_TOKEN_INVALID: "Refresh token geçersiz.",
+        REFRESH_TOKEN_EXPIRED:
+          "Refresh token süresi doldu. Lütfen tekrar giriş yapın.",
+
+        RATE_LIMIT_EXCEEDED:
+          "Çok fazla istek gönderdiniz. Lütfen biraz bekleyin.",
+        RATE_LIMIT_GENERAL:
+          "Çok fazla istek gönderdiniz. Lütfen biraz bekleyin.",
+        RATE_LIMIT_TOO_FAST:
+          "Çok hızlı işlem yapıyorsunuz. Lütfen biraz bekleyin.",
+        RATE_LIMIT_EMAIL_RESEND:
+          "Yeni doğrulama kodu istemeden önce lütfen 1 dakika bekleyin.",
+        RATE_LIMIT_REFRESH:
+          "Çok fazla oturum yenileme isteği gönderildi. Lütfen daha sonra tekrar deneyin.",
+
+        IDEMPOTENCY_KEY_REUSED:
+          "Bu istek daha önce işlendi. Lütfen yeni bir istek anahtarı kullanın.",
+        IDEMPOTENCY_KEY_CONFLICT:
+          "Bu istek anahtarı farklı bir veriyle kullanılmış. Lütfen yeni bir istek anahtarı kullanın.",
+
+        WORKSPACE_NOT_FOUND: "Workspace bulunamadı.",
+        WORKSPACE_ALREADY_EXISTS: "Bu workspace zaten mevcut.",
+        WORKSPACE_ACCESS_DENIED: "Bu workspace için yetkiniz yok.",
+        WORKSPACE_CREATE_FAILED: "Workspace oluşturulamadı.",
+        DEFAULT_WORKSPACE_CREATE_FAILED: "Varsayılan workspace oluşturulamadı.",
+        WORKSPACE_OWNER_MEMBER_CREATE_FAILED:
+          "Workspace sahibi üye olarak eklenemedi.",
+
+        WORKSPACE_MEMBER_NOT_FOUND: "Workspace üyesi bulunamadı.",
+        WORKSPACE_MEMBER_NOT_IN_WORKSPACE:
+          "Bu üye seçili workspace'e ait değil.",
+        WORKSPACE_MEMBER_ROLE_UPDATE_FAILED: "Üye rolü güncellenemedi.",
+        WORKSPACE_MEMBER_USER_NOT_FOUND: "Bu üyeye bağlı kullanıcı bulunamadı.",
+        OWNER_ROLE_CANNOT_BE_CHANGED: "OWNER rolü değiştirilemez.",
+        OWNER_CANNOT_BE_REMOVED: "OWNER workspace'ten çıkarılamaz.",
+        CANNOT_REMOVE_YOURSELF_FROM_WORKSPACE:
+          "Kendinizi workspace'ten çıkaramazsınız.",
+
+        WORKSPACE_INVITATION_USER_NOT_FOUND:
+          "Bu e-posta adresine sahip kullanıcı bulunamadı.",
+        CANNOT_INVITE_YOURSELF: "Kendinize davet gönderemezsiniz.",
+        USER_ALREADY_WORKSPACE_MEMBER: "Bu kullanıcı zaten workspace üyesi.",
+        WORKSPACE_INVITATION_ALREADY_PENDING:
+          "Bu kullanıcı için zaten bekleyen bir davet var.",
+        WORKSPACE_INVITATION_NOT_FOUND: "Davet bulunamadı.",
+        WORKSPACE_INVITATION_NOT_VALID: "Bu davet artık geçerli değil.",
+        WORKSPACE_INVITATION_EXPIRED: "Bu davetin süresi dolmuş.",
+        WORKSPACE_INVITATION_NOT_OWNED_BY_USER:
+          "Bu davet bu kullanıcıya ait değil.",
+        WORKSPACE_INVITATION_REJECT_FAILED: "Davet reddedilemedi.",
+        WORKSPACE_INVITATION_WORKSPACE_NOT_FOUND:
+          "Bu davete bağlı workspace bulunamadı.",
+
+        GOOGLE_ACCOUNT_PASSWORD_NOT_AVAILABLE:
+          "Bu hesap Google ile oluşturulmuş. Lütfen önce şifre belirleyin.",
+        PASSWORD_MISMATCH: "Mevcut şifreniz hatalı.",
+        PASSWORD_UPDATE_FAILED: "Şifre güncellenemedi.",
+        PROFILE_UPDATE_FAILED: "Profil bilgileri güncellenemedi.",
+        AVATAR_UPDATE_FAILED: "Profil fotoğrafı güncellenemedi.",
+
+        TRANSACTION_CREATE_FAILED: "İşlem oluşturulamadı.",
+        TRANSACTION_UPDATE_FAILED: "İşlem güncellenemedi.",
+        TRANSACTION_DELETE_FAILED: "İşlem silinemedi.",
+        TRANSACTION_NOT_FOUND: "İşlem bulunamadı.",
+        TRANSACTION_ALREADY_EXISTS: "İşlem zaten mevcut.",
+        INVALID_TRANSACTION_CURRENCY: "Geçersiz işlem para birimi.",
+        INVALID_TRANSACTION_DATE_RANGE: "Geçersiz tarih aralığı.",
+
+        EMAIL_ALREADY_VERIFIED: "E-posta adresi zaten doğrulanmış.",
+        EMAIL_VERIFICATION_CODE_INVALID: "Doğrulama kodu geçersiz.",
+        EMAIL_VERIFICATION_CODE_EXPIRED: "Doğrulama kodunun süresi dolmuş.",
+        EMAIL_VERIFICATION_TOO_MANY_ATTEMPTS:
+          "Çok fazla hatalı deneme yaptınız. Lütfen yeni kod isteyin.",
+        TOO_MANY_ATTEMPTS: "Çok fazla hatalı deneme yaptınız.",
+
+        GOOGLE_LOGIN_FAILED: "Google ile giriş başarısız.",
+        GOOGLE_SIGNUP_FAILED: "Google ile kayıt başarısız.",
+        GOOGLE_ACCOUNT_IS_NOT_VERIFIED: "Google hesabı doğrulanmamış.",
+        GOOGLE_EMAIL_ACCOUNT_IS_NOT_VERIFIED:
+          "Google e-posta hesabı doğrulanmamış.",
+        GOOGLE_USER_ALREADY_EXISTS_EMAIL:
+          "Bu e-posta Google girişi ile kullanılmalıdır.",
+        GOOGLE_USER_NOT_FOUND: "Lütfen önce Google ile kayıt olun.",
+
+        INVALID_IMAGE_FORMAT:
+          "Sadece JPEG, PNG veya WEBP formatları desteklenir.",
+        AVATAR_REQUIRED: "Profil fotoğrafı zorunludur.",
+      },
       title: "Title",
       amount: "Amount",
       category: "Category",
@@ -199,13 +323,36 @@ const resources = {
       },
       created_by: "Created by",
       workspace: {
+        workspaces: "Workspaces",
+        edit: "Edit",
+        name: "Name",
+        description: "Description",
+        name_placeholder: "Enter workspace name",
+        description_placeholder: "Enter workspace description",
+        save: "Save",
+        cancel: "Cancel",
+        leave: "Leave",
         loading: "Workspace loading...",
+        save_changes: "Save Changes",
+        edit_workspace: "Edit Workspace",
         empty: "Workspace not found",
         roles: {
           owner: "Owner",
           editor: "Editor",
           viewer: "Viewer",
         },
+        delete: "Delete",
+        delete_workspace: "Delete Workspace",
+        delete_workspace_confirm:
+          "Do you want to delete this workspace? This action cannot be undone. Related transactions, members, and invitations will also be deleted.",
+        delete_workspace_success: "Workspace deleted successfully.",
+        delete_workspace_error:
+          "An error occurred while deleting the workspace.",
+        default_workspace_cannot_be_deleted:
+          "The default workspace cannot be deleted.",
+        only_owner_can_delete_workspace:
+          "You must be an OWNER to delete this workspace.",
+        deleting: "Deleting...",
         role_info: {
           editor:
             "Can add, edit, and delete transactions. Cannot manage workspace members.",
@@ -304,10 +451,7 @@ const resources = {
         invitation_reject_failed: "Invitation could not be rejected.",
         invitation_reject_failed_desc:
           "The invitation may have expired or become invalid.",
-        name: "Workspace name",
-        description: "Description",
-        name_placeholder: "Example: Family Budget",
-        description_placeholder: "Optional description",
+
         create: "Create",
 
         create_name_validation: "Workspace name must be at least 2 characters.",
@@ -336,6 +480,23 @@ const resources = {
         name_max_length: "Workspace name can be at most 80 characters.",
         description_max_length: "Description can be at most 250 characters.",
         form_invalid: "Please check the workspace information.",
+        page_title: "Your workspaces",
+        page_description:
+          "View your workspaces, switch the active workspace, manage members, and track invitation processes from one screen.",
+        select_workspace_description:
+          "Select the workspace you want to work with.",
+        no_description: "No description available.",
+        active_workspace_description:
+          "Members, invitations, and workspace settings are managed in this area.",
+        total_workspace: "Total workspaces",
+        active_role: "Active role",
+        management_permission: "Management permission",
+        permission_available: "Available",
+        permission_unavailable: "Unavailable",
+        overview: "Overview",
+        overview_ready_title: "Workspace panel is ready.",
+        overview_ready_description:
+          "You can select a workspace from the left, create a new workspace, invite members, or view your pending invitations.",
       },
       filters: "Filters",
       newest_to_oldest: "Newest to oldest",
@@ -378,12 +539,18 @@ const resources = {
           required: "Verification Required",
         },
         errors: {
+          email_required: "Email is required.",
+          email_invalid: "Please enter a valid email address.",
+          password_required: "Password is required.",
+          password_min: "Password must be at least 6 characters.",
           emailNotFound: "Email information not found.",
           invalidCodeLength: "Please enter a 6-digit verification code.",
           wrongCode: "Verification code is incorrect or expired.",
           resendFailed: "Could not resend the code.",
           notRegistered:
             "You need to complete the registration process before coming to the verification screen.",
+          general: "Something went wrong.",
+          system: "A system error occurred.",
         },
         success: {
           verified: "Email address verified successfully.",
@@ -406,6 +573,116 @@ const resources = {
       edit_transaction: "İşlem Güncelle",
       new_category: "Yeni Kategori",
       edit_category: "Kategori Güncelle",
+      transactions_subtitle:
+        "Gelir ve gider hareketlerini buradan yönetebilirsin.",
+      server_errors: {
+        USER_NOT_FOUND: "User not found.",
+        INVALID_CREDENTIALS: "Invalid email or password.",
+        EMAIL_NOT_VERIFIED: "Please verify your email address first.",
+        USER_ALREADY_EXISTS: "This user already exists.",
+
+        UNAUTHORIZED: "Unauthorized request.",
+        FORBIDDEN: "Access denied.",
+        NOT_FOUND: "Requested resource was not found.",
+        INTERNAL_SERVER_ERROR: "A server error occurred.",
+        VALIDATION_ERROR: "Invalid data was sent.",
+
+        TOKEN_NOT_FOUND: "Token not found.",
+        INVALID_OR_EXPIRED_TOKEN: "Invalid or expired token.",
+        ACCESS_TOKEN_EXPIRED: "Your session has expired. Please log in again.",
+        ACCESS_TOKEN_INVALID: "Your session information is invalid.",
+        REFRESH_TOKEN_NOT_FOUND: "Refresh token not found.",
+        REFRESH_TOKEN_INVALID: "Refresh token is invalid.",
+        REFRESH_TOKEN_EXPIRED:
+          "Refresh token has expired. Please log in again.",
+
+        RATE_LIMIT_EXCEEDED: "Too many requests. Please wait a moment.",
+        RATE_LIMIT_GENERAL: "Too many requests. Please wait a moment.",
+        RATE_LIMIT_TOO_FAST:
+          "You are acting too quickly. Please wait a moment.",
+        RATE_LIMIT_EMAIL_RESEND:
+          "Please wait 1 minute before requesting a new verification code.",
+        RATE_LIMIT_REFRESH:
+          "Too many session refresh attempts. Please try again later.",
+
+        IDEMPOTENCY_KEY_REUSED:
+          "This request has already been processed. Please use a new request key.",
+        IDEMPOTENCY_KEY_CONFLICT:
+          "This request key was used with different data. Please use a new request key.",
+
+        WORKSPACE_NOT_FOUND: "Workspace not found.",
+        WORKSPACE_ALREADY_EXISTS: "This workspace already exists.",
+        WORKSPACE_ACCESS_DENIED:
+          "You do not have permission for this workspace.",
+        WORKSPACE_CREATE_FAILED: "Workspace could not be created.",
+        DEFAULT_WORKSPACE_CREATE_FAILED:
+          "Default workspace could not be created.",
+        WORKSPACE_OWNER_MEMBER_CREATE_FAILED:
+          "Workspace owner could not be added as a member.",
+
+        WORKSPACE_MEMBER_NOT_FOUND: "Workspace member not found.",
+        WORKSPACE_MEMBER_NOT_IN_WORKSPACE:
+          "This member does not belong to the selected workspace.",
+        WORKSPACE_MEMBER_ROLE_UPDATE_FAILED:
+          "Member role could not be updated.",
+        WORKSPACE_MEMBER_USER_NOT_FOUND:
+          "The user linked to this member could not be found.",
+        OWNER_ROLE_CANNOT_BE_CHANGED: "The OWNER role cannot be changed.",
+        OWNER_CANNOT_BE_REMOVED:
+          "The OWNER cannot be removed from the workspace.",
+        CANNOT_REMOVE_YOURSELF_FROM_WORKSPACE:
+          "You cannot remove yourself from the workspace.",
+
+        WORKSPACE_INVITATION_USER_NOT_FOUND:
+          "No user was found with this email address.",
+        CANNOT_INVITE_YOURSELF: "You cannot invite yourself.",
+        USER_ALREADY_WORKSPACE_MEMBER:
+          "This user is already a workspace member.",
+        WORKSPACE_INVITATION_ALREADY_PENDING:
+          "There is already a pending invitation for this user.",
+        WORKSPACE_INVITATION_NOT_FOUND: "Invitation not found.",
+        WORKSPACE_INVITATION_NOT_VALID: "This invitation is no longer valid.",
+        WORKSPACE_INVITATION_EXPIRED: "This invitation has expired.",
+        WORKSPACE_INVITATION_NOT_OWNED_BY_USER:
+          "This invitation does not belong to this user.",
+        WORKSPACE_INVITATION_REJECT_FAILED: "Invitation could not be rejected.",
+        WORKSPACE_INVITATION_WORKSPACE_NOT_FOUND:
+          "The workspace linked to this invitation could not be found.",
+
+        GOOGLE_ACCOUNT_PASSWORD_NOT_AVAILABLE:
+          "This account was created with Google. Please set a password first.",
+        PASSWORD_MISMATCH: "Your current password is incorrect.",
+        PASSWORD_UPDATE_FAILED: "Password could not be updated.",
+        PROFILE_UPDATE_FAILED: "Profile could not be updated.",
+        AVATAR_UPDATE_FAILED: "Profile photo could not be updated.",
+
+        TRANSACTION_CREATE_FAILED: "Transaction could not be created.",
+        TRANSACTION_UPDATE_FAILED: "Transaction could not be updated.",
+        TRANSACTION_DELETE_FAILED: "Transaction could not be deleted.",
+        TRANSACTION_NOT_FOUND: "Transaction not found.",
+        TRANSACTION_ALREADY_EXISTS: "Transaction already exists.",
+        INVALID_TRANSACTION_CURRENCY: "Invalid transaction currency.",
+        INVALID_TRANSACTION_DATE_RANGE: "Invalid date range.",
+
+        EMAIL_ALREADY_VERIFIED: "Email address is already verified.",
+        EMAIL_VERIFICATION_CODE_INVALID: "Verification code is invalid.",
+        EMAIL_VERIFICATION_CODE_EXPIRED: "Verification code has expired.",
+        EMAIL_VERIFICATION_TOO_MANY_ATTEMPTS:
+          "Too many failed attempts. Please request a new code.",
+        TOO_MANY_ATTEMPTS: "Too many failed attempts.",
+
+        GOOGLE_LOGIN_FAILED: "Google login failed.",
+        GOOGLE_SIGNUP_FAILED: "Google signup failed.",
+        GOOGLE_ACCOUNT_IS_NOT_VERIFIED: "Google account is not verified.",
+        GOOGLE_EMAIL_ACCOUNT_IS_NOT_VERIFIED:
+          "Google email account is not verified.",
+        GOOGLE_USER_ALREADY_EXISTS_EMAIL:
+          "This email should be used with Google login.",
+        GOOGLE_USER_NOT_FOUND: "Please sign up with Google first.",
+
+        INVALID_IMAGE_FORMAT: "Only JPEG, PNG, or WEBP formats are supported.",
+        AVATAR_REQUIRED: "Profile photo is required.",
+      },
       add_transaction_this: "İşlem Ekle",
       edit_transaction_this: "İşlemi Güncelle",
       title: "Başlık",
@@ -424,6 +701,7 @@ const resources = {
       register: "Kayıt Ol",
       logout: "Çıkış Yap",
       dashboard: "Gösterge Paneli",
+
       total_balance: "Toplam Bakiye",
       total_income: "Toplam Gelir",
       total_expense: "Toplam Gider",
@@ -606,8 +884,29 @@ const resources = {
       },
       created_by: "Oluşturan kişi",
       workspace: {
+        edit: "Düzenle",
+        name: "Workspace adı",
+        save_changes: "Değişiklikleri kaydet",
+        name_placeholder: "Workspace adını gir",
+        description: "Workspace açıklaması",
+        description_placeholder: "Workspace açıklamasını gir",
+        save: "Kaydet",
+        cancel: "İptal",
+        leave: "Ayrıl",
+        edit_workspace: "Workspace düzenle",
+        workspaces: "Çalışma Alanları",
         loading: "Workspace yükleniyor...",
         empty: "Workspace bulunamadı",
+        delete: "Sil",
+        delete_workspace: "Workspace Sil",
+        delete_workspace_confirm:
+          "Bu workspace silinsin mi? Bu işlem geri alınamaz. Workspace'e ait işlemler, üyeler ve davetler de silinir.",
+        delete_workspace_success: "Workspace başarıyla silindi.",
+        delete_workspace_error: "Workspace silinirken bir hata oluştu.",
+        default_workspace_cannot_be_deleted: "Varsayılan workspace silinemez.",
+        only_owner_can_delete_workspace:
+          "Workspace silmek için OWNER yetkisine sahip olmalısınız.",
+        deleting: "Siliniyor...",
         roles: {
           owner: "Sahip",
           editor: "Editör",
@@ -707,10 +1006,6 @@ const resources = {
         invitation_reject_failed: "Davet reddedilemedi.",
         invitation_reject_failed_desc:
           "Davet süresi dolmuş veya geçersiz olabilir.",
-        name: "Workspace adı",
-        description: "Açıklama",
-        name_placeholder: "Örn: Aile Bütçesi",
-        description_placeholder: "Opsiyonel açıklama",
         create: "Oluştur",
 
         create_name_validation: "Workspace adı en az 2 karakter olmalıdır.",
@@ -744,6 +1039,23 @@ const resources = {
         name_max_length: "Workspace adı en fazla 80 karakter olabilir.",
         description_max_length: "Açıklama en fazla 250 karakter olabilir.",
         form_invalid: "Lütfen workspace bilgilerini kontrol edin.",
+        page_title: "Çalışma alanların",
+        page_description:
+          "Workspace’leri görüntüle, aktif workspace’i değiştir, üyeleri yönet ve davet süreçlerini tek ekrandan kontrol et.",
+        select_workspace_description:
+          "Aktif olarak çalışmak istediğin alanı seç.",
+        no_description: "Açıklama bulunmuyor.",
+        active_workspace_description:
+          "Bu alanda üyeler, davetler ve workspace ayarları yönetilir.",
+        total_workspace: "Toplam Workspace",
+        active_role: "Aktif Rol",
+        management_permission: "Yönetim Yetkisi",
+        permission_available: "Var",
+        permission_unavailable: "Yok",
+        overview: "Genel Bakış",
+        overview_ready_title: "Workspace paneli hazır.",
+        overview_ready_description:
+          "Sol taraftan workspace seçebilir, üstteki butonlardan yeni workspace oluşturabilir, üye davet edebilir veya gelen davetlerini görüntüleyebilirsin.",
       },
       filters: "Filtreler",
       newest_to_oldest: "En yeniden eskiye",
@@ -765,6 +1077,8 @@ const resources = {
         last_name_min: "Soyad en az 3 karakter olmalıdır.",
         general: "Sunucuyla bağlantı kurulamadı.",
         system: "Bir sistem hatası oluştu.",
+        firstName_min: "Ad en az 2 karakter olmalıdır.",
+        lastName_min: "Soyad en az 2 karakter olmalıdır.",
       },
       verifyEmail: {
         title: "E-posta adresini doğrula",
@@ -783,14 +1097,7 @@ const resources = {
           verification: "E-posta Doğrulama",
           required: "Doğrulama Gerekli",
         },
-        errors: {
-          emailNotFound: "E-posta bilgisi bulunamadı.",
-          invalidCodeLength: "Lütfen 6 haneli doğrulama kodunu girin.",
-          wrongCode: "Doğrulama kodu hatalı veya süresi dolmuş.",
-          resendFailed: "Kod tekrar gönderilemedi.",
-          notRegistered:
-            "Doğrulama ekranına gelmeden önce kayıt işlemini tamamlaman gerekiyor.",
-        },
+
         success: {
           verified: "E-posta adresi başarıyla doğrulandı.",
           codeSent: "Yeni doğrulama kodu gönderildi.",

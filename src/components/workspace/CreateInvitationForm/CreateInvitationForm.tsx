@@ -117,7 +117,7 @@ function CreateInvitationForm({
           onClick={onCancel}
           disabled={isSubmitting}
         >
-          {t("cancel")}
+          {t("no_delete")}
         </Button>
 
         <Button

@@ -64,7 +64,15 @@ function Dashboard() {
   return (
     <div className="dashboard">
       <div className="dashboard__header">
-        <h2 className="dashboard__title">{t("welcome_dashboard")}</h2>
+        <div className="dashboard__title-group">
+          <h2 className="dashboard__title">{t("welcome_dashboard")}</h2>
+          <p className="dashboard__subtitle">
+            {activeWorkspace?.name
+              ? `${activeWorkspace.name} workspace overview`
+              : t("loading_data")}
+          </p>
+        </div>
+
         <div className="dashboard__currency-wrapper">
           <Select
             label={t("currency_label")}
@@ -82,17 +90,23 @@ function Dashboard() {
       <div className="dashboard__cards">
         <SummaryCard
           title={t("total_balance")}
-          amount={`${currencySymbol} ${new Intl.NumberFormat("tr-TR").format(income - expense)}`}
+          amount={`${currencySymbol} ${new Intl.NumberFormat("tr-TR").format(
+            income - expense,
+          )}`}
           type="balance"
         />
         <SummaryCard
           title={t("total_income")}
-          amount={`${currencySymbol} ${new Intl.NumberFormat("tr-TR").format(income)}`}
+          amount={`${currencySymbol} ${new Intl.NumberFormat("tr-TR").format(
+            income,
+          )}`}
           type="income"
         />
         <SummaryCard
           title={t("total_expense")}
-          amount={`${currencySymbol} ${new Intl.NumberFormat("tr-TR").format(expense)}`}
+          amount={`${currencySymbol} ${new Intl.NumberFormat("tr-TR").format(
+            expense,
+          )}`}
           type="expense"
         />
       </div>

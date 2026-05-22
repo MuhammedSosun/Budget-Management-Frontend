@@ -76,6 +76,8 @@ function RegisterForm() {
     try {
       await register(formData);
 
+      sessionStorage.setItem("pendingVerificationEmail", formData.email);
+
       toast.success(t("toast.register_success"));
 
       navigate("/verify-email", {

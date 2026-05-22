@@ -19,11 +19,8 @@ export const Modal = ({
   width = "500px",
 }: ModalProps) => {
   useEffect(() => {
-    if (isOpen) {
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "unset";
-    }
+    document.body.style.overflow = isOpen ? "hidden" : "unset";
+
     return () => {
       document.body.style.overflow = "unset";
     };
@@ -32,18 +29,21 @@ export const Modal = ({
   if (!isOpen) return null;
 
   return createPortal(
-    <div className="modal" onClick={onClose}>
-      <div
-        className="modal__content"
-        style={{ maxWidth: width }}
-        onClick={(e) => e.stopPropagation()}
-      >
+    <div className="modal" role="dialog" aria-modal="true">
+      <div className="modal__content" style={{ maxWidth: width }}>
         <div className="modal__header">
           <h3 className="modal__title">{title}</h3>
-          <button className="modal__close-btn" onClick={onClose}>
+
+          <button
+            type="button"
+            className="modal__close-btn"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
             &times;
           </button>
         </div>
+
         <div className="modal__body">{children}</div>
       </div>
     </div>,

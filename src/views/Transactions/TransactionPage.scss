@@ -1,47 +1,66 @@
-.transaction-page-wrapper {
-  background: var(--bg-body);
-  transition: background 0.3s ease;
-  padding-bottom: 2rem;
+.transaction-page {
+  width: 100%;
+  color: var(--text-main);
 
-  [data-theme="dark"] & {
-    background: radial-gradient(
-      circle at top right,
-      #1e2434 0%,
-      var(--bg-body) 100%
-    );
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
   }
 
-  .page-title {
-    font-size: 2rem;
-    font-weight: 700;
+  &__title {
+    margin: 0;
+    font-size: clamp(1.35rem, 2vw, 1.8rem);
+    font-weight: 900;
+    line-height: 1.15;
     color: var(--text-main);
-    margin: 2rem 0;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.04em;
 
     &::after {
       content: "";
       display: block;
-      width: 50px;
+      width: 46px;
       height: 4px;
+      margin-top: 0.6rem;
       background: var(--primary);
-      border-radius: 2px;
-      margin-top: 8px;
+      border-radius: 999px;
     }
   }
 
-  .content-card {
+  &__subtitle {
+    margin: 0.75rem 0 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  &__panel {
     background: var(--bg-card);
     border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.5rem;
+    border-radius: 20px;
     box-shadow: var(--shadow);
-    backdrop-filter: blur(10px);
+    overflow: hidden;
+  }
+}
 
-    [data-theme="dark"] & {
-      background: rgba(31, 41, 55, 0.5);
-      box-shadow:
-        var(--shadow),
-        0 0 20px rgba(0, 0, 0, 0.2);
+[data-theme="dark"] {
+  .transaction-page {
+    &__panel {
+      background: color-mix(in srgb, var(--bg-card) 86%, transparent);
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .transaction-page {
+    &__header {
+      margin-bottom: 1rem;
+    }
+
+    &__panel {
+      border-radius: 16px;
     }
   }
 }

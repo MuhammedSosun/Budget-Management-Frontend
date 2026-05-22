@@ -1,56 +1,91 @@
 .dashboard {
-  padding: 2rem;
-  min-height: auto;
+  width: 100%;
   background-color: var(--bg-body);
+  color: var(--text-main);
   transition: background-color 0.3s ease;
 
   &__header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
-    margin-bottom: 2rem;
-
-    @media (max-width: 600px) {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
-    }
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
   }
 
-  &__currency-wrapper {
-    width: 140px;
+  &__title-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
   }
 
   &__title {
-    font-size: 1.5rem;
-    font-weight: 700;
+    margin: 0;
+    font-size: clamp(1.4rem, 2vw, 2rem);
+    font-weight: 900;
+    line-height: 1.15;
     color: var(--text-main);
+    letter-spacing: -0.04em;
+  }
+
+  &__subtitle {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: 0.95rem;
+    font-weight: 500;
+  }
+
+  &__currency-wrapper {
+    width: 150px;
+    min-width: 150px;
   }
 
   &__cards {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     gap: 1.5rem;
-    flex-wrap: wrap;
-    margin-bottom: 2rem;
-
-    & > * {
-      flex: 1;
-      min-width: 280px;
-    }
+    margin-bottom: 1.5rem;
   }
 
   &__charts {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     gap: 1.5rem;
-    flex-wrap: wrap;
+  }
+}
 
-    & > * {
-      flex: 1;
-      min-width: 400px;
+@media (max-width: 1200px) {
+  .dashboard {
+    &__cards {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
-      @media (max-width: 600px) {
-        min-width: 100%;
-      }
+    &__charts {
+      grid-template-columns: 1fr;
+    }
+  }
+}
+
+@media (max-width: 760px) {
+  .dashboard {
+    &__header {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    &__currency-wrapper {
+      width: 100%;
+      min-width: 0;
+    }
+
+    &__cards {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    &__charts {
+      gap: 1rem;
     }
   }
 }

@@ -19,7 +19,7 @@ function VerifyEmailPage() {
   const storedEmail = sessionStorage.getItem("pendingVerificationEmail");
 
   const email = useMemo(() => {
-    return emailFromState || storedEmail || "";
+    return (emailFromState || storedEmail || "").trim().toLowerCase();
   }, [emailFromState, storedEmail]);
 
   const [code, setCode] = useState("");
