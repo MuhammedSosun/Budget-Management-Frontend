@@ -3,10 +3,15 @@ import { transactionService } from "../services/transaction.service";
 import { useLoading } from "./useLoading";
 import type { Transaction, TransactionFilters } from "../types/transaction";
 import { useWorkspace } from "./useWorkspace";
+import {
+  TRANSACTION_CHANGED_EVENT,
+  TRANSACTION_CHANGED_STORAGE_KEY,
+} from "../utils/events";
 
 export const useTransactions = (initialPageSize = 10) => {
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [searchValue, setSearchValue] = useState("");
+
   const { activeWorkspaceId, isWorkspaceLoading } = useWorkspace();
 
   const [filters, setFilters] = useState<TransactionFilters>({
@@ -27,13 +32,20 @@ export const useTransactions = (initialPageSize = 10) => {
   const { showLoading, hideLoading } = useLoading();
 
   const fetchTransactions = useCallback(
-    async (page: number, currentFilters: TransactionFilters) => {
+    async (
+      page: number,
+      currentFilters: TransactionFilters,
+      options?: { silent?: boolean },
+    ) => {
       if (!activeWorkspaceId || isWorkspaceLoading) {
         setTransactions([]);
         return;
       }
+
       try {
-        showLoading("Loading...");
+        if (!options?.silent) {
+          showLoading("Loading...");
+        }
 
         const response = await transactionService.getAll(
           activeWorkspaceId,
@@ -66,7 +78,9 @@ export const useTransactions = (initialPageSize = 10) => {
           console.error(error);
         }
       } finally {
-        hideLoading();
+        if (!options?.silent) {
+          hideLoading();
+        }
       }
     },
     [
@@ -114,12 +128,47 @@ export const useTransactions = (initialPageSize = 10) => {
     filters,
     fetchTransactions,
   ]);
+
   useEffect(() => {
     setPagination((prev) => ({
       ...prev,
       currentPage: 1,
     }));
   }, [activeWorkspaceId]);
+
+  useEffect(() => {
+    const handleTransactionChanged = () => {
+      fetchTransactions(pagination.currentPage, filters, {
+        silent: true,
+      });
+    };
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === TRANSACTION_CHANGED_STORAGE_KEY) {
+        handleTransactionChanged();
+      }
+    };
+
+    window.addEventListener(
+      TRANSACTION_CHANGED_EVENT,
+      handleTransactionChanged,
+    );
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener(
+        TRANSACTION_CHANGED_EVENT,
+        handleTransactionChanged,
+      );
+
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [fetchTransactions, pagination.currentPage, filters]);
+
+  const refresh = useCallback(() => {
+    return fetchTransactions(pagination.currentPage, filters);
+  }, [fetchTransactions, pagination.currentPage, filters]);
 
   return {
     transactions,
@@ -129,6 +178,6 @@ export const useTransactions = (initialPageSize = 10) => {
     setFilters,
     searchValue,
     setSearchValue,
-    refresh: () => fetchTransactions(pagination.currentPage, filters),
+    refresh,
   };
 };

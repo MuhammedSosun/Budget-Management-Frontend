@@ -1,4 +1,4 @@
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../../../hooks/useAuth";
 import "./Sidebar.scss";
 import WorkspaceSwitcher from "../../workspace/WorkspaceSwitcher/WorkspaceSwitcher";
@@ -11,7 +11,6 @@ interface SidebarProps {
 
 function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
   const { logout } = useAuth();
-  const navigate = useNavigate();
 
   const { t } = useTranslation();
 
@@ -23,7 +22,7 @@ function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
     },
     {
       label: t("transactions"),
-      path: "/home#transactions",
+      path: "/transactions",
       icon: "▤",
     },
     {
@@ -37,16 +36,6 @@ function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
       icon: "⚙️",
     },
   ];
-
-  const handleTransactionsClick = () => {
-    navigate("/home#transactions");
-    onCloseMobile?.();
-
-    setTimeout(() => {
-      const element = document.getElementById("transactions-section");
-      element?.scrollIntoView({ behavior: "smooth" });
-    }, 200);
-  };
 
   const handleLogout = () => {
     onCloseMobile?.();
@@ -81,20 +70,6 @@ function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
 
       <nav className="sidebar__nav">
         {sidebarItems.map((item) => {
-          if (item.path === "/home#transactions") {
-            return (
-              <button
-                key={item.label}
-                type="button"
-                className="sidebar__link sidebar__link--button"
-                onClick={handleTransactionsClick}
-              >
-                <span className="sidebar__icon">{item.icon}</span>
-                <span className="sidebar__label">{item.label}</span>
-              </button>
-            );
-          }
-
           return (
             <NavLink
               key={item.path}

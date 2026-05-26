@@ -1,178 +1,62 @@
-import { useState } from "react";
 import Button from "../../components/ui/Button/Button";
 import { Modal } from "../../components/ui/Modal/Modal";
-import { toast } from "sonner";
-import { workspaceService } from "../../services/workspace.service";
+
 import CreateWorkspaceForm from "../../components/workspace/CreateWorkspaceForm/CreateWorkspaceForm";
 import CreateInvitationForm from "../../components/workspace/CreateInvitationForm/CreateInvitationForm";
 import MyPendingInvitations from "../../components/workspace/MyPendingInvitations/MyPendingInvitations";
 import WorkspaceMembersManager from "../../components/workspace/WorkspaceMembersManager/WorkspaceMembersManager";
 import WorkspaceInvitationsList from "../../components/workspace/WorkspaceInvitationsList/WorkspaceInvitationsList";
 
-import { useWorkspace } from "../../hooks/useWorkspace";
-import { useTranslation } from "react-i18next";
+import { useWorkspacesPage } from "../../hooks/useWorkspacePage";
 
 import "./WorkspacesPage.scss";
-import type { Workspace } from "../../types/workspace";
-
-type WorkspaceTab = "overview" | "members" | "invitations" | "myInvitations";
-
-type WorkspaceModal =
-  | "createWorkspace"
-  | "myInvitations"
-  | "createInvitation"
-  | "editWorkspace"
-  | "deleteWorkspace"
-  | "leaveWorkspace"
-  | null;
 
 function WorkspacesPage() {
   const {
+    t,
+
     workspaces,
     activeWorkspace,
     activeWorkspaceId,
     activeRole,
-    setActiveWorkspaceById,
     canManageWorkspace,
-    refreshWorkspaces,
-  } = useWorkspace();
+    canViewWorkspaceManagementTabs,
+    canInviteMember,
 
-  const { t } = useTranslation();
-  const [activeTab, setActiveTab] = useState<WorkspaceTab>("overview");
-  const [activeModal, setActiveModal] = useState<WorkspaceModal>(null);
-  const [isDeletingWorkspace, setIsDeletingWorkspace] = useState(false);
-  const [selectedWorkspace, setSelectedWorkspace] = useState<Workspace | null>(
-    null,
-  );
+    activeTab,
+    setActiveTab,
 
-  const [editWorkspaceName, setEditWorkspaceName] = useState("");
-  const [editWorkspaceDescription, setEditWorkspaceDescription] = useState("");
+    activeModal,
+    selectedWorkspace,
 
-  const [isUpdatingWorkspace, setIsUpdatingWorkspace] = useState(false);
+    editWorkspaceName,
+    setEditWorkspaceName,
+    editWorkspaceDescription,
+    setEditWorkspaceDescription,
 
-  const [isLeavingWorkspace, setIsLeavingWorkspace] = useState(false);
+    isDeletingWorkspace,
+    isUpdatingWorkspace,
+    isLeavingWorkspace,
 
-  const closeModal = () => {
-    setActiveModal(null);
-    setSelectedWorkspace(null);
-    setEditWorkspaceName("");
-    setEditWorkspaceDescription("");
-  };
+    setActiveWorkspaceById,
 
-  const handleWorkspaceCreateSuccess = async () => {
-    await refreshWorkspaces();
-    closeModal();
-  };
+    closeModal,
+    openCreateWorkspaceModal,
+    openMyInvitationsModal,
+    openCreateInvitationModal,
+    openEditWorkspaceModal,
+    openDeleteWorkspaceModal,
+    openLeaveWorkspaceModal,
 
-  const handleInvitationSuccess = async () => {
-    await refreshWorkspaces();
-    closeModal();
-  };
+    handleWorkspaceCreateSuccess,
+    handleInvitationSuccess,
+    handleDeleteWorkspace,
+    handleUpdateWorkspace,
+    handleLeaveWorkspace,
 
-  const openEditWorkspaceModal = (workspace: Workspace) => {
-    setSelectedWorkspace(workspace);
-    setEditWorkspaceName(workspace.name);
-    setEditWorkspaceDescription(workspace.description || "");
-    setActiveModal("editWorkspace");
-  };
-
-  const openDeleteWorkspaceModal = (workspace: Workspace) => {
-    setSelectedWorkspace(workspace);
-    setActiveModal("deleteWorkspace");
-  };
-
-  const openLeaveWorkspaceModal = (workspace: Workspace) => {
-    setSelectedWorkspace(workspace);
-    setActiveModal("leaveWorkspace");
-  };
-  const handleDeleteWorkspace = async () => {
-    if (!selectedWorkspace) return;
-
-    if (selectedWorkspace.isDefault) {
-      toast.error(t("workspace.default_workspace_cannot_be_deleted"));
-      closeModal();
-      return;
-    }
-
-    if (selectedWorkspace.role !== "OWNER") {
-      toast.error(t("workspace.only_owner_can_delete_workspace"));
-      closeModal();
-      return;
-    }
-
-    try {
-      setIsDeletingWorkspace(true);
-
-      await workspaceService.deleteWorkspace(selectedWorkspace.id);
-
-      toast.success(t("workspace.delete_workspace_success"));
-
-      if (activeWorkspaceId === selectedWorkspace.id) {
-        const nextWorkspace = workspaces.find(
-          (workspace) => workspace.id !== selectedWorkspace.id,
-        );
-
-        if (nextWorkspace) {
-          setActiveWorkspaceById(nextWorkspace.id);
-        }
-      }
-
-      await refreshWorkspaces();
-      closeModal();
-    } catch {
-      toast.error(t("workspace.delete_workspace_error"));
-    } finally {
-      setIsDeletingWorkspace(false);
-    }
-  };
-  const handleUpdateWorkspace = async () => {
-    if (!selectedWorkspace) return;
-
-    const trimmedName = editWorkspaceName.trim();
-    const trimmedDescription = editWorkspaceDescription.trim();
-
-    if (!trimmedName) {
-      toast.error(t("workspace.name_required"));
-      return;
-    }
-
-    try {
-      setIsUpdatingWorkspace(true);
-
-      await workspaceService.updateWorkspace(selectedWorkspace.id, {
-        name: trimmedName,
-        description: trimmedDescription,
-      });
-
-      await refreshWorkspaces();
-
-      toast.success(t("workspace.update_success"));
-      closeModal();
-    } catch {
-      toast.error(t("workspace.update_error"));
-    } finally {
-      setIsUpdatingWorkspace(false);
-    }
-  };
-
-  const handleLeaveWorkspace = async () => {
-    if (!selectedWorkspace) return;
-
-    try {
-      setIsLeavingWorkspace(true);
-
-      await workspaceService.leaveWorkspace(selectedWorkspace.id);
-
-      await refreshWorkspaces();
-
-      toast.success(t("workspace.leave_success"));
-      closeModal();
-    } catch {
-      toast.error(t("workspace.leave_error"));
-    } finally {
-      setIsLeavingWorkspace(false);
-    }
-  };
+    getOverviewTitle,
+    getOverviewDescription,
+  } = useWorkspacesPage();
 
   return (
     <div className="workspaces-page">
@@ -193,24 +77,16 @@ function WorkspacesPage() {
           </div>
 
           <div className="workspaces-page__hero-actions">
-            <Button
-              variant="primary"
-              onClick={() => setActiveModal("createWorkspace")}
-            >
+            <Button variant="primary" onClick={openCreateWorkspaceModal}>
               {t("workspace.create_workspace")}
             </Button>
 
-            <Button
-              variant="link"
-              onClick={() => setActiveModal("myInvitations")}
-            >
+            <Button variant="link" onClick={openMyInvitationsModal}>
               {t("workspace.my_pending_invitations")}
             </Button>
-            {canManageWorkspace && activeWorkspaceId && (
-              <Button
-                variant="link"
-                onClick={() => setActiveModal("createInvitation")}
-              >
+
+            {canInviteMember && (
+              <Button variant="link" onClick={openCreateInvitationModal}>
                 {t("workspace.invite_member")}
               </Button>
             )}
@@ -367,58 +243,49 @@ function WorkspacesPage() {
                 {t("workspace.overview")}
               </button>
 
-              <button
-                type="button"
-                className={
-                  activeTab === "members"
-                    ? "workspaces-page__tab workspaces-page__tab--active"
-                    : "workspaces-page__tab"
-                }
-                onClick={() => setActiveTab("members")}
-              >
-                {t("workspace.members")}
-              </button>
+              {canViewWorkspaceManagementTabs && (
+                <>
+                  <button
+                    type="button"
+                    className={
+                      activeTab === "members"
+                        ? "workspaces-page__tab workspaces-page__tab--active"
+                        : "workspaces-page__tab"
+                    }
+                    onClick={() => setActiveTab("members")}
+                  >
+                    {t("workspace.members")}
+                  </button>
 
-              <button
-                type="button"
-                className={
-                  activeTab === "invitations"
-                    ? "workspaces-page__tab workspaces-page__tab--active"
-                    : "workspaces-page__tab"
-                }
-                onClick={() => setActiveTab("invitations")}
-              >
-                {t("workspace.sent_invitations")}
-              </button>
-
-              <button
-                type="button"
-                className={
-                  activeTab === "myInvitations"
-                    ? "workspaces-page__tab workspaces-page__tab--active"
-                    : "workspaces-page__tab"
-                }
-                onClick={() => setActiveTab("myInvitations")}
-              >
-                {t("workspace.my_pending_invitations")}
-              </button>
+                  <button
+                    type="button"
+                    className={
+                      activeTab === "invitations"
+                        ? "workspaces-page__tab workspaces-page__tab--active"
+                        : "workspaces-page__tab"
+                    }
+                    onClick={() => setActiveTab("invitations")}
+                  >
+                    {t("workspace.sent_invitations")}
+                  </button>
+                </>
+              )}
             </div>
 
             <div className="workspaces-page__panel">
               {activeTab === "overview" && (
                 <div className="workspaces-page__empty">
-                  <strong>{t("workspace.overview_ready_title")}</strong>
-                  <p>{t("workspace.overview_ready_description")}</p>
+                  <strong>{getOverviewTitle()}</strong>
+                  <p>{getOverviewDescription()}</p>
                 </div>
               )}
 
-              {activeTab === "members" && <WorkspaceMembersManager />}
-
-              {activeTab === "invitations" && <WorkspaceInvitationsList />}
-
-              {activeTab === "myInvitations" && (
-                <MyPendingInvitations onSuccess={handleInvitationSuccess} />
+              {activeTab === "members" && canViewWorkspaceManagementTabs && (
+                <WorkspaceMembersManager />
               )}
+
+              {activeTab === "invitations" &&
+                canViewWorkspaceManagementTabs && <WorkspaceInvitationsList />}
             </div>
           </main>
         </div>
@@ -446,12 +313,12 @@ function WorkspacesPage() {
       </Modal>
 
       <Modal
-        isOpen={activeModal === "createInvitation"}
+        isOpen={activeModal === "createInvitation" && canInviteMember}
         onClose={closeModal}
         title={t("workspace.invite_member")}
         width="480px"
       >
-        {activeWorkspaceId && (
+        {canInviteMember && activeWorkspaceId && (
           <CreateInvitationForm
             workspaceId={activeWorkspaceId}
             onCancel={closeModal}
@@ -459,6 +326,7 @@ function WorkspacesPage() {
           />
         )}
       </Modal>
+
       <Modal
         isOpen={activeModal === "deleteWorkspace"}
         onClose={closeModal}
@@ -491,6 +359,7 @@ function WorkspacesPage() {
           </div>
         </div>
       </Modal>
+
       <Modal
         isOpen={activeModal === "editWorkspace"}
         onClose={closeModal}
@@ -543,6 +412,7 @@ function WorkspacesPage() {
           </div>
         </div>
       </Modal>
+
       <Modal
         isOpen={activeModal === "leaveWorkspace"}
         onClose={closeModal}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import SummaryCard from "./SummaryCard/SummaryCard";
 import "./Dashboard.scss";
 import { SpendingChart } from "./SpendingChart/SpendingChart";
@@ -8,6 +8,11 @@ import { useLoading } from "../../../hooks/useLoading";
 import { useTranslation } from "react-i18next";
 import Select from "../../ui/Select/Select";
 import { useWorkspace } from "../../../hooks/useWorkspace";
+import {
+  TRANSACTION_CHANGED_EVENT,
+  TRANSACTION_CHANGED_STORAGE_KEY,
+} from "../../../utils/events";
+
 function Dashboard() {
   const { t } = useTranslation();
   const { activeWorkspace } = useWorkspace();
@@ -15,60 +20,98 @@ function Dashboard() {
   const [income, setIncome] = useState<number>(0);
   const [expense, setExpense] = useState<number>(0);
   const [currency, setCurrency] = useState<"TRY" | "USD" | "EUR">("TRY");
+  const [chartRefreshKey, setChartRefreshKey] = useState(0);
 
   const isFetchingRef = useRef(false);
   const { showLoading, hideLoading } = useLoading();
 
   const activeWorkspaceId = activeWorkspace?.id;
 
-  useEffect(() => {
-    const fetchTotals = async () => {
+  const fetchTotals = useCallback(
+    async (options?: { silent?: boolean }) => {
       if (!activeWorkspaceId) return;
       if (isFetchingRef.current) return;
 
       isFetchingRef.current = true;
+
       try {
-        showLoading(t("loading_data"));
+        if (!options?.silent) {
+          showLoading(t("loading_data"));
+        }
+
         const [incomeResponse, expenseResponse] = await Promise.all([
           transactionService.totalIncome(activeWorkspaceId, currency),
           transactionService.totalExpense(activeWorkspaceId, currency),
         ]);
+
         setIncome(incomeResponse.data || 0);
         setExpense(expenseResponse.data || 0);
       } catch (error) {
         console.error("Veriler çekilemedi:", error);
       } finally {
-        hideLoading();
+        if (!options?.silent) {
+          hideLoading();
+        }
+
         isFetchingRef.current = false;
+      }
+    },
+    [activeWorkspaceId, currency, showLoading, hideLoading, t],
+  );
+
+  useEffect(() => {
+    fetchTotals();
+  }, [fetchTotals]);
+
+  useEffect(() => {
+    const handleTransactionChanged = () => {
+      fetchTotals({ silent: true });
+      setChartRefreshKey((prev) => prev + 1);
+    };
+
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === TRANSACTION_CHANGED_STORAGE_KEY) {
+        handleTransactionChanged();
       }
     };
 
-    fetchTotals();
+    window.addEventListener(
+      TRANSACTION_CHANGED_EVENT,
+      handleTransactionChanged,
+    );
 
-    const handleRefresh = () => fetchTotals();
-    window.addEventListener("refresh-dashboard", handleRefresh);
+    window.addEventListener("storage", handleStorageChange);
 
     return () => {
-      window.removeEventListener("refresh-dashboard", handleRefresh);
+      window.removeEventListener(
+        TRANSACTION_CHANGED_EVENT,
+        handleTransactionChanged,
+      );
+
+      window.removeEventListener("storage", handleStorageChange);
     };
-  }, [activeWorkspaceId, currency, t, showLoading, hideLoading]);
+  }, [fetchTotals]);
+
   const currencySymbol =
     currency === "TRY" ? "₺" : currency === "USD" ? "$" : "€";
+
   if (!activeWorkspaceId) {
     return (
       <div className="dashboard">
-        <p>Aktif workspace bulunamadı.</p>
+        <p>{t("no_active_workspace")}</p>
       </div>
     );
   }
+
   return (
     <div className="dashboard">
       <div className="dashboard__header">
         <div className="dashboard__title-group">
           <h2 className="dashboard__title">{t("welcome_dashboard")}</h2>
+
           <p className="dashboard__subtitle">
             {activeWorkspace?.name
-              ? `${activeWorkspace.name} workspace overview`
+              ? activeWorkspace.name + " " + t("workspace_overview")
               : t("loading_data")}
           </p>
         </div>
@@ -95,6 +138,7 @@ function Dashboard() {
           )}`}
           type="balance"
         />
+
         <SummaryCard
           title={t("total_income")}
           amount={`${currencySymbol} ${new Intl.NumberFormat("tr-TR").format(
@@ -102,6 +146,7 @@ function Dashboard() {
           )}`}
           type="income"
         />
+
         <SummaryCard
           title={t("total_expense")}
           amount={`${currencySymbol} ${new Intl.NumberFormat("tr-TR").format(
@@ -112,8 +157,17 @@ function Dashboard() {
       </div>
 
       <div className="dashboard__charts">
-        <SpendingChart workspaceId={activeWorkspaceId} currency={currency} />
-        <TrendChart workspaceId={activeWorkspaceId} currency={currency} />
+        <SpendingChart
+          workspaceId={activeWorkspaceId}
+          currency={currency}
+          refreshKey={chartRefreshKey}
+        />
+
+        <TrendChart
+          workspaceId={activeWorkspaceId}
+          currency={currency}
+          refreshKey={chartRefreshKey}
+        />
       </div>
     </div>
   );

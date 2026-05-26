@@ -25,6 +25,7 @@ interface CustomTooltipProps {
 interface TrendChartProps {
   workspaceId: string;
   currency: Currency;
+  refreshKey?: number;
 }
 const getCurrencySymbol = (currency: Currency) => {
   if (currency === "TRY") return "₺";
@@ -78,7 +79,11 @@ const CustomTooltip = ({
   );
 };
 
-export const TrendChart = ({ workspaceId, currency }: TrendChartProps) => {
+export const TrendChart = ({
+  workspaceId,
+  currency,
+  refreshKey = 0,
+}: TrendChartProps) => {
   const { t } = useTranslation();
   const [data, setData] = useState<{ name: string; value: number }[]>([]);
   const [period, setPeriod] = useState<Period>("weekly");
@@ -114,7 +119,7 @@ export const TrendChart = ({ workspaceId, currency }: TrendChartProps) => {
 
   useEffect(() => {
     fetchTrendStats();
-  }, [fetchTrendStats]);
+  }, [fetchTrendStats, refreshKey]);
 
   const formatYAxis = (value: number) => {
     if (value === 0) return `0 ${currencySymbol}`;

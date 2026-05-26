@@ -6,7 +6,6 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import Button from "../../ui/Button/Button";
 import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
-import Select from "../../ui/Select/Select";
 
 interface HeaderProps {
   onMenuClick?: () => void;
@@ -16,10 +15,18 @@ function Header({ onMenuClick }: HeaderProps) {
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
   const { user, logout } = useAuth();
+
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const themeData = useContext(ThemeContext);
 
   if (!themeData) return null;
+
+  const currentLanguage = i18n.language?.startsWith("tr") ? "tr" : "en";
+
+  const handleLanguageChange = (language: "tr" | "en") => {
+    i18n.changeLanguage(language);
+    localStorage.setItem("lang", language);
+  };
 
   return (
     <header className="main-header">
@@ -31,7 +38,9 @@ function Header({ onMenuClick }: HeaderProps) {
             onClick={onMenuClick}
             aria-label="Open sidebar"
           >
-            ☰
+            <span />
+            <span />
+            <span />
           </button>
         )}
 
@@ -49,15 +58,26 @@ function Header({ onMenuClick }: HeaderProps) {
 
       <div className="main-header__right">
         <div className="main-header__settings">
-          <Select
-            label=""
-            options={[
-              { label: "Türkçe", value: "tr" },
-              { label: "English", value: "en" },
-            ]}
-            value={i18n.language}
-            onChange={(val) => i18n.changeLanguage(val)}
-          />
+          <div
+            className="main-header__language-toggle"
+            aria-label="Language switcher"
+          >
+            <button
+              type="button"
+              className={currentLanguage === "tr" ? "active" : ""}
+              onClick={() => handleLanguageChange("tr")}
+            >
+              TR
+            </button>
+
+            <button
+              type="button"
+              className={currentLanguage === "en" ? "active" : ""}
+              onClick={() => handleLanguageChange("en")}
+            >
+              EN
+            </button>
+          </div>
 
           <button
             type="button"
@@ -74,7 +94,8 @@ function Header({ onMenuClick }: HeaderProps) {
         <div className="main-header__auth">
           {user ? (
             <div className="main-header__profile-zone">
-              <div
+              <button
+                type="button"
                 className={`main-header__user-trigger ${
                   isDropdownOpen ? "active" : ""
                 }`}
@@ -88,9 +109,10 @@ function Header({ onMenuClick }: HeaderProps) {
                   alt="Profile"
                   className="main-header__avatar"
                 />
+
                 <span className="main-header__username">{user.firstName}</span>
                 <span className="main-header__arrow">▾</span>
-              </div>
+              </button>
 
               {isDropdownOpen && (
                 <div className="main-header__dropdown">

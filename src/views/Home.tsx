@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import Dashboard from "../components/Layout/Dashboard/Dashboard";
-import TransactionPage from "./Transactions/TransactionPage";
 import "./Home.scss";
+import RecentTransactions from "../components/Transactions/RecentTransactions/RecentTransactions";
 
 function Home() {
   const { hash } = useLocation();
@@ -26,9 +26,8 @@ function Home() {
       <section id="dashboard-top" className="home-page__section">
         <Dashboard />
       </section>
-
       <section id="transactions-section" className="home-page__section">
-        <TransactionPage />
+        <RecentTransactions />
       </section>
     </div>
   );

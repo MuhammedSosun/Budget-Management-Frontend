@@ -41,7 +41,10 @@ function TransactionForm({
     expense: [
       { label: t("categories.rent"), value: "rent" },
       { label: t("categories.market"), value: "market" },
-      { label: t("categories.etf_investment"), value: "etf_investment" },
+      {
+        label: t("categories.etf_investment"),
+        value: t("categories.etf_investment"),
+      },
       { label: t("categories.transport"), value: "transport" },
       { label: t("categories.bills"), value: "bills" },
       { label: t("categories.other"), value: "other" },

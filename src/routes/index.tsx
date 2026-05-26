@@ -9,7 +9,7 @@ import AppLayout from "../components/AppLayout/AppLayout";
 import SettingsPage from "../views/SettingPage";
 import VerifyEmailPage from "../views/Auth/VerifyEmailPage";
 import WorkspacesPage from "../views/Workspace/WorkspacesPage";
-
+import TransactionPage from "../views/Transactions/TransactionPage";
 const AppRouter = () => {
   return (
     <Routes>
@@ -25,6 +25,7 @@ const AppRouter = () => {
       <Route element={<ProtectedRoute />}>
         <Route element={<AppLayout />}>
           <Route path="/home" element={<Home />} />
+          <Route path="/transactions" element={<TransactionPage />} />
           <Route path="/workspace" element={<WorkspacesPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>

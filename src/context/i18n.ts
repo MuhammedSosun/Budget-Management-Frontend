@@ -5,6 +5,7 @@ import LanguageDetector from "i18next-browser-languagedetector";
 const resources = {
   en: {
     translation: {
+      no_active_workspace: "No active workspace found.",
       errors: {
         email_required: "Email is required.",
         email_invalid: "Please enter a valid email address.",
@@ -29,6 +30,11 @@ const resources = {
       edit_category: "Edit Category",
       add_transaction_this: "Add Transaction",
       edit_transaction_this: "Edit Transaction",
+      last_transactions: "Last Transactions",
+      last_transactions_description:
+        "Recent transaction movements can be viewed here.",
+      view_all: "View All",
+      no_transactions: "No transactions yet.",
       transactions_subtitle:
         "Income and expense movements can be managed here.",
       server_errors: {
@@ -179,7 +185,6 @@ const resources = {
       start_date: "Start Date",
       end_date: "End Date",
       reset: "Reset",
-      no_transactions: "No transactions found.",
       confirm_delete: "Confirm Delete",
       delete_confirm:
         "Are you sure you want to delete this? This action cannot be undone.",
@@ -283,6 +288,9 @@ const resources = {
         ara: "Dec",
       },
       toast: {
+        too_many_requests: "Too many requests",
+        too_many_requests_desc:
+          "You have made too many requests. Please try again later.",
         login_success: "Login successful",
         login_failed: "Login failed",
         register_success: "Account created",
@@ -322,10 +330,15 @@ const resources = {
           "You need to select an active workspace to perform this action.",
       },
       created_by: "Created by",
+      workspace_overview: "Workspace Overview",
       workspace: {
         workspaces: "Workspaces",
+        update_success: "Workspace updated successfully",
+        update_error: "Workspace update failed",
+        updating: "Updating...",
         edit: "Edit",
         name: "Name",
+
         description: "Description",
         name_placeholder: "Enter workspace name",
         description_placeholder: "Enter workspace description",
@@ -495,6 +508,21 @@ const resources = {
         permission_unavailable: "Unavailable",
         overview: "Overview",
         overview_ready_title: "Workspace panel is ready.",
+        overview_no_workspace_title: "No workspace selected.",
+        overview_no_workspace_description:
+          "Select a workspace to view your role and available actions.",
+
+        overview_owner_title: "You manage this workspace.",
+        overview_owner_description:
+          "As the owner, you can edit the workspace, manage members, send invitations, and delete non-default workspaces.",
+
+        overview_editor_title: "You can work with transactions here.",
+        overview_editor_description:
+          "As an editor, you can add, update, and manage transactions in this workspace, but you cannot manage members or invitations.",
+
+        overview_viewer_title: "You have read-only access.",
+        overview_viewer_description:
+          "As a viewer, you can only view workspace data. Member management and invitations are not available for your role.",
         overview_ready_description:
           "You can select a workspace from the left, create a new workspace, invite members, or view your pending invitations.",
       },
@@ -566,6 +594,7 @@ const resources = {
   },
   tr: {
     translation: {
+      no_active_workspace: "Aktif workspace bulunamadı.",
       dashboard_title: "Harcama Trendi",
       welcome_dashboard: "Hesabınıza Hoş Geldiniz",
       new_transaction: "Yeni İşlem",
@@ -729,6 +758,10 @@ const resources = {
       end_date: "Bitiş Tarihi",
       reset: "Sıfırla",
       no_transactions: "Henüz bir işlem bulunamadı.",
+      last_transactions: "Son İşlemler",
+      last_transactions_description:
+        "Son işlem hareketleri burada görüntülenebilir.",
+      view_all: "Tümünü Görüntüle",
       currency_label: "Para Birimi",
       confirm_delete: "Silmeyi Onayla",
       delete_confirm:
@@ -847,6 +880,9 @@ const resources = {
         ara: "Ara",
       },
       toast: {
+        too_many_requests: "Çok fazla istek",
+        too_many_requests_desc:
+          "Çok fazla istek yaptınız. Lütfen daha sonra tekrar deneyin.",
         transaction_deleted: "İşlem silindi",
         transaction_deleted_error: "İşlem silinirken hata oluştu",
         login_success: "Giriş başarılı",
@@ -883,10 +919,14 @@ const resources = {
           "Bu işlemi yapmak için aktif bir workspace seçmelisiniz.",
       },
       created_by: "Oluşturan kişi",
+      workspace_overview: "workspace genel bakışı",
       workspace: {
         edit: "Düzenle",
         name: "Workspace adı",
         save_changes: "Değişiklikleri kaydet",
+        update_success: "Workspace başarıyla güncellendi",
+        update_error: "Workspace güncelleme hatası",
+        updating: "Güncelleniyor...",
         name_placeholder: "Workspace adını gir",
         description: "Workspace açıklaması",
         description_placeholder: "Workspace açıklamasını gir",
@@ -1054,6 +1094,22 @@ const resources = {
         permission_unavailable: "Yok",
         overview: "Genel Bakış",
         overview_ready_title: "Workspace paneli hazır.",
+        overview_no_workspace_title: "Seçili workspace yok.",
+        overview_no_workspace_description:
+          "Rolünü ve yapabileceğin işlemleri görmek için bir workspace seç.",
+
+        overview_owner_title: "Bu workspace'i sen yönetiyorsun.",
+        overview_owner_description:
+          "Owner olarak workspace'i düzenleyebilir, üyeleri yönetebilir, davet gönderebilir ve varsayılan olmayan workspace'leri silebilirsin.",
+
+        overview_editor_title: "Bu workspace içinde işlem yapabilirsin.",
+        overview_editor_description:
+          "Editor olarak bu workspace içinde gelir-gider işlemleri ekleyebilir ve düzenleyebilirsin. Ancak üye yönetimi ve davet işlemleri yapamazsın.",
+
+        overview_viewer_title:
+          "Bu workspace için sadece görüntüleme yetkin var.",
+        overview_viewer_description:
+          "Viewer olarak workspace verilerini görüntüleyebilirsin. Üye yönetimi ve davet işlemleri bu rol için kullanılamaz.",
         overview_ready_description:
           "Sol taraftan workspace seçebilir, üstteki butonlardan yeni workspace oluşturabilir, üye davet edebilir veya gelen davetlerini görüntüleyebilirsin.",
       },

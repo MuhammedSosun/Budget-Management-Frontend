@@ -12,6 +12,7 @@ interface StatData {
 interface SpendingChartProps {
   workspaceId: string;
   currency: "TRY" | "USD" | "EUR";
+  refreshKey?: number;
 }
 const COLORS = [
   "#059669",
@@ -24,6 +25,7 @@ const COLORS = [
 export const SpendingChart = ({
   workspaceId,
   currency,
+  refreshKey,
 }: SpendingChartProps) => {
   const { t } = useTranslation();
   const [data, setData] = useState<StatData[]>([]);
@@ -59,7 +61,7 @@ export const SpendingChart = ({
     };
 
     fetchStats();
-  }, [workspaceId, currency, t, showLoading, hideLoading]);
+  }, [workspaceId, currency, t, showLoading, refreshKey]);
   const currencySymbol =
     currency === "TRY" ? "₺" : currency === "USD" ? "$" : "€";
   let total = 0;

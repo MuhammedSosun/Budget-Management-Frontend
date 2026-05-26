@@ -104,6 +104,32 @@ export const WorkspaceProvider = ({ children }: WorkspaceProviderProps) => {
 
     refreshWorkspaces();
   }, [isChecking, refreshWorkspaces]);
+  useEffect(() => {
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key !== ACTIVE_WORKSPACE_STORAGE_KEY) return;
+
+      const newWorkspaceId = event.newValue;
+
+      if (!newWorkspaceId) {
+        setActiveWorkspace(null);
+        return;
+      }
+
+      const selectedWorkspace = workspaces.find(
+        (workspace) => workspace.id === newWorkspaceId,
+      );
+
+      if (!selectedWorkspace) return;
+
+      setActiveWorkspace(selectedWorkspace);
+    };
+
+    window.addEventListener("storage", handleStorageChange);
+
+    return () => {
+      window.removeEventListener("storage", handleStorageChange);
+    };
+  }, [workspaces]);
 
   const setActiveWorkspaceById = useCallback(
     (workspaceId: string) => {
