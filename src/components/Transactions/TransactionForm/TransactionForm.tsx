@@ -15,6 +15,7 @@ import "./TransactionForm.scss";
 import { Controller, useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useWorkspace } from "../../../hooks/useWorkspace";
+import { getTransactionCategorySelectOptions } from "../../../constants/categories";
 
 interface TransactionFormProps {
   onSuccess?: () => void;
@@ -29,27 +30,6 @@ function TransactionForm({
 }: TransactionFormProps) {
   const { activeWorkspaceId } = useWorkspace();
   const { t } = useTranslation();
-
-  const CATEGORY_MAP = {
-    income: [
-      { label: t("categories.salary"), value: "salary" },
-      { label: t("categories.dividend"), value: "dividend" },
-      { label: t("categories.trade_profit"), value: "trade_profit" },
-      { label: t("categories.freelance"), value: "freelance" },
-      { label: t("categories.other"), value: "other" },
-    ],
-    expense: [
-      { label: t("categories.rent"), value: "rent" },
-      { label: t("categories.market"), value: "market" },
-      {
-        label: t("categories.etf_investment"),
-        value: t("categories.etf_investment"),
-      },
-      { label: t("categories.transport"), value: "transport" },
-      { label: t("categories.bills"), value: "bills" },
-      { label: t("categories.other"), value: "other" },
-    ],
-  };
 
   const [customCategories, setCustomCategories] = useState<
     { label: string; value: string }[]
@@ -91,7 +71,7 @@ function TransactionForm({
     }) ?? "expense";
 
   const currentCategoryOptions = [
-    ...CATEGORY_MAP[selectedType],
+    ...getTransactionCategorySelectOptions(selectedType, t),
     ...customCategories,
     { label: t("categories.custom"), value: "custom" },
   ];
@@ -155,7 +135,12 @@ function TransactionForm({
                 onChange={(val) => {
                   const nextType = val as "income" | "expense";
                   field.onChange(nextType);
-                  setValue("category", CATEGORY_MAP[nextType][0].value);
+
+                  const firstCategory = getTransactionCategorySelectOptions(
+                    nextType,
+                    t,
+                  )[0];
+                  setValue("category", firstCategory.value);
                 }}
                 error={errors.type?.message}
               />

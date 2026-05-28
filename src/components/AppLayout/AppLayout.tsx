@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import Sidebar from "../../components/Layout/Sidebar/Sidebar";
 import Header from "../../components/Layout/Header/Header";
+import MobileBottomNav from "../../components/Layout/MobileBottomNav/MobileBottomNav";
 import "./AppLayout.scss";
 
 function AppLayout() {
@@ -37,6 +38,8 @@ function AppLayout() {
         <main className="app-layout__content">
           <Outlet />
         </main>
+
+        <MobileBottomNav />
       </div>
     </div>
   );

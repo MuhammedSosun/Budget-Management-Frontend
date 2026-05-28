@@ -26,6 +26,11 @@ function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
       icon: "▤",
     },
     {
+      label: "Budgets",
+      path: "/budgets",
+      icon: "🎯",
+    },
+    {
       label: t("workspace.workspaces"),
       path: "/workspace",
       icon: "👥",
