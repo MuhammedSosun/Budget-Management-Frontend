@@ -1,4 +1,3 @@
-import React from "react";
 import "./Select.scss";
 
 interface Option {
@@ -13,14 +12,19 @@ interface SelectProps {
   onChange: (val: string) => void;
   error?: string;
 }
+
 function Select({ label, options, value, onChange, error }: SelectProps) {
   return (
     <div className="select-group">
       <label className="select-group__label">{label}</label>
+
       <select
-        className={`select-group__input ${error ? "select-group__input--error" : ""}`}
+        className={`select-group__input ${
+          error ? "select-group__input--error" : ""
+        }`}
         value={value}
         onChange={(e) => onChange(e.target.value)}
+        aria-invalid={Boolean(error)}
       >
         {options.map((option) => (
           <option key={option.value} value={option.value}>
@@ -28,6 +32,7 @@ function Select({ label, options, value, onChange, error }: SelectProps) {
           </option>
         ))}
       </select>
+
       {error && <span className="select-group__error-text">{error}</span>}
     </div>
   );

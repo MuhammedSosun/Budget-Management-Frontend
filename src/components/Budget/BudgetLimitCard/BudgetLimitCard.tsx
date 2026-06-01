@@ -12,12 +12,6 @@ interface BudgetLimitCardProps {
   onDelete: (budgetLimit: BudgetLimit) => void;
 }
 
-const statusLabelMap = {
-  SAFE: "Güvenli",
-  WARNING: "Dikkat",
-  EXCEEDED: "Aşıldı",
-};
-
 const formatMoney = (amount: number, currency: string) => {
   return `${amount.toLocaleString("tr-TR", {
     minimumFractionDigits: 0,
@@ -38,10 +32,16 @@ export const BudgetLimitCard = ({
   onEdit,
   onDelete,
 }: BudgetLimitCardProps) => {
+  const { t } = useTranslation();
+  const statusLabelMap = {
+    SAFE: t("budget.safe"),
+    WARNING: t("budget.warning"),
+    EXCEEDED: t("budget.exceeded"),
+  };
   const status = usage?.status || "SAFE";
   const usagePercentage = usage?.usagePercentage || 0;
   const progressPercentage = getSafePercentage(usagePercentage);
-  const { t } = useTranslation();
+
   const spentAmount = usage?.spent.amount || 0;
   const remainingAmount = usage?.remaining.amount ?? budgetLimit.limit.amount;
 

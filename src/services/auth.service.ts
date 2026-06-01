@@ -67,3 +67,20 @@ export const resendVerificationCode = async (payload: { email: string }) => {
   const response = await api.post("/auth/resend-verification-code", payload);
   return response.data;
 };
+export const forgotPassword = async (email: string) => {
+  const response = await api.post("/auth/forgot-password", {
+    email,
+  });
+
+  return response.data;
+};
+
+export const resetPassword = async (data: {
+  token: string;
+  password: string;
+  confirmPassword: string;
+}) => {
+  const response = await api.post("/auth/reset-password", data);
+
+  return response.data;
+};

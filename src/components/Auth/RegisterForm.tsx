@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import { register } from "../../services/auth.service";
 import Container from "../ui/Container/PageContainer";
@@ -10,31 +10,37 @@ import "./RegisterForm.scss";
 import { useLoading } from "../../hooks/useLoading";
 import { useTranslation } from "react-i18next";
 import { toast } from "sonner";
-interface ApiError {
-  message: string;
-}
+import type { ApiErrorResponse } from "../../types/api-error";
+import { getApiErrorMessage } from "../../utils/getApiErrorMessage";
 
 function RegisterForm() {
-  const { t } = useTranslation();
-  const registerSchema = z.object({
-    email: z
-      .string()
-      .min(1, t("errors.email_required"))
-      .email(t("errors.email_invalid")),
-    password: z
-      .string()
-      .min(1, t("errors.password_required"))
-      .min(6, t("errors.password_min")),
-    firstName: z
-      .string()
-      .min(1, t("errors.firstName_required"))
-      .min(3, t("errors.firstName_min")),
-    lastName: z
-      .string()
-      .min(1, t("errors.lastName_required"))
-      .min(3, t("errors.lastName_min")),
-  });
+  const { t, i18n } = useTranslation();
+
+  const registerSchema = useMemo(() => {
+    return z.object({
+      email: z
+        .string()
+        .min(1, t("errors.email_required"))
+        .email(t("errors.email_invalid")),
+
+      password: z
+        .string()
+        .min(1, t("errors.password_required"))
+        .min(6, t("errors.password_min")),
+
+      firstName: z
+        .string()
+        .min(1, t("errors.firstName_required"))
+        .min(3, t("errors.firstName_min")),
+
+      lastName: z
+        .string()
+        .min(1, t("errors.lastName_required"))
+        .min(3, t("errors.lastName_min")),
+    });
+  }, [t, i18n.language]);
   const { showLoading, hideLoading } = useLoading();
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -48,10 +54,12 @@ function RegisterForm() {
 
   const handleChange = (name: string, value: string) => {
     setFormData((prev) => ({ ...prev, [name]: value }));
-    if (errors[name]) {
+
+    if (errors[name] || errors.general) {
       setErrors((prev) => {
         const newErrors = { ...prev };
         delete newErrors[name];
+        delete newErrors.general;
         return newErrors;
       });
     }
@@ -71,6 +79,7 @@ function RegisterForm() {
       });
       return;
     }
+    setIsSubmitting(true);
     showLoading(t("loading.register"));
 
     try {
@@ -87,14 +96,34 @@ function RegisterForm() {
       });
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        const serverError = error.response?.data as ApiError;
-        const message = serverError?.message || t("errors.general");
+        const status = error.response?.status;
+
+        const serverError = error.response?.data as
+          | ApiErrorResponse
+          | undefined;
+        const message = getApiErrorMessage(t, serverError);
 
         setErrors((prev) => ({ ...prev, general: message }));
 
-        toast.error(t("toast.register_failed"), {
+        if (status === 429) {
+          toast.error(t("toast.too_many_requests"), {
+            description: message,
+          });
+          return;
+        }
+
+        if (serverError?.code === "USER_ALREADY_EXISTS") {
+          toast.error(t("toast.register_failed"), {
+            description: message,
+          });
+          return;
+        }
+
+        toast.error(t("toast.system_error"), {
           description: message,
         });
+
+        return;
       } else {
         const message = t("errors.system");
 
@@ -109,6 +138,7 @@ function RegisterForm() {
       }
     } finally {
       hideLoading();
+      setIsSubmitting(false);
     }
   };
 
@@ -166,10 +196,9 @@ function RegisterForm() {
             />
           </div>
 
-          <Button variant="primary" type="submit">
-            {t("register")}
+          <Button variant="primary" type="submit" disabled={isSubmitting}>
+            {isSubmitting ? t("loading.register") : t("register")}
           </Button>
-
           <div className="register-card__footer">
             {t("already_have_account")}
             <Button variant="link" onClick={() => navigate("/login")}>

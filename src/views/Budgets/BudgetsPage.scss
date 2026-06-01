@@ -40,9 +40,9 @@
   }
 
   &__toolbar {
-    display: flex;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    justify-content: space-between;
     gap: 1.25rem;
     margin-bottom: 1.5rem;
     padding: 1.25rem;
@@ -66,7 +66,7 @@
     display: inline-flex;
     margin-bottom: 0.35rem;
     color: var(--primary);
-    font-size: 0.75rem;
+    font-size: var(--font-xs);
     font-weight: 900;
     letter-spacing: 0.08em;
     text-transform: uppercase;
@@ -75,38 +75,41 @@
   &__toolbar-title {
     margin: 0;
     color: var(--text-main);
-    font-size: 1.05rem;
+    font-size: var(--font-lg);
     font-weight: 900;
     letter-spacing: -0.03em;
   }
 
   &__toolbar-description {
     margin: 0.35rem 0 0;
+    max-width: 520px;
     color: var(--text-muted);
-    font-size: 0.9rem;
+    font-size: var(--font-sm);
     font-weight: 600;
+    line-height: 1.45;
   }
 
   &__toolbar-actions {
-    display: flex;
-    align-items: flex-end;
+    display: grid;
+    grid-template-columns: 190px 150px;
+    align-items: end;
     gap: 0.85rem;
-    flex-wrap: wrap;
 
     .select-group {
-      min-width: 140px;
+      min-width: 0;
       margin: 0;
     }
 
     .select-group__label {
       color: var(--text-muted);
-      font-size: 0.8rem;
+      font-size: var(--font-xs);
       font-weight: 900;
     }
 
     .select-group__input {
-      min-height: 50px;
-      border-radius: 14px;
+      width: 100%;
+      min-height: 48px;
+      border-radius: var(--radius-md);
       background: color-mix(in srgb, var(--bg-body) 82%, transparent);
       border-color: var(--border);
       color: var(--text-main);
@@ -118,23 +121,25 @@
     display: flex;
     flex-direction: column;
     gap: 0.45rem;
+    min-width: 0;
   }
 
   &__filter-label {
     color: var(--text-muted);
-    font-size: 0.8rem;
+    font-size: var(--font-xs);
     font-weight: 900;
   }
 
   &__month-input {
-    min-height: 50px;
-    width: 190px;
-    padding: 0 1rem;
-    border-radius: 14px;
+    width: 100%;
+    min-height: 48px;
+    padding: 0 0.9rem;
+    border-radius: var(--radius-md);
     border: 1px solid var(--border);
     background: color-mix(in srgb, var(--bg-body) 82%, transparent);
     color: var(--text-main);
     font: inherit;
+    font-size: 16px;
     font-weight: 800;
     outline: none;
     box-sizing: border-box;
@@ -155,7 +160,6 @@
     &::-webkit-calendar-picker-indicator {
       cursor: pointer;
       opacity: 0.75;
-      filter: invert(0.7);
     }
   }
 
@@ -292,11 +296,12 @@
     }
 
     &__toolbar {
-      display: grid;
       grid-template-columns: 1fr;
+      align-items: stretch;
     }
 
-    &__month-input {
+    &__toolbar-actions {
+      grid-template-columns: 1fr 1fr;
       width: 100%;
     }
   }
@@ -304,15 +309,7 @@
 
 @media (max-width: 768px) {
   .budget-page {
-    &__toolbar {
-      align-items: stretch;
-      flex-direction: column;
-      padding: 1rem;
-    }
-
     &__toolbar-actions {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
       gap: 0.8rem;
       width: 100%;
 
@@ -337,6 +334,36 @@
   .budget-page {
     padding: 1rem;
 
+    &__toolbar {
+      gap: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius-lg);
+    }
+
+    &__toolbar-eyebrow {
+      font-size: 0.72rem;
+    }
+
+    &__toolbar-title {
+      font-size: 1rem;
+    }
+
+    &__toolbar-description {
+      font-size: 0.86rem;
+      line-height: 1.45;
+    }
+
+    &__toolbar-actions {
+      grid-template-columns: 1fr;
+      gap: 0.75rem;
+    }
+
+    &__toolbar-actions .select-group__input,
+    &__month-input {
+      min-height: 44px;
+      font-size: 16px;
+    }
+
     &__grid {
       grid-template-columns: 1fr;
     }
@@ -359,8 +386,5 @@
 
 @media (max-width: 480px) {
   .budget-page {
-    &__toolbar-actions {
-      grid-template-columns: 1fr;
-    }
   }
 }

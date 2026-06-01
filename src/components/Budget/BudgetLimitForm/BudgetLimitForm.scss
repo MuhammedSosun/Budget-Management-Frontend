@@ -53,13 +53,34 @@
 
 @media (max-width: 640px) {
   .budget-limit-form {
-    &__actions {
-      display: grid;
-      grid-template-columns: 1fr;
+    gap: 1.1rem;
+
+    &__grid {
+      gap: 0.95rem;
     }
 
-    &__actions .my-custom-button {
+    &__period-box {
+      padding: 0.9rem;
+      border-radius: var(--radius-md);
+    }
+
+    &__actions {
+      display: flex;
+      flex-direction: column-reverse;
+      align-items: stretch;
+      gap: 0.7rem;
+      padding-top: 0.85rem;
+    }
+
+    &__actions .my-custom-button--primary,
+    &__actions .my-custom-button--success,
+    &__actions .my-custom-button--danger {
       width: 100%;
+    }
+
+    &__actions .my-custom-button--link {
+      width: fit-content;
+      align-self: center;
     }
   }
 }

@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { login, googleLogin } from "../../services/auth.service";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../ui/Button/Button";
 import Input from "../ui/Input/Input";
 import Container from "../ui/Container/PageContainer";
@@ -257,6 +257,9 @@ function LoginForm({ onSuccessRedirect }: { onSuccessRedirect: string }) {
             onChange={(val) => handleChange("password", val)}
             error={errors.password}
           />
+          <Link to="/forgot-password" className="login-card__forgot-link">
+            {t("forgot_password.title")}
+          </Link>
 
           <Button variant="primary" type="submit" disabled={isSubmitting}>
             {isSubmitting ? t("loading.keep_going") : t("login")}

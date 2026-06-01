@@ -38,110 +38,131 @@ const resources = {
       transactions_subtitle:
         "Income and expense movements can be managed here.",
       server_errors: {
-        USER_NOT_FOUND: "Kullanıcı bulunamadı.",
-        INVALID_CREDENTIALS: "E-posta veya şifre hatalı.",
-        EMAIL_NOT_VERIFIED: "Lütfen önce e-posta adresinizi doğrulayın.",
-        USER_ALREADY_EXISTS: "Bu kullanıcı zaten mevcut.",
-
-        UNAUTHORIZED: "Yetkisiz istek.",
-        FORBIDDEN: "Erişim engellendi.",
-        NOT_FOUND: "İstenen kaynak bulunamadı.",
-        INTERNAL_SERVER_ERROR: "Sunucu hatası oluştu.",
-        VALIDATION_ERROR: "Geçersiz veri gönderildi.",
-
-        TOKEN_NOT_FOUND: "Token bulunamadı.",
-        INVALID_OR_EXPIRED_TOKEN: "Token geçersiz veya süresi dolmuş.",
-        ACCESS_TOKEN_EXPIRED:
-          "Oturum süreniz doldu. Lütfen tekrar giriş yapın.",
-        ACCESS_TOKEN_INVALID: "Oturum bilginiz geçersiz.",
-        REFRESH_TOKEN_NOT_FOUND: "Refresh token bulunamadı.",
-        REFRESH_TOKEN_INVALID: "Refresh token geçersiz.",
-        REFRESH_TOKEN_EXPIRED:
-          "Refresh token süresi doldu. Lütfen tekrar giriş yapın.",
-
-        RATE_LIMIT_EXCEEDED:
-          "Çok fazla istek gönderdiniz. Lütfen biraz bekleyin.",
-        RATE_LIMIT_GENERAL:
-          "Çok fazla istek gönderdiniz. Lütfen biraz bekleyin.",
-        RATE_LIMIT_TOO_FAST:
-          "Çok hızlı işlem yapıyorsunuz. Lütfen biraz bekleyin.",
-        RATE_LIMIT_EMAIL_RESEND:
-          "Yeni doğrulama kodu istemeden önce lütfen 1 dakika bekleyin.",
-        RATE_LIMIT_REFRESH:
-          "Çok fazla oturum yenileme isteği gönderildi. Lütfen daha sonra tekrar deneyin.",
-
+        USER_NOT_FOUND: "User not found.",
+        INVALID_CREDENTIALS: "Incorrect email or password.",
+        EMAIL_NOT_VERIFIED: "Please verify your email address first.",
+        USER_ALREADY_EXISTS: "This email address is already registered.",
+        DEFAULT_WORKSPACE_CANNOT_BE_DELETED:
+          "Default workspace cannot be deleted.",
+        WORKSPACE_OWNER_NOT_FOUND: "Workspace owner was not found.",
+        INVALID_ID: "Invalid ID.",
+        WORKSPACE_UPDATE_FAILED: "Failed to update workspace.",
+        WORKSPACE_OWNER_CANNOT_LEAVE: "The owner cannot leave the workspace.",
+        DEFAULT_WORKSPACE_CANNOT_BE_LEFT: "Default workspace cannot be left.",
+        BUDGET_LIMIT_ALREADY_EXISTS:
+          "A budget limit already exists for this category and period.",
+        BUDGET_LIMIT_CREATE_FAILED: "Failed to create budget limit.",
+        BUDGET_LIMIT_NOT_FOUND: "Budget limit not found.",
+        BUDGET_LIMIT_UPDATE_FAILED: "Failed to update budget limit.",
+        INVALID_BUDGET_MONTH: "Invalid budget month.",
+        PASSWORD_RESET_LINK_SENT_IF_EMAIL_EXISTS:
+          "If an account with this email address exists, a password reset link has been sent.",
+        FAILED_TO_SEND_PASSWORD_RESET_LINK:
+          "Failed to send password reset link.",
+        PASSWORD_RESET_TOKEN_INVALID:
+          "Invalid or expired password reset token.",
+        PASSWORD_RESET_TOKEN_EXPIRED: "Password reset token has expired.",
         IDEMPOTENCY_KEY_REUSED:
-          "Bu istek daha önce işlendi. Lütfen yeni bir istek anahtarı kullanın.",
+          "This request has already been processed. Please use a new request key.",
+        PASSWORD_RESET_IF_EMAIL_EXIST:
+          "If an account with this email address exists, a password reset link has been sent.",
+        UNAUTHORIZED: "Unauthorized request.",
+        FORBIDDEN: "Access forbidden.",
+        NOT_FOUND: "Requested resource was not found.",
+        INTERNAL_SERVER_ERROR: "An internal server error occurred.",
+        VALIDATION_ERROR: "Invalid data was submitted.",
+
+        TOKEN_NOT_FOUND: "Token not found.",
+        INVALID_OR_EXPIRED_TOKEN: "Token is invalid or expired.",
+        ACCESS_TOKEN_EXPIRED: "Your session has expired. Please log in again.",
+        ACCESS_TOKEN_INVALID: "Your session information is invalid.",
+        REFRESH_TOKEN_NOT_FOUND: "Refresh token was not found.",
+        REFRESH_TOKEN_INVALID: "Refresh token is invalid.",
+        REFRESH_TOKEN_EXPIRED:
+          "Refresh token has expired. Please log in again.",
+
+        RATE_LIMIT_EXCEEDED: "Too many requests. Please wait a moment.",
+        RATE_LIMIT_TOO_FAST:
+          "You are sending requests too quickly. Please wait a moment.",
+        RATE_LIMIT_EMAIL_RESEND:
+          "Please wait before requesting a new verification code.",
+        RATE_LIMIT_REFRESH:
+          "Too many session refresh attempts. Please try again later.",
+
         IDEMPOTENCY_KEY_CONFLICT:
-          "Bu istek anahtarı farklı bir veriyle kullanılmış. Lütfen yeni bir istek anahtarı kullanın.",
+          "This request key was used with different data. Please use a new request key.",
+        IDEMPOTENCY_REQUEST_ALREADY_PROCESSED:
+          "This request has already been processed. Please use a new request key.",
 
-        WORKSPACE_NOT_FOUND: "Workspace bulunamadı.",
-        WORKSPACE_ALREADY_EXISTS: "Bu workspace zaten mevcut.",
-        WORKSPACE_ACCESS_DENIED: "Bu workspace için yetkiniz yok.",
-        WORKSPACE_CREATE_FAILED: "Workspace oluşturulamadı.",
-        DEFAULT_WORKSPACE_CREATE_FAILED: "Varsayılan workspace oluşturulamadı.",
+        WORKSPACE_NOT_FOUND: "Workspace not found.",
+        WORKSPACE_ALREADY_EXISTS: "Workspace already exists.",
+        WORKSPACE_ACCESS_DENIED: "You do not have access to this workspace.",
+        WORKSPACE_CREATE_FAILED: "Failed to create workspace.",
+        DEFAULT_WORKSPACE_CREATE_FAILED: "Failed to create default workspace.",
         WORKSPACE_OWNER_MEMBER_CREATE_FAILED:
-          "Workspace sahibi üye olarak eklenemedi.",
+          "Failed to create workspace owner member.",
 
-        WORKSPACE_MEMBER_NOT_FOUND: "Workspace üyesi bulunamadı.",
+        WORKSPACE_MEMBER_NOT_FOUND: "Workspace member not found.",
         WORKSPACE_MEMBER_NOT_IN_WORKSPACE:
-          "Bu üye seçili workspace'e ait değil.",
-        WORKSPACE_MEMBER_ROLE_UPDATE_FAILED: "Üye rolü güncellenemedi.",
-        WORKSPACE_MEMBER_USER_NOT_FOUND: "Bu üyeye bağlı kullanıcı bulunamadı.",
-        OWNER_ROLE_CANNOT_BE_CHANGED: "OWNER rolü değiştirilemez.",
-        OWNER_CANNOT_BE_REMOVED: "OWNER workspace'ten çıkarılamaz.",
+          "This member does not belong to the selected workspace.",
+        WORKSPACE_MEMBER_ROLE_UPDATE_FAILED: "Failed to update member role.",
+        WORKSPACE_MEMBER_USER_NOT_FOUND:
+          "User linked to this member was not found.",
+        OWNER_ROLE_CANNOT_BE_CHANGED: "The OWNER role cannot be changed.",
+        OWNER_CANNOT_BE_REMOVED:
+          "The OWNER cannot be removed from the workspace.",
         CANNOT_REMOVE_YOURSELF_FROM_WORKSPACE:
-          "Kendinizi workspace'ten çıkaramazsınız.",
+          "You cannot remove yourself from the workspace.",
 
         WORKSPACE_INVITATION_USER_NOT_FOUND:
-          "Bu e-posta adresine sahip kullanıcı bulunamadı.",
-        CANNOT_INVITE_YOURSELF: "Kendinize davet gönderemezsiniz.",
-        USER_ALREADY_WORKSPACE_MEMBER: "Bu kullanıcı zaten workspace üyesi.",
+          "No user was found with this email address.",
+        CANNOT_INVITE_YOURSELF: "You cannot invite yourself.",
+        USER_ALREADY_WORKSPACE_MEMBER:
+          "This user is already a workspace member.",
         WORKSPACE_INVITATION_ALREADY_PENDING:
-          "Bu kullanıcı için zaten bekleyen bir davet var.",
-        WORKSPACE_INVITATION_NOT_FOUND: "Davet bulunamadı.",
-        WORKSPACE_INVITATION_NOT_VALID: "Bu davet artık geçerli değil.",
-        WORKSPACE_INVITATION_EXPIRED: "Bu davetin süresi dolmuş.",
+          "There is already a pending invitation for this user.",
+        WORKSPACE_INVITATION_NOT_FOUND: "Invitation not found.",
+        WORKSPACE_INVITATION_NOT_VALID: "This invitation is no longer valid.",
+        WORKSPACE_INVITATION_EXPIRED: "This invitation has expired.",
         WORKSPACE_INVITATION_NOT_OWNED_BY_USER:
-          "Bu davet bu kullanıcıya ait değil.",
-        WORKSPACE_INVITATION_REJECT_FAILED: "Davet reddedilemedi.",
+          "This invitation does not belong to this user.",
+        WORKSPACE_INVITATION_REJECT_FAILED: "Failed to reject the invitation.",
         WORKSPACE_INVITATION_WORKSPACE_NOT_FOUND:
-          "Bu davete bağlı workspace bulunamadı.",
+          "Workspace linked to this invitation was not found.",
 
         GOOGLE_ACCOUNT_PASSWORD_NOT_AVAILABLE:
-          "Bu hesap Google ile oluşturulmuş. Lütfen önce şifre belirleyin.",
-        PASSWORD_MISMATCH: "Mevcut şifreniz hatalı.",
-        PASSWORD_UPDATE_FAILED: "Şifre güncellenemedi.",
-        PROFILE_UPDATE_FAILED: "Profil bilgileri güncellenemedi.",
-        AVATAR_UPDATE_FAILED: "Profil fotoğrafı güncellenemedi.",
+          "This account was created with Google. Please set a local password first.",
+        PASSWORD_MISMATCH: "Passwords do not match.",
+        PASSWORD_UPDATE_FAILED: "Failed to update password.",
+        PROFILE_UPDATE_FAILED: "Failed to update profile information.",
+        AVATAR_UPDATE_FAILED: "Failed to update profile picture.",
 
-        TRANSACTION_CREATE_FAILED: "İşlem oluşturulamadı.",
-        TRANSACTION_UPDATE_FAILED: "İşlem güncellenemedi.",
-        TRANSACTION_DELETE_FAILED: "İşlem silinemedi.",
-        TRANSACTION_NOT_FOUND: "İşlem bulunamadı.",
-        TRANSACTION_ALREADY_EXISTS: "İşlem zaten mevcut.",
-        INVALID_TRANSACTION_CURRENCY: "Geçersiz işlem para birimi.",
-        INVALID_TRANSACTION_DATE_RANGE: "Geçersiz tarih aralığı.",
+        TRANSACTION_CREATE_FAILED: "Failed to create transaction.",
+        TRANSACTION_UPDATE_FAILED: "Failed to update transaction.",
+        TRANSACTION_DELETE_FAILED: "Failed to delete transaction.",
+        TRANSACTION_NOT_FOUND: "Transaction not found.",
+        TRANSACTION_ALREADY_EXISTS: "Transaction already exists.",
+        INVALID_TRANSACTION_CURRENCY: "Invalid transaction currency.",
+        INVALID_TRANSACTION_DATE_RANGE: "Invalid date range.",
 
-        EMAIL_ALREADY_VERIFIED: "E-posta adresi zaten doğrulanmış.",
-        EMAIL_VERIFICATION_CODE_INVALID: "Doğrulama kodu geçersiz.",
-        EMAIL_VERIFICATION_CODE_EXPIRED: "Doğrulama kodunun süresi dolmuş.",
+        EMAIL_ALREADY_VERIFIED: "Email address is already verified.",
+        EMAIL_VERIFICATION_CODE_INVALID: "Verification code is invalid.",
+        EMAIL_VERIFICATION_CODE_EXPIRED: "Verification code has expired.",
         EMAIL_VERIFICATION_TOO_MANY_ATTEMPTS:
-          "Çok fazla hatalı deneme yaptınız. Lütfen yeni kod isteyin.",
-        TOO_MANY_ATTEMPTS: "Çok fazla hatalı deneme yaptınız.",
+          "Too many failed attempts. Please request a new code.",
+        TOO_MANY_ATTEMPTS: "Too many failed attempts.",
 
-        GOOGLE_LOGIN_FAILED: "Google ile giriş başarısız.",
-        GOOGLE_SIGNUP_FAILED: "Google ile kayıt başarısız.",
-        GOOGLE_ACCOUNT_IS_NOT_VERIFIED: "Google hesabı doğrulanmamış.",
+        GOOGLE_LOGIN_FAILED: "Google login failed.",
+        GOOGLE_SIGNUP_FAILED: "Google signup failed.",
+        GOOGLE_ACCOUNT_IS_NOT_VERIFIED: "Google account is not verified.",
         GOOGLE_EMAIL_ACCOUNT_IS_NOT_VERIFIED:
-          "Google e-posta hesabı doğrulanmamış.",
+          "Google email account is not verified.",
         GOOGLE_USER_ALREADY_EXISTS_EMAIL:
-          "Bu e-posta Google girişi ile kullanılmalıdır.",
-        GOOGLE_USER_NOT_FOUND: "Lütfen önce Google ile kayıt olun.",
+          "This email address should be used with Google login.",
+        GOOGLE_USER_NOT_FOUND: "Please sign up with Google first.",
 
-        INVALID_IMAGE_FORMAT:
-          "Sadece JPEG, PNG veya WEBP formatları desteklenir.",
-        AVATAR_REQUIRED: "Profil fotoğrafı zorunludur.",
+        INVALID_IMAGE_FORMAT: "Only JPEG, PNG or WEBP formats are supported.",
+        AVATAR_REQUIRED: "Profile picture is required.",
       },
       title: "Title",
       amount: "Amount",
@@ -291,6 +312,41 @@ const resources = {
         eke: "Oct",
         kas: "Nov",
         ara: "Dec",
+      },
+
+      forgot_password: {
+        title: "Forgot Password",
+        description:
+          "Enter the e-mail address linked to your account. We will send you a password reset link.",
+        email_required: "E-mail address is required.",
+        email_invalid: "Please enter a valid email address.",
+        submit: "Send Reset Link",
+        sending: "Sending...",
+        success_title: "Password reset link sent.",
+        success_description:
+          "If an account exists with this e-mail address, the reset link has been sent.",
+        error_title: "Password reset request could not be sent.",
+      },
+
+      reset_password: {
+        title: "Create New Password",
+        description: "Set a new password for your account.",
+        new_password: "New Password",
+        new_password_placeholder: "Enter your new password",
+        confirm_password: "Confirm New Password",
+        confirm_password_placeholder: "Enter your new password again",
+        submit: "Update Password",
+        updating: "Updating...",
+        token_invalid: "The password reset link is invalid.",
+        password_required: "New password is required.",
+        password_min: "Password must be at least 6 characters.",
+        password_max: "Password can be at most 72 characters.",
+        confirm_password_required: "Password confirmation is required.",
+        passwords_not_match: "Passwords do not match.",
+        success_title: "Your password has been updated successfully.",
+        success_description: "You can now log in with your new password.",
+        error_title: "Password reset failed.",
+        error_description: "The reset link may be expired or invalid.",
       },
       toast: {
         too_many_requests: "Too many requests",
@@ -669,6 +725,8 @@ const resources = {
         status_exceeded: "{{count}} exceeded",
         create_limit: "Create limit",
         update_limit: "Update limit",
+        safe: "safe",
+        warning: "warning",
       },
     },
   },
@@ -685,113 +743,141 @@ const resources = {
       transactions_subtitle:
         "Gelir ve gider hareketlerini buradan yönetebilirsin.",
       server_errors: {
-        USER_NOT_FOUND: "User not found.",
-        INVALID_CREDENTIALS: "Invalid email or password.",
-        EMAIL_NOT_VERIFIED: "Please verify your email address first.",
-        USER_ALREADY_EXISTS: "This user already exists.",
-
-        UNAUTHORIZED: "Unauthorized request.",
-        FORBIDDEN: "Access denied.",
-        NOT_FOUND: "Requested resource was not found.",
-        INTERNAL_SERVER_ERROR: "A server error occurred.",
-        VALIDATION_ERROR: "Invalid data was sent.",
-
-        TOKEN_NOT_FOUND: "Token not found.",
-        INVALID_OR_EXPIRED_TOKEN: "Invalid or expired token.",
-        ACCESS_TOKEN_EXPIRED: "Your session has expired. Please log in again.",
-        ACCESS_TOKEN_INVALID: "Your session information is invalid.",
-        REFRESH_TOKEN_NOT_FOUND: "Refresh token not found.",
-        REFRESH_TOKEN_INVALID: "Refresh token is invalid.",
-        REFRESH_TOKEN_EXPIRED:
-          "Refresh token has expired. Please log in again.",
-
-        RATE_LIMIT_EXCEEDED: "Too many requests. Please wait a moment.",
-        RATE_LIMIT_GENERAL: "Too many requests. Please wait a moment.",
-        RATE_LIMIT_TOO_FAST:
-          "You are acting too quickly. Please wait a moment.",
-        RATE_LIMIT_EMAIL_RESEND:
-          "Please wait 1 minute before requesting a new verification code.",
-        RATE_LIMIT_REFRESH:
-          "Too many session refresh attempts. Please try again later.",
-
+        USER_NOT_FOUND: "Kullanıcı bulunamadı.",
+        INVALID_CREDENTIALS: "E-posta veya şifre hatalı.",
+        EMAIL_NOT_VERIFIED: "Lütfen önce e-posta adresinizi doğrulayın.",
+        USER_ALREADY_EXISTS: "Bu e-posta adresi zaten kayıtlı.",
+        DEFAULT_WORKSPACE_CANNOT_BE_DELETED:
+          "Varsayılan çalışma alanı silinemez.",
+        WORKSPACE_OWNER_NOT_FOUND: "Çalışma alanı sahibi bulunamadı.",
+        INVALID_ID: "Geçersiz kimlik (ID).",
+        WORKSPACE_UPDATE_FAILED: "Çalışma alanı güncellenemedi.",
+        WORKSPACE_OWNER_CANNOT_LEAVE:
+          "Çalışma alanı sahibi çalışma alanından ayrılamaz.",
+        DEFAULT_WORKSPACE_CANNOT_BE_LEFT:
+          "Varsayılan çalışma alanından ayrılamaz.",
+        BUDGET_LIMIT_ALREADY_EXISTS:
+          "Bu kategori ve dönem için zaten bir bütçe limiti mevcut.",
+        BUDGET_LIMIT_CREATE_FAILED: "Bütçe limiti oluşturulamadı.",
+        BUDGET_LIMIT_NOT_FOUND: "Bütçe limiti bulunamadı.",
+        BUDGET_LIMIT_UPDATE_FAILED: "Bütçe limiti güncellenemedi.",
+        INVALID_BUDGET_MONTH: "Geçersiz bütçe ayı.",
+        PASSWORD_RESET_LINK_SENT_IF_EMAIL_EXISTS:
+          "Bu e-posta adresine ait bir hesap varsa, şifre sıfırlama bağlantısı gönderilmiştir.",
+        FAILED_TO_SEND_PASSWORD_RESET_LINK:
+          "Şifre sıfırlama bağlantısı gönderilemedi.",
+        PASSWORD_RESET_TOKEN_INVALID:
+          "Şifre sıfırlama belirteci (token) geçersiz veya süresi dolmuş.",
+        PASSWORD_RESET_TOKEN_EXPIRED:
+          "Şifre sıfırlama belirtecinin (token) süresi dolmuş.",
         IDEMPOTENCY_KEY_REUSED:
-          "This request has already been processed. Please use a new request key.",
+          "Bu istek zaten işleme alındı. Lütfen yeni bir istek anahtarı kullanın.",
+        PASSWORD_RESET_IF_EMAIL_EXIST:
+          "Bu e-posta adresine ait bir hesap varsa, şifre sıfırlama bağlantısı gönderilmiştir.",
+        UNAUTHORIZED: "Yetkisiz istek.",
+        FORBIDDEN: "Erişim engellendi.",
+        NOT_FOUND: "İstenen kaynak bulunamadı.",
+        INTERNAL_SERVER_ERROR: "Sunucu içi bir hata oluştu.",
+        VALIDATION_ERROR: "Gönderilen veriler geçersiz.",
+
+        TOKEN_NOT_FOUND: "Belirteç (token) bulunamadı.",
+        INVALID_OR_EXPIRED_TOKEN:
+          "Belirteç (token) geçersiz veya süresi dolmuş.",
+        ACCESS_TOKEN_EXPIRED:
+          "Oturumunuzun süresi doldu. Lütfen tekrar giriş yapın.",
+        ACCESS_TOKEN_INVALID: "Oturum bilgileriniz geçersiz.",
+        REFRESH_TOKEN_NOT_FOUND:
+          "Yenileme belirteci (refresh token) bulunamadı.",
+        REFRESH_TOKEN_INVALID: "Yenileme belirteci (refresh token) geçersiz.",
+        REFRESH_TOKEN_EXPIRED:
+          "Yenileme belirtecinin süresi dolmuş. Lütfen tekrar giriş yapın.",
+
+        RATE_LIMIT_EXCEEDED:
+          "Çok fazla istek gönderildi. Lütfen biraz bekleyin.",
+        RATE_LIMIT_TOO_FAST:
+          "Çok hızlı istek gönderiyorsunuz. Lütfen biraz bekleyin.",
+        RATE_LIMIT_EMAIL_RESEND:
+          "Yeni bir doğrulama kodu istemeden önce lütfen bekleyin.",
+        RATE_LIMIT_REFRESH:
+          "Çok fazla oturum yenileme denemesi yapıldı. Lütfen daha sonra tekrar deneyin.",
+
         IDEMPOTENCY_KEY_CONFLICT:
-          "This request key was used with different data. Please use a new request key.",
+          "Bu istek anahtarı farklı verilerle kullanılmış. Lütfen yeni bir istek anahtarı kullanın.",
+        IDEMPOTENCY_REQUEST_ALREADY_PROCESSED:
+          "Bu istek zaten işleme alındı. Lütfen yeni bir istek anahtarı kullanın.",
 
-        WORKSPACE_NOT_FOUND: "Workspace not found.",
-        WORKSPACE_ALREADY_EXISTS: "This workspace already exists.",
-        WORKSPACE_ACCESS_DENIED:
-          "You do not have permission for this workspace.",
-        WORKSPACE_CREATE_FAILED: "Workspace could not be created.",
+        WORKSPACE_NOT_FOUND: "Çalışma alanı bulunamadı.",
+        WORKSPACE_ALREADY_EXISTS: "Çalışma alanı zaten mevcut.",
+        WORKSPACE_ACCESS_DENIED: "Bu çalışma alanına erişim izniniz yok.",
+        WORKSPACE_CREATE_FAILED: "Çalışma alanı oluşturulamadı.",
         DEFAULT_WORKSPACE_CREATE_FAILED:
-          "Default workspace could not be created.",
+          "Varsayılan çalışma alanı oluşturulamadı.",
         WORKSPACE_OWNER_MEMBER_CREATE_FAILED:
-          "Workspace owner could not be added as a member.",
+          "Çalışma alanı sahibi üye kaydı oluşturulamadı.",
 
-        WORKSPACE_MEMBER_NOT_FOUND: "Workspace member not found.",
+        WORKSPACE_MEMBER_NOT_FOUND: "Çalışma alanı üyesi bulunamadı.",
         WORKSPACE_MEMBER_NOT_IN_WORKSPACE:
-          "This member does not belong to the selected workspace.",
-        WORKSPACE_MEMBER_ROLE_UPDATE_FAILED:
-          "Member role could not be updated.",
-        WORKSPACE_MEMBER_USER_NOT_FOUND:
-          "The user linked to this member could not be found.",
-        OWNER_ROLE_CANNOT_BE_CHANGED: "The OWNER role cannot be changed.",
+          "Bu üye seçilen çalışma alanına ait değil.",
+        WORKSPACE_MEMBER_ROLE_UPDATE_FAILED: "Üye rolü güncellenemedi.",
+        WORKSPACE_MEMBER_USER_NOT_FOUND: "Bu üyeye bağlı kullanıcı bulunamadı.",
+        OWNER_ROLE_CANNOT_BE_CHANGED: "SAHİP (OWNER) rolü değiştirilemez.",
         OWNER_CANNOT_BE_REMOVED:
-          "The OWNER cannot be removed from the workspace.",
+          "SAHİP (OWNER) çalışma alanından kaldırılamaz.",
         CANNOT_REMOVE_YOURSELF_FROM_WORKSPACE:
-          "You cannot remove yourself from the workspace.",
+          "Kendinizi çalışma alanından kaldıramazsınız.",
 
         WORKSPACE_INVITATION_USER_NOT_FOUND:
-          "No user was found with this email address.",
-        CANNOT_INVITE_YOURSELF: "You cannot invite yourself.",
+          "Bu e-posta adresine sahip bir kullanıcı bulunamadı.",
+        CANNOT_INVITE_YOURSELF: "Kendinizi davet edemezsiniz.",
         USER_ALREADY_WORKSPACE_MEMBER:
-          "This user is already a workspace member.",
+          "Bu kullanıcı zaten çalışma alanının bir üyesi.",
         WORKSPACE_INVITATION_ALREADY_PENDING:
-          "There is already a pending invitation for this user.",
-        WORKSPACE_INVITATION_NOT_FOUND: "Invitation not found.",
-        WORKSPACE_INVITATION_NOT_VALID: "This invitation is no longer valid.",
-        WORKSPACE_INVITATION_EXPIRED: "This invitation has expired.",
+          "Bu kullanıcı için zaten bekleyen bir davet var.",
+        WORKSPACE_INVITATION_NOT_FOUND: "Davet bulunamadı.",
+        WORKSPACE_INVITATION_NOT_VALID: "Bu davet artık geçerli değil.",
+        WORKSPACE_INVITATION_EXPIRED: "Bu davetin süresi dolmuş.",
         WORKSPACE_INVITATION_NOT_OWNED_BY_USER:
-          "This invitation does not belong to this user.",
-        WORKSPACE_INVITATION_REJECT_FAILED: "Invitation could not be rejected.",
+          "Bu davet bu kullanıcıya ait değil.",
+        WORKSPACE_INVITATION_REJECT_FAILED: "Davet reddedilemedi.",
         WORKSPACE_INVITATION_WORKSPACE_NOT_FOUND:
-          "The workspace linked to this invitation could not be found.",
+          "Bu davete bağlı çalışma alanı bulunamadı.",
 
         GOOGLE_ACCOUNT_PASSWORD_NOT_AVAILABLE:
-          "This account was created with Google. Please set a password first.",
-        PASSWORD_MISMATCH: "Your current password is incorrect.",
-        PASSWORD_UPDATE_FAILED: "Password could not be updated.",
-        PROFILE_UPDATE_FAILED: "Profile could not be updated.",
-        AVATAR_UPDATE_FAILED: "Profile photo could not be updated.",
+          "Bu hesap Google ile oluşturulmuş. Lütfen önce yerel bir şifre belirleyin.",
+        PASSWORD_MISMATCH: "Şifreler uyuşmuyor.",
+        PASSWORD_UPDATE_FAILED: "Şifre güncellenemedi.",
+        PROFILE_UPDATE_FAILED: "Profil bilgileri güncellenemedi.",
+        AVATAR_UPDATE_FAILED: "Profil resmi güncellenemedi.",
 
-        TRANSACTION_CREATE_FAILED: "Transaction could not be created.",
-        TRANSACTION_UPDATE_FAILED: "Transaction could not be updated.",
-        TRANSACTION_DELETE_FAILED: "Transaction could not be deleted.",
-        TRANSACTION_NOT_FOUND: "Transaction not found.",
-        TRANSACTION_ALREADY_EXISTS: "Transaction already exists.",
-        INVALID_TRANSACTION_CURRENCY: "Invalid transaction currency.",
-        INVALID_TRANSACTION_DATE_RANGE: "Invalid date range.",
+        TRANSACTION_CREATE_FAILED: "İşlem (transaction) oluşturulamadı.",
+        TRANSACTION_UPDATE_FAILED: "İşlem güncellenemedi.",
+        TRANSACTION_DELETE_FAILED: "İşlem silinemedi.",
+        TRANSACTION_NOT_FOUND: "İşlem bulunamadı.",
+        TRANSACTION_ALREADY_EXISTS: "İşlem zaten mevcut.",
+        INVALID_TRANSACTION_CURRENCY: "Geçersiz işlem para birimi.",
+        INVALID_TRANSACTION_DATE_RANGE: "Geçersiz tarih aralığı.",
 
-        EMAIL_ALREADY_VERIFIED: "Email address is already verified.",
-        EMAIL_VERIFICATION_CODE_INVALID: "Verification code is invalid.",
-        EMAIL_VERIFICATION_CODE_EXPIRED: "Verification code has expired.",
+        EMAIL_ALREADY_VERIFIED: "E-posta adresi zaten doğrulanmış.",
+        EMAIL_VERIFICATION_CODE_INVALID: "Doğrulama kodu geçersiz.",
+        EMAIL_VERIFICATION_CODE_EXPIRED: "Doğrulama kodunun süresi dolmuş.",
         EMAIL_VERIFICATION_TOO_MANY_ATTEMPTS:
-          "Too many failed attempts. Please request a new code.",
-        TOO_MANY_ATTEMPTS: "Too many failed attempts.",
+          "Çok fazla hatalı deneme yapıldı. Lütfen yeni bir kod isteyin.",
+        TOO_MANY_ATTEMPTS: "Çok fazla hatalı deneme yapıldı.",
 
-        GOOGLE_LOGIN_FAILED: "Google login failed.",
-        GOOGLE_SIGNUP_FAILED: "Google signup failed.",
-        GOOGLE_ACCOUNT_IS_NOT_VERIFIED: "Google account is not verified.",
+        GOOGLE_LOGIN_FAILED: "Google ile giriş başarısız oldu.",
+        GOOGLE_SIGNUP_FAILED: "Google ile kayıt başarısız oldu.",
+        GOOGLE_ACCOUNT_IS_NOT_VERIFIED: "Google hesabı doğrulanmamış.",
         GOOGLE_EMAIL_ACCOUNT_IS_NOT_VERIFIED:
-          "Google email account is not verified.",
+          "Google e-posta hesabı doğrulanmamış.",
         GOOGLE_USER_ALREADY_EXISTS_EMAIL:
-          "This email should be used with Google login.",
-        GOOGLE_USER_NOT_FOUND: "Please sign up with Google first.",
+          "Bu e-posta adresi Google girişi ile kullanılmalıdır.",
+        GOOGLE_USER_NOT_FOUND: "Lütfen önce Google ile kayıt olun.",
 
-        INVALID_IMAGE_FORMAT: "Only JPEG, PNG, or WEBP formats are supported.",
-        AVATAR_REQUIRED: "Profile photo is required.",
+        INVALID_IMAGE_FORMAT:
+          "Yalnızca JPEG, PNG veya WEBP formatları desteklenmektedir.",
+        AVATAR_REQUIRED: "Profil resmi zorunludur.",
       },
+
       add_transaction_this: "İşlem Ekle",
       edit_transaction_this: "İşlemi Güncelle",
       title: "Başlık",
@@ -967,6 +1053,41 @@ const resources = {
         kas: "Kas",
         ara: "Ara",
       },
+      forgot_password: {
+        title: "Şifremi Unuttum",
+        description:
+          "Hesabına bağlı e-posta adresini gir. Sana şifre sıfırlama bağlantısı gönderelim.",
+        email_required: "E-posta adresi zorunludur.",
+        email_invalid: "Geçerli bir e-posta adresi giriniz.",
+        submit: "Sıfırlama Bağlantısı Gönder",
+        sending: "Gönderiliyor...",
+        success_title: "Şifre sıfırlama bağlantısı gönderildi.",
+        success_description:
+          "Eğer bu e-posta ile kayıtlı bir hesap varsa bağlantı mail adresine gönderildi.",
+        error_title: "Şifre sıfırlama isteği gönderilemedi.",
+      },
+
+      reset_password: {
+        title: "Yeni Şifre Oluştur",
+        description: "Hesabın için yeni bir şifre belirle.",
+        new_password: "Yeni Şifre",
+        new_password_placeholder: "Yeni şifren",
+        confirm_password: "Yeni Şifre Tekrar",
+        confirm_password_placeholder: "Yeni şifreni tekrar gir",
+        submit: "Şifremi Güncelle",
+        updating: "Güncelleniyor...",
+        token_invalid: "Şifre sıfırlama bağlantısı geçersiz.",
+        password_required: "Yeni şifre zorunludur.",
+        password_min: "Şifre en az 6 karakter olmalıdır.",
+        password_max: "Şifre en fazla 72 karakter olabilir.",
+        confirm_password_required: "Şifre tekrarı zorunludur.",
+        passwords_not_match: "Şifreler eşleşmiyor.",
+        success_title: "Şifren başarıyla güncellendi.",
+        success_description: "Yeni şifrenle giriş yapabilirsin.",
+        error_title: "Şifre sıfırlama işlemi başarısız.",
+        error_description: "Bağlantı süresi dolmuş veya geçersiz olabilir.",
+      },
+
       toast: {
         too_many_requests: "Çok fazla istek",
         too_many_requests_desc:
@@ -1326,6 +1447,8 @@ const resources = {
         status_exceeded: "{{count}} aşıldı",
         create_limit: "Limit Oluştur",
         update_limit: "Limit Güncelle",
+        safe: "Güvneli",
+        warning: "Dikkat",
       },
     },
   },

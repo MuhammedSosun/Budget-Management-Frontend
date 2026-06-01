@@ -11,6 +11,8 @@ import VerifyEmailPage from "../views/Auth/VerifyEmailPage";
 import WorkspacesPage from "../views/Workspace/WorkspacesPage";
 import TransactionPage from "../views/Transactions/TransactionPage";
 import BudgetPage from "../views/Budgets/BudgetsPage";
+import ForgotPassword from "../components/Auth/ForgotPassword";
+import ResetPassword from "../components/Auth/ResetPassword";
 const AppRouter = () => {
   return (
     <Routes>
@@ -21,6 +23,8 @@ const AppRouter = () => {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/verify-email" element={<VerifyEmailPage />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
       </Route>
 
       <Route element={<ProtectedRoute />}>

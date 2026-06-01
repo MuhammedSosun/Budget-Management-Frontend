@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import "./Header.scss";
-import logo from "../../../../public/logo.png";
+import logo1 from "../../../../public/logo1.png";
 import { useContext, useState } from "react";
 import { ThemeContext } from "../../../context/ThemeContext";
 import Button from "../../ui/Button/Button";
@@ -50,7 +50,7 @@ function Header({ onMenuClick }: HeaderProps) {
             className="main-header__brand-button"
             onClick={() => navigate("/login")}
           >
-            <img src={logo} alt="Budget Logo" />
+            <img src={logo1} alt="Budget Logo" />
             <div className="main-header__brand">Budget Management</div>
           </button>
         )}

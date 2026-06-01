@@ -1,3 +1,4 @@
+import type React from "react";
 import "./Button.scss";
 
 interface ButtonProps {
@@ -7,6 +8,7 @@ interface ButtonProps {
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
   isLoading?: boolean;
+  loadingText?: string;
 }
 
 function Button({
@@ -14,18 +16,21 @@ function Button({
   variant,
   onClick,
   type = "button",
-  disabled,
-  isLoading,
+  disabled = false,
+  isLoading = false,
+  loadingText = "Loading...",
 }: ButtonProps) {
-  const className = `my-custom-button ${variant} ${isLoading || disabled ? "disabled" : ""}`;
+  const className = `my-custom-button my-custom-button--${variant}`;
+
   return (
     <button
       className={className}
       onClick={onClick}
       type={type}
       disabled={disabled || isLoading}
+      aria-busy={isLoading}
     >
-      {isLoading ? "Loading..." : children}
+      {isLoading ? loadingText : children}
     </button>
   );
 }
