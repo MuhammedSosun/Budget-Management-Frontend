@@ -31,6 +31,11 @@ function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
       icon: "🎯",
     },
     {
+      label: "Notifications",
+      path: "/notifications",
+      icon: "🔔",
+    },
+    {
       label: t("workspace.workspaces"),
       path: "/workspace",
       icon: "👥",

@@ -13,6 +13,7 @@ import TransactionPage from "../views/Transactions/TransactionPage";
 import BudgetPage from "../views/Budgets/BudgetsPage";
 import ForgotPassword from "../components/Auth/ForgotPassword";
 import ResetPassword from "../components/Auth/ResetPassword";
+import NotificationsPage from "../views/Notifications/NotificationPage";
 const AppRouter = () => {
   return (
     <Routes>
@@ -34,6 +35,7 @@ const AppRouter = () => {
           <Route path="/budgets" element={<BudgetPage />} />
           <Route path="/workspace" element={<WorkspacesPage />} />
           <Route path="/settings" element={<SettingsPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
         </Route>
       </Route>
 

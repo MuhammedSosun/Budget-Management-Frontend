@@ -6,6 +6,7 @@ import { ThemeContext } from "../../../context/ThemeContext";
 import Button from "../../ui/Button/Button";
 import { useAuth } from "../../../hooks/useAuth";
 import { useTranslation } from "react-i18next";
+import NotificationBell from "../../Notifications/NotificationBell";
 
 interface HeaderProps {
   onMenuClick?: () => void;
@@ -58,6 +59,7 @@ function Header({ onMenuClick }: HeaderProps) {
 
       <div className="main-header__right">
         <div className="main-header__settings">
+          {user && <NotificationBell />}
           <div
             className="main-header__language-toggle"
             aria-label="Language switcher"

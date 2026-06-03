@@ -93,14 +93,14 @@ export const useWorkspacesPage = () => {
   };
 
   const openDeleteWorkspaceModal = (workspace: Workspace) => {
-    if (workspace.isDefault || workspace.role !== "OWNER") return;
+    if (workspace.role !== "OWNER") return;
 
     setSelectedWorkspace(workspace);
     setActiveModal("deleteWorkspace");
   };
 
   const openLeaveWorkspaceModal = (workspace: Workspace) => {
-    if (workspace.isDefault || workspace.role === "OWNER") return;
+    if (workspace.role === "OWNER") return;
 
     setSelectedWorkspace(workspace);
     setActiveModal("leaveWorkspace");
@@ -108,12 +108,6 @@ export const useWorkspacesPage = () => {
 
   const handleDeleteWorkspace = async () => {
     if (!selectedWorkspace) return;
-
-    if (selectedWorkspace.isDefault) {
-      toast.error(t("workspace.default_workspace_cannot_be_deleted"));
-      closeModal();
-      return;
-    }
 
     if (selectedWorkspace.role !== "OWNER") {
       toast.error(t("workspace.only_owner_can_delete_workspace"));

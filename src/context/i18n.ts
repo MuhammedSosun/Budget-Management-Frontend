@@ -241,6 +241,109 @@ const resources = {
         personal_care: "Personal Care",
         investment: "Investment",
       },
+      notification: {
+        eyebrow: "NOTIFICATIONS",
+        title: "Notifications",
+        unread_count: "{{count}} unread notification",
+        unread_count_plural: "{{count}} unread notifications",
+        all_up_to_date: "Everything looks up to date",
+        mark_all_as_read: "Mark all as read",
+        loading: "Loading notifications...",
+        empty_title: "No notifications yet",
+        empty_description: "New activity will appear here.",
+        view_all: "View all notifications",
+        unread_aria_label: "Unread notification",
+
+        time_just_now: "just now",
+        time_minutes_ago: "{{count}} min ago",
+        time_hours_ago: "{{count}} hr ago",
+        time_days_ago: "{{count}} day ago",
+        time_days_ago_plural: "{{count}} days ago",
+        general_error: "An error occurred while loading notifications.",
+
+        center: "Notification Center",
+        description:
+          "Track workspace, budget, invitation and transaction activity from here.",
+        refresh: "Refresh",
+        total_notifications: "Total Notifications",
+        unread: "Unread",
+        page: "Page",
+        all: "All",
+        unread_filter: "Unread",
+        read_filter: "Read",
+        page_empty_title: "No notifications here yet",
+        page_empty_description:
+          "New transaction, budget or workspace activity will appear here.",
+        previous: "Previous",
+        next: "Next",
+      },
+      notification_message: {
+        budget_limit_warning: {
+          title: "Budget limit warning",
+          message: "{{category}} is close to its budget limit.",
+        },
+        budget_limit_exceeded: {
+          title: "Budget limit exceeded",
+          message: "{{category}} has exceeded its budget limit.",
+        },
+        budget_limit_created: {
+          title: "New budget limit created",
+          message: "A new budget limit was created for {{category}}.",
+        },
+        budget_limit_updated: {
+          title: "Budget limit updated",
+          message: "The budget limit for {{category}} was updated.",
+        },
+        budget_limit_deleted: {
+          title: "Budget limit deleted",
+          message: "The budget limit for {{category}} was deleted.",
+        },
+
+        transaction_created: {
+          title: "New transaction added",
+          message:
+            "{{actorEmail}} added {{amount}} {{currency}} in {{category}}.",
+        },
+        transaction_updated: {
+          title: "Transaction updated",
+          message: "{{actorEmail}} updated {{transactionTitle}}.",
+        },
+        transaction_deleted: {
+          title: "Transaction deleted",
+          message: "{{actorEmail}} deleted a transaction.",
+        },
+
+        workspace_member_joined: {
+          title: "New member joined",
+          message: "{{targetUserEmail}} joined the workspace.",
+        },
+        workspace_member_removed: {
+          title: "Member removed",
+          message: "{{targetUserEmail}} was removed from the workspace.",
+        },
+        workspace_member_left: {
+          title: "Member left",
+          message: "{{targetUserEmail}} left the workspace.",
+        },
+        workspace_member_role_updated: {
+          title: "Member role updated",
+          message: "{{targetUserEmail}}'s role was updated to {{newRole}}.",
+        },
+
+        workspace_invitation_created: {
+          title: "Workspace invitation received",
+          message: "{{actorEmail}} invited you to a workspace.",
+        },
+        workspace_invitation_accepted: {
+          title: "Workspace invitation accepted",
+          message: "{{invitedEmail}} accepted the workspace invitation.",
+        },
+        workspace_invitation_rejected: {
+          title: "Workspace invitation rejected",
+          message: "{{invitedEmail}} rejected the workspace invitation.",
+        },
+      },
+
       profile: {
         profile: "Profile",
         active_account: "Active account",
@@ -417,6 +520,8 @@ const resources = {
         },
         delete: "Delete",
         delete_workspace: "Delete Workspace",
+        leave_workspace: "Leave",
+        leave_workspace_confirm: "Are you sure about leaving the workspace? ",
         delete_workspace_confirm:
           "Do you want to delete this workspace? This action cannot be undone. Related transactions, members, and invitations will also be deleted.",
         delete_workspace_success: "Workspace deleted successfully.",
@@ -982,6 +1087,109 @@ const resources = {
         personal_care: "Kişisel Bakım",
         investment: "Yatırım",
       },
+      notification: {
+        eyebrow: "BİLDİRİMLER",
+        title: "Bildirimler",
+        unread_count: "{{count}} okunmamış bildirimin var",
+        unread_count_plural: "{{count}} okunmamış bildirimin var",
+        all_up_to_date: "Her şey güncel görünüyor",
+        mark_all_as_read: "Tümünü okundu yap",
+        loading: "Bildirimler yükleniyor...",
+        empty_title: "Henüz bildirim yok",
+        empty_description: "Yeni bir hareket olduğunda burada görünecek.",
+        view_all: "Tüm bildirimleri görüntüle",
+        unread_aria_label: "Okunmamış bildirim",
+
+        time_just_now: "az önce",
+        time_minutes_ago: "{{count}} dk önce",
+        time_hours_ago: "{{count}} sa önce",
+        time_days_ago: "{{count}} gün önce",
+        time_days_ago_plural: "{{count}} gün önce",
+        general_error: "Bildirimler yüklenirken bir hata oluştu.",
+
+        center: "Bildirim Merkezi",
+        description:
+          "Workspace, bütçe, davet ve işlem hareketlerini buradan takip edebilirsin.",
+        refresh: "Yenile",
+        total_notifications: "Toplam Bildirim",
+        unread: "Okunmamış",
+        page: "Sayfa",
+        all: "Tümü",
+        unread_filter: "Okunmamış",
+        read_filter: "Okunmuş",
+        page_empty_title: "Burada henüz bildirim yok",
+        page_empty_description:
+          "Yeni transaction, bütçe veya workspace hareketleri olduğunda burada görünecek.",
+        previous: "Önceki",
+        next: "Sonraki",
+      },
+      notification_message: {
+        budget_limit_warning: {
+          title: "Bütçe limiti uyarısı",
+          message: "{{category}} bütçe limitine yaklaştı.",
+        },
+        budget_limit_exceeded: {
+          title: "Bütçe limiti aşıldı",
+          message: "{{category}} bütçe limitini aştı.",
+        },
+        budget_limit_created: {
+          title: "Yeni bütçe limiti oluşturuldu",
+          message: "{{category}} için yeni bütçe limiti oluşturuldu.",
+        },
+        budget_limit_updated: {
+          title: "Bütçe limiti güncellendi",
+          message: "{{category}} için bütçe limiti güncellendi.",
+        },
+        budget_limit_deleted: {
+          title: "Bütçe limiti silindi",
+          message: "{{category}} için bütçe limiti silindi.",
+        },
+
+        transaction_created: {
+          title: "Yeni işlem eklendi",
+          message:
+            "{{actorEmail}} {{category}} kategorisine {{amount}} {{currency}} işlem ekledi.",
+        },
+        transaction_updated: {
+          title: "İşlem güncellendi",
+          message: "{{actorEmail}} {{transactionTitle}} işlemini güncelledi.",
+        },
+        transaction_deleted: {
+          title: "İşlem silindi",
+          message: "{{actorEmail}} bir işlemi sildi.",
+        },
+
+        workspace_member_joined: {
+          title: "Yeni üye katıldı",
+          message: "{{targetUserEmail}} workspace'e katıldı.",
+        },
+        workspace_member_removed: {
+          title: "Üye çıkarıldı",
+          message: "{{targetUserEmail}} workspace'ten çıkarıldı.",
+        },
+        workspace_member_left: {
+          title: "Üye ayrıldı",
+          message: "{{targetUserEmail}} workspace'ten ayrıldı.",
+        },
+        workspace_member_role_updated: {
+          title: "Üye rolü güncellendi",
+          message:
+            "{{targetUserEmail}} kullanıcısının rolü {{newRole}} olarak güncellendi.",
+        },
+
+        workspace_invitation_created: {
+          title: "Workspace daveti aldın",
+          message: "{{actorEmail}} seni bir workspace'e davet etti.",
+        },
+        workspace_invitation_accepted: {
+          title: "Workspace daveti kabul edildi",
+          message: "{{invitedEmail}} workspace davetini kabul etti.",
+        },
+        workspace_invitation_rejected: {
+          title: "Workspace daveti reddedildi",
+          message: "{{invitedEmail}} workspace davetini reddetti.",
+        },
+      },
       profile: {
         profile: "Profil",
         active_account: "Aktif hesap",
@@ -1137,6 +1345,8 @@ const resources = {
         update_error: "Workspace güncelleme hatası",
         updating: "Güncelleniyor...",
         name_placeholder: "Workspace adını gir",
+        leave_workspace: "Ayrıl",
+        leave_workspace_confirm: "Bu workspace'den ayrılmak istiyor musun?",
         description: "Workspace açıklaması",
         description_placeholder: "Workspace açıklamasını gir",
         save: "Kaydet",

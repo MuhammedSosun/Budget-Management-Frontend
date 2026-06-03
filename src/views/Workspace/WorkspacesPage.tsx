@@ -150,7 +150,7 @@ function WorkspacesPage() {
                           </button>
                         )}
 
-                        {!workspace.isDefault && workspace.role === "OWNER" && (
+                        {workspace.role === "OWNER" && (
                           <button
                             type="button"
                             className="workspaces-page__workspace-action workspaces-page__workspace-action--danger"
@@ -163,7 +163,7 @@ function WorkspacesPage() {
                           </button>
                         )}
 
-                        {!workspace.isDefault && workspace.role !== "OWNER" && (
+                        {workspace.role !== "OWNER" && (
                           <button
                             type="button"
                             className="workspaces-page__workspace-action workspaces-page__workspace-action--danger"
