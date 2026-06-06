@@ -164,6 +164,62 @@ const resources = {
         INVALID_IMAGE_FORMAT: "Only JPEG, PNG or WEBP formats are supported.",
         AVATAR_REQUIRED: "Profile picture is required.",
       },
+      AI_ANALYTICS: "AI Analytics",
+      AI_FINANCIAL_REVIEW: "AI Financial Review",
+      AI_REVIEW_DESCRIPTION:
+        "Analyze your monthly spending patterns, category concentration, workspace activity, and saving suggestions with AI support.",
+      AI_REVIEW_WORKSPACE_BADGE: "AI analysis for {{workspaceName}}",
+      AI_REVIEW_SMART_INSIGHTS: "Smart budget insights",
+
+      AI_REVIEW_MONTH: "Month",
+      AI_REVIEW_CURRENCY: "Currency",
+      AI_REVIEW_PROVIDER: "AI Provider",
+      AI_REVIEW_GENERATING: "Generating...",
+      AI_REVIEW_GENERATE: "Generate Review",
+
+      AI_REVIEW_NO_WORKSPACE_TITLE: "No workspace selected",
+      AI_REVIEW_NO_WORKSPACE_DESCRIPTION:
+        "Please select an active workspace before generating an AI analysis.",
+
+      AI_REVIEW_ERROR_TITLE: "AI analysis could not be generated",
+      AI_REVIEW_PROVIDER_FALLBACK_DESCRIPTION:
+        "Selected AI provider will generate your monthly review.",
+      AI_REVIEW_PROVIDER_FALLBACK_BADGE: "AI",
+
+      AI_REVIEW_EMPTY_TITLE: "No AI review generated yet",
+      AI_REVIEW_EMPTY_DESCRIPTION:
+        "After selecting the month, currency, and AI provider, you can generate your financial analysis report.",
+      AI_REVIEW_EMPTY_BUTTON: "Generate first review",
+
+      AI_REVIEW_LOADING_TITLE: "Preparing AI financial report",
+      AI_REVIEW_LOADING_DESCRIPTION:
+        "Analytics data is being summarized, safe signals are being created, and the selected AI model is generating an interpretation.",
+
+      AI_REVIEW_GENERATED_REVIEW: "Generated Review",
+      AI_REVIEW_POWERED_BY: "Powered by",
+      AI_REVIEW_SUMMARY: "Summary",
+      AI_REVIEW_HIGHLIGHTS: "Highlights",
+      AI_REVIEW_RISKS: "Risks",
+      AI_REVIEW_RECOMMENDATIONS: "Recommendations",
+      AI_REVIEW_SAVING_SUGGESTION: "Saving Suggestion",
+
+      AI_REVIEW_GENERATED_AT: "Generated At",
+      AI_REVIEW_PROVIDER_LABEL: "Provider",
+      AI_REVIEW_MODEL: "Model",
+      AI_REVIEW_REGENERATE: "Regenerate",
+      AI_REVIEW_ASK_AI: "Ask AI",
+
+      AI_PROVIDER_OLLAMA_LABEL: "Ollama",
+      AI_PROVIDER_OLLAMA_BADGE: "Local",
+      AI_PROVIDER_OLLAMA_DESCRIPTION:
+        "Runs the AI review with a local Ollama model. Useful for local testing and offline experiments.",
+
+      AI_PROVIDER_GEMINI_LABEL: "Gemini",
+      AI_PROVIDER_GEMINI_BADGE: "Cloud",
+      AI_PROVIDER_GEMINI_DESCRIPTION:
+        "Runs the AI review with Google Gemini. Faster and more suitable for cloud-based analysis.",
+      RATE_LIMIT_AI_REVIEW:
+        "AI review requests are too frequent. Please wait a moment and try again.",
       title: "Title",
       amount: "Amount",
       category: "Category",
@@ -512,6 +568,7 @@ const resources = {
         loading: "Workspace loading...",
         save_changes: "Save Changes",
         edit_workspace: "Edit Workspace",
+        workspaces_mobile: "Spaces",
         empty: "Workspace not found",
         roles: {
           owner: "Owner",
@@ -758,6 +815,7 @@ const resources = {
       },
       budget: {
         monthly_budget_limit: "Monthly budget limit",
+        example_amount: "Ex: 5000",
         spent: "Spent",
         limit: "Limit",
         remaining: "Remaining",
@@ -982,7 +1040,62 @@ const resources = {
           "Yalnızca JPEG, PNG veya WEBP formatları desteklenmektedir.",
         AVATAR_REQUIRED: "Profil resmi zorunludur.",
       },
+      AI_ANALYTICS: "AI Analitik",
+      AI_FINANCIAL_REVIEW: "AI Finansal Analiz",
+      AI_REVIEW_DESCRIPTION:
+        "Aylık harcama düzenini, kategori yoğunluğunu, workspace aktivitelerini ve tasarruf önerilerini AI desteğiyle analiz et.",
+      AI_REVIEW_WORKSPACE_BADGE: "{{workspaceName}} için AI analiz",
+      AI_REVIEW_SMART_INSIGHTS: "Akıllı bütçe içgörüleri",
 
+      AI_REVIEW_MONTH: "Ay",
+      AI_REVIEW_CURRENCY: "Para Birimi",
+      AI_REVIEW_PROVIDER: "AI Sağlayıcısı",
+      AI_REVIEW_GENERATING: "Oluşturuluyor...",
+      AI_REVIEW_GENERATE: "Analiz Oluştur",
+
+      AI_REVIEW_NO_WORKSPACE_TITLE: "Workspace seçilmedi",
+      AI_REVIEW_NO_WORKSPACE_DESCRIPTION:
+        "AI analizi oluşturmak için önce aktif bir workspace seçmelisin.",
+
+      AI_REVIEW_ERROR_TITLE: "AI analizi oluşturulamadı",
+      AI_REVIEW_PROVIDER_FALLBACK_DESCRIPTION:
+        "Seçilen AI sağlayıcısı aylık analiz raporunu oluşturacak.",
+      AI_REVIEW_PROVIDER_FALLBACK_BADGE: "AI",
+
+      AI_REVIEW_EMPTY_TITLE: "Henüz AI analizi oluşturulmadı",
+      AI_REVIEW_EMPTY_DESCRIPTION:
+        "Ay, para birimi ve AI sağlayıcısını seçtikten sonra finansal analiz raporunu oluşturabilirsin.",
+      AI_REVIEW_EMPTY_BUTTON: "İlk analizi oluştur",
+
+      AI_REVIEW_LOADING_TITLE: "AI finansal raporu hazırlanıyor",
+      AI_REVIEW_LOADING_DESCRIPTION:
+        "Analytics verileri özetleniyor, güvenli sinyaller oluşturuluyor ve seçilen AI modeli yorum üretiyor.",
+
+      AI_REVIEW_GENERATED_REVIEW: "Oluşturulan Analiz",
+      AI_REVIEW_POWERED_BY: "Destekleyen",
+      AI_REVIEW_SUMMARY: "Özet",
+      AI_REVIEW_HIGHLIGHTS: "Öne Çıkanlar",
+      AI_REVIEW_RISKS: "Riskler",
+      AI_REVIEW_RECOMMENDATIONS: "Öneriler",
+      AI_REVIEW_SAVING_SUGGESTION: "Tasarruf Önerisi",
+
+      AI_REVIEW_GENERATED_AT: "Oluşturulma Zamanı",
+      AI_REVIEW_PROVIDER_LABEL: "Sağlayıcı",
+      AI_REVIEW_MODEL: "Model",
+      AI_REVIEW_REGENERATE: "Yeniden Oluştur",
+      AI_REVIEW_ASK_AI: "AI'a Sor",
+
+      AI_PROVIDER_OLLAMA_LABEL: "Ollama",
+      AI_PROVIDER_OLLAMA_BADGE: "Local",
+      AI_PROVIDER_OLLAMA_DESCRIPTION:
+        "AI analizini local Ollama modeliyle oluşturur. Local testler ve offline denemeler için uygundur.",
+
+      AI_PROVIDER_GEMINI_LABEL: "Gemini",
+      AI_PROVIDER_GEMINI_BADGE: "Cloud",
+      AI_PROVIDER_GEMINI_DESCRIPTION:
+        "AI analizini Google Gemini ile oluşturur. Daha hızlıdır ve cloud tabanlı analiz için daha uygundur.",
+      RATE_LIMIT_AI_REVIEW:
+        "AI analiz isteği çok sık gönderildi. Lütfen biraz bekleyip tekrar dene.",
       add_transaction_this: "İşlem Ekle",
       edit_transaction_this: "İşlemi Güncelle",
       title: "Başlık",
@@ -1354,6 +1467,7 @@ const resources = {
         leave: "Ayrıl",
         edit_workspace: "Workspace düzenle",
         workspaces: "Çalışma Alanları",
+        workspaces_mobile: "Alanlar",
         loading: "Workspace yükleniyor...",
         empty: "Workspace bulunamadı",
         delete: "Sil",
@@ -1585,6 +1699,7 @@ const resources = {
       },
       budget: {
         monthly_budget_limit: "Aylık Harcanan bütçe limiti",
+        example_amount: "Örn: 5000",
         spent: "Harcanan",
         limit: "Limit",
         remaining: "Kalan",

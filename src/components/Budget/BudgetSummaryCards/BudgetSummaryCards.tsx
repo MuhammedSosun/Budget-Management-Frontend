@@ -125,7 +125,7 @@ export const BudgetSummaryCards = ({
       </article>
 
       <article
-        className={`budget-summary__card budget-summary__card--${overallStatus}`}
+        className={`budget-summary__card budget-summary__card--full-width budget-summary__card--${overallStatus}`}
       >
         <div className="budget-summary__icon">📊</div>
 

@@ -31,6 +31,11 @@ function Sidebar({ isMobileOpen = false, onCloseMobile }: SidebarProps) {
       icon: "🎯",
     },
     {
+      label: "AI Review",
+      path: "/ai-review",
+      icon: "🤖",
+    },
+    {
       label: "Notifications",
       path: "/notifications",
       icon: "🔔",

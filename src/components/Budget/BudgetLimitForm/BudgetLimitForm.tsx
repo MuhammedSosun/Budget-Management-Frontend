@@ -33,18 +33,9 @@ interface BudgetLimitFormErrors {
 }
 
 const currencyOptions = [
-  {
-    label: "TRY",
-    value: "TRY",
-  },
-  {
-    label: "USD",
-    value: "USD",
-  },
-  {
-    label: "EUR",
-    value: "EUR",
-  },
+  { label: "TRY", value: "TRY" },
+  { label: "USD", value: "USD" },
+  { label: "EUR", value: "EUR" },
 ];
 
 const initialFormState: BudgetLimitFormState = {
@@ -55,7 +46,6 @@ const initialFormState: BudgetLimitFormState = {
 
 const hasMoreThanTwoDecimals = (value: string) => {
   const decimalPart = value.split(".")[1];
-
   return Boolean(decimalPart && decimalPart.length > 2);
 };
 
@@ -93,20 +83,12 @@ export const BudgetLimitForm = ({
     key: K,
     value: BudgetLimitFormState[K],
   ) => {
-    setForm((prev) => ({
-      ...prev,
-      [key]: value,
-    }));
-
-    setErrors((prev) => ({
-      ...prev,
-      [key]: undefined,
-    }));
+    setForm((prev) => ({ ...prev, [key]: value }));
+    setErrors((prev) => ({ ...prev, [key]: undefined }));
   };
 
   const validateForm = () => {
     const nextErrors: BudgetLimitFormErrors = {};
-
     const trimmedCategory = form.category.trim();
     const amountAsNumber = Number(form.amount);
 
@@ -135,15 +117,12 @@ export const BudgetLimitForm = ({
     }
 
     setErrors(nextErrors);
-
     return Object.keys(nextErrors).length === 0;
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
     const isValid = validateForm();
-
     if (!isValid) return;
 
     const payload: CreateBudgetLimitPayload | UpdateBudgetLimitPayload = {
@@ -161,32 +140,36 @@ export const BudgetLimitForm = ({
   return (
     <form className="budget-limit-form" onSubmit={handleSubmit}>
       <div className="budget-limit-form__grid">
-        <Select
-          label={t("category")}
-          options={categoryOptions}
-          value={form.category}
-          onChange={(value) => updateField("category", value)}
-          error={errors.category}
-        />
+        <div className="budget-limit-form__field-row">
+          <Select
+            label={t("category")}
+            options={categoryOptions}
+            value={form.category}
+            onChange={(value) => updateField("category", value)}
+            error={errors.category}
+          />
+        </div>
 
-        <Input
-          label={t("budget.monthly_budget")}
-          placeholder="Örn: 5000"
-          type="number"
-          value={form.amount}
-          onChange={(value) => updateField("amount", value)}
-          error={errors.amount}
-        />
+        <div className="budget-limit-form__amount-row">
+          <Input
+            label={t("budget.monthly_budget")}
+            placeholder={t("budget.example_amount")}
+            type="number"
+            value={form.amount}
+            onChange={(value) => updateField("amount", value)}
+            error={errors.amount}
+          />
 
-        <Select
-          label={t("currency_label")}
-          value={form.currency}
-          options={currencyOptions}
-          onChange={(value) =>
-            updateField("currency", value as BudgetLimitFormState["currency"])
-          }
-          error={errors.currency}
-        />
+          <Select
+            label={t("currency_label")}
+            value={form.currency}
+            options={currencyOptions}
+            onChange={(value) =>
+              updateField("currency", value as BudgetLimitFormState["currency"])
+            }
+            error={errors.currency}
+          />
+        </div>
 
         <div className="budget-limit-form__period-box">
           <span className="budget-limit-form__period-label">

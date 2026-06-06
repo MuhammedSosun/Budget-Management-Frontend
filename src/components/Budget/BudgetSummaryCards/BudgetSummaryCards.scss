@@ -236,24 +236,80 @@
 
 @media (max-width: 640px) {
   .budget-summary {
-    grid-template-columns: 1fr;
+    display: grid !important;
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
 
     &__card {
-      min-height: auto;
-      padding: 1.1rem;
-      border-radius: 18px;
+      padding: 1rem !important;
+      border-radius: 18px !important;
+      min-height: auto !important;
+      display: flex !important;
+      flex-direction: row !important;
+      align-items: flex-start !important;
+      text-align: left !important;
+      gap: 0.75rem !important;
+
+      &:nth-child(1) {
+        grid-column: span 2 !important;
+        order: 2 !important;
+      }
+
+      &:nth-child(2) {
+        grid-column: span 1 !important;
+        order: 1 !important;
+      }
+
+      &:nth-child(3) {
+        grid-column: span 1 !important;
+        order: 1 !important;
+      }
+
+      &--full-width {
+        grid-column: span 2 !important;
+        order: 3 !important;
+      }
     }
 
     &__icon {
-      width: 44px;
-      height: 44px;
-      min-width: 44px;
-      border-radius: 14px;
-      font-size: 1.25rem;
+      width: 38px !important;
+      height: 38px !important;
+      min-width: 38px !important;
+      border-radius: 12px !important;
+      font-size: 1.1rem !important;
+    }
+
+    &__label {
+      font-size: 0.68rem !important;
+      margin-bottom: 0.15rem !important;
     }
 
     &__value {
-      font-size: 1.25rem;
+      font-size: 1.15rem !important;
+      letter-spacing: -0.02em !important;
+    }
+
+    &__desc,
+    &__meta {
+      font-size: 0.65rem !important;
+      line-height: 1.3 !important;
+      margin-top: 0.2rem !important;
+    }
+
+    &__progress {
+      height: 6px !important;
+      margin-top: 0.65rem !important;
+    }
+
+    &__status-list {
+      gap: 0.35rem !important;
+      margin-top: 0.65rem !important;
+    }
+
+    &__status {
+      padding: 0.25rem 0.5rem !important;
+      font-size: 0.65rem !important;
     }
   }
 }

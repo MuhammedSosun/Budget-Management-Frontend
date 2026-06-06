@@ -77,17 +77,98 @@
 
 @media (max-width: 640px) {
   .transaction-form {
-    &__amount-group {
-      grid-template-columns: 1fr;
+    gap: 1rem !important;
+
+    &__inputs {
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.85rem !important;
+
+      .select-group,
+      .input-group,
+      .transaction-form__amount-group {
+        grid-column: span 2 !important;
+        width: 100% !important;
+        margin: 0 !important;
+      }
+
+      .select-group {
+        label.select-group__label {
+          &[htmlFor*="type"] {
+            // Transaction Type alanı en üstte tam genişlik kalır
+          }
+        }
+      }
+
+      .input-group {
+        label.input-group__label {
+          &[htmlFor*="title"] {
+            grid-column: span 1 !important;
+            width: 100% !important;
+          }
+        }
+      }
+
+      .transaction-form__amount-group {
+        display: grid !important;
+        grid-template-columns: 1.8fr 1.2fr !important;
+        gap: 0.65rem !important;
+
+        .input-group,
+        .select-group {
+          grid-column: span 1 !important;
+        }
+      }
+
+      // Title ve Category alanlarını yakalayıp yan yana %50 - %50 yerleştiren ana kırılım
+      .input-group:has(input[placeholder*="shopping"]),
+      .input-group:has(input[placeholder*="mağaza"]),
+      .input-group:has(label[htmlFor*="title"]),
+      .select-group:has(label[htmlFor*="category"]) {
+        grid-column: span 1 !important;
+      }
+
+      .input-group:has(input[type="date"]),
+      .input-group:has(label[htmlFor*="date"]) {
+        grid-column: span 2 !important;
+      }
+    }
+
+    input,
+    select,
+    .select-group__input,
+    .select-group__trigger,
+    .input-group__input {
+      height: 42px !important;
+      min-height: 42px !important;
+      font-size: 0.82rem !important;
+      border-radius: 12px !important;
+      padding: 0 0.7rem !important;
+    }
+
+    label,
+    .select-group__label,
+    .input-group__label {
+      font-size: 0.72rem !important;
+      font-weight: 850 !important;
+      margin-bottom: 0.3rem !important;
     }
 
     &__actions {
-      flex-direction: column-reverse;
-      align-items: stretch;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.65rem !important;
+      padding-top: 0.95rem !important;
+      margin-top: 0.25rem !important;
 
       button {
-        width: 100%;
-        min-width: 0;
+        width: 100% !important;
+        height: 42px !important;
+        min-height: 42px !important;
+        border-radius: 12px !important;
+        font-size: 0.85rem !important;
+        font-weight: 900 !important;
+        padding: 0 !important;
       }
     }
   }
@@ -103,12 +184,14 @@
     }
 
     &__actions {
-      flex-direction: column-reverse;
-      align-items: stretch;
+      display: grid !important;
+      grid-template-columns: 1fr 1fr !important;
+      gap: 0.65rem !important;
 
       button {
-        width: 100%;
-        min-width: 0;
+        width: 100% !important;
+        min-width: 0 !important;
+        height: 42px !important;
       }
     }
   }

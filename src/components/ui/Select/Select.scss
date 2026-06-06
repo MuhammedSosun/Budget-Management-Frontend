@@ -1,8 +1,10 @@
 .select-group {
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--space-xs);
   margin-bottom: var(--space-md);
+  position: relative;
 
   &__label {
     color: var(--text-main);
@@ -10,10 +12,10 @@
     font-weight: 750;
   }
 
-  &__input {
+  &__trigger {
     width: 100%;
     min-height: 46px;
-    padding: 0.75rem 2.4rem 0.75rem 0.9rem;
+    padding: 0.75rem 0.9rem;
     border: 1px solid var(--border);
     border-radius: var(--radius-md);
     outline: none;
@@ -24,12 +26,17 @@
     font-size: 16px;
     font-weight: 650;
     line-height: 1.2;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.7rem;
     transition:
       border-color 0.2s ease,
       box-shadow 0.2s ease,
       background-color 0.2s ease;
 
-    &:focus {
+    &:focus,
+    &--open {
       border-color: var(--primary);
       box-shadow: 0 0 0 3px color-mix(in srgb, var(--primary) 16%, transparent);
     }
@@ -38,6 +45,69 @@
       border-color: var(--danger);
       box-shadow: 0 0 0 3px color-mix(in srgb, var(--danger) 14%, transparent);
     }
+  }
+
+  &__value {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &__chevron {
+    color: var(--text-muted);
+    font-size: 1rem;
+    line-height: 1;
+    transform: translateY(-1px);
+    flex-shrink: 0;
+  }
+
+  &__menu {
+    position: absolute;
+    top: calc(100% + 0.4rem);
+    right: 0;
+    width: 100%;
+    min-width: 100%;
+    padding: 0.35rem;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    background-color: var(--bg-body);
+    box-shadow: var(--shadow);
+    z-index: 9999;
+  }
+
+  &__option {
+    width: 100%;
+    min-height: 38px;
+    padding: 0.45rem 0.65rem;
+    border: none;
+    border-radius: calc(var(--radius-md) - 6px);
+    background-color: transparent;
+    color: var(--text-main);
+    cursor: pointer;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 650;
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    text-align: left;
+
+    &:hover {
+      background-color: color-mix(in srgb, var(--primary) 14%, transparent);
+    }
+
+    &--selected {
+      background-color: color-mix(in srgb, var(--primary) 22%, transparent);
+      color: var(--text-main);
+    }
+  }
+
+  &__check {
+    width: 16px;
+    color: var(--primary);
+    font-weight: 900;
+    flex-shrink: 0;
   }
 
   &__error-text {
@@ -50,18 +120,73 @@
 
 @media (max-width: 640px) {
   .select-group {
-    gap: 0.4rem;
+    gap: 0.35rem;
     margin-bottom: var(--space-sm);
 
     &__label {
-      font-size: var(--font-sm);
+      font-size: 0.8rem;
     }
 
-    &__input {
-      min-height: 44px;
-      padding: 0.68rem 2.2rem 0.68rem 0.85rem;
-      font-size: 16px;
+    &__trigger {
+      min-height: 40px;
+      padding: 0.55rem 0.75rem;
+      font-size: 0.85rem;
       border-radius: var(--radius-md);
+      line-height: 1.1;
+    }
+
+    &__value {
+      font-size: 0.85rem;
+    }
+
+    &__chevron {
+      font-size: 0.8rem;
+    }
+
+    &__menu {
+      padding: 0.3rem;
+      border-radius: var(--radius-md);
+    }
+
+    &__option {
+      min-height: 32px;
+      padding: 0.4rem 0.55rem;
+      font-size: 0.78rem;
+      line-height: 1.1;
+    }
+
+    &__check {
+      width: 12px;
+      font-size: 0.75rem;
+    }
+
+    &__error-text {
+      font-size: 0.72rem;
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .select-group {
+    &__trigger {
+      min-height: 36px;
+      padding: 0.48rem 0.65rem;
+      font-size: 0.78rem;
+      border-radius: 13px;
+    }
+
+    &__value {
+      font-size: 0.78rem;
+    }
+
+    &__chevron {
+      font-size: 0.72rem;
+    }
+
+    &__option {
+      min-height: 30px;
+      padding: 0.35rem 0.5rem;
+      font-size: 0.72rem;
     }
   }
 }

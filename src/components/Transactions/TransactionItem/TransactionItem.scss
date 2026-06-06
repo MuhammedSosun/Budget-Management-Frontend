@@ -278,30 +278,117 @@
 @media (max-width: 720px) {
   .transaction-item {
     grid-template-columns: 1fr;
-    padding: 1rem;
+    gap: 0.72rem;
+    padding: 0.85rem;
+    border-radius: 16px;
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.1);
+
+    &:hover {
+      transform: none;
+    }
 
     &__main {
       align-items: flex-start;
+      gap: 0.7rem;
+    }
+
+    &__icon {
+      width: 42px;
+      height: 42px;
+      flex-basis: 42px;
+      border-radius: 14px;
+
+      span {
+        font-size: 1.1rem;
+      }
+    }
+
+    &__summary {
+      gap: 0.32rem;
     }
 
     &__title-row {
-      align-items: flex-start;
-      flex-direction: column;
-      gap: 0.45rem;
+      display: flex;
+      align-items: center;
+      flex-direction: row;
+      flex-wrap: wrap;
+      gap: 0.35rem 0.45rem;
+    }
+
+    &__title {
+      max-width: 100%;
+      font-size: 0.88rem;
+      line-height: 1.15;
+    }
+
+    &__type {
+      padding: 0.18rem 0.42rem;
+      font-size: 0.62rem;
+      line-height: 1;
+    }
+
+    &__meta {
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 0.32rem 0.45rem;
+    }
+
+    &__category {
+      max-width: 92px;
+      padding: 0.22rem 0.5rem;
+      font-size: 0.66rem;
+      line-height: 1;
+    }
+
+    &__date {
+      font-size: 0.68rem;
+      line-height: 1;
     }
 
     &__creator,
     &__description-area,
     &__right {
+      min-height: auto;
+      border-left: none;
       border-top: 1px solid color-mix(in srgb, var(--border) 80%, transparent);
-      padding-top: 1rem;
+      padding-left: 0;
+      padding-top: 0.7rem;
+    }
+
+    &__creator {
+      gap: 0.55rem;
+    }
+
+    &__creator-avatar {
+      width: 32px;
+      height: 32px;
+      flex-basis: 32px;
+    }
+
+    &__creator-info {
+      span {
+        font-size: 0.66rem;
+      }
+
+      strong {
+        font-size: 0.78rem;
+      }
+    }
+
+    &__description {
+      font-size: 0.76rem;
+      line-height: 1.32;
+      -webkit-line-clamp: 2;
     }
 
     &__right {
       justify-items: stretch;
+      gap: 0.6rem;
     }
 
     &__amount {
+      font-size: 0.92rem;
       text-align: left;
     }
 
@@ -309,11 +396,102 @@
       width: 100%;
       display: grid;
       grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
 
       .my-custom-button,
       button {
         width: 100%;
+        min-height: 32px;
+        padding-inline: 0.7rem;
+        font-size: 0.75rem;
+        border-radius: 9px;
       }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .transaction-item {
+    gap: 0.6rem;
+    padding: 0.72rem;
+    border-radius: 14px;
+
+    &__main {
+      gap: 0.6rem;
+    }
+
+    &__icon {
+      width: 38px;
+      height: 38px;
+      flex-basis: 38px;
+      border-radius: 12px;
+
+      span {
+        font-size: 1rem;
+      }
+    }
+
+    &__summary {
+      gap: 0.28rem;
+    }
+
+    &__title-row {
+      gap: 0.28rem 0.38rem;
+    }
+
+    &__title {
+      font-size: 0.82rem;
+      line-height: 1.12;
+    }
+
+    &__type {
+      font-size: 0.58rem;
+      padding: 0.16rem 0.38rem;
+    }
+
+    &__meta {
+      gap: 0.28rem 0.38rem;
+    }
+
+    &__category {
+      max-width: 82px;
+      font-size: 0.62rem;
+      padding: 0.18rem 0.42rem;
+    }
+
+    &__date {
+      font-size: 0.64rem;
+    }
+
+    &__creator,
+    &__description-area,
+    &__right {
+      padding-top: 0.62rem;
+    }
+
+    &__creator-avatar {
+      width: 30px;
+      height: 30px;
+      flex-basis: 30px;
+    }
+
+    &__creator-info {
+      span {
+        font-size: 0.62rem;
+      }
+
+      strong {
+        font-size: 0.72rem;
+      }
+    }
+
+    &__description {
+      font-size: 0.7rem;
+      line-height: 1.3;
+    }
+
+    &__amount {
+      font-size: 0.84rem;
     }
   }
 }

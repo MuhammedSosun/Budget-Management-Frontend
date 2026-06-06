@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./TransactionList.scss";
 import {
   type Transaction,
@@ -20,8 +20,10 @@ import { useWorkspace } from "../../../hooks/useWorkspace";
 function TransactionList() {
   const { t } = useTranslation();
   const { activeWorkspaceId, activeWorkspace } = useWorkspace();
+
   const canManageTransactions =
     activeWorkspace?.role === "OWNER" || activeWorkspace?.role === "EDITOR";
+
   const {
     transactions,
     pagination,
@@ -32,15 +34,51 @@ function TransactionList() {
     searchValue,
     setSearchValue,
   } = useTransactions(10);
+
+  const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isFiltersOpen, setIsFiltersOpen] = useState(false);
+  const [idToDelete, setIdToDelete] = useState<string | null>(null);
+  const [selectedTransaction, setSelectedTransaction] =
+    useState<Transaction | null>(null);
+
+  const [localFilters, setLocalFilters] = useState<TransactionFilters>({
+    type: "",
+    startDate: "",
+    endDate: "",
+    category: "",
+    search: "",
+    filter: "",
+  });
+
+  useEffect(() => {
+    if (isFiltersOpen) {
+      setLocalFilters(filters);
+    }
+  }, [isFiltersOpen, filters]);
+
+  useEffect(() => {
+    if (!isFiltersOpen) return;
+
+    const originalOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    return () => {
+      document.body.style.overflow = originalOverflow;
+    };
+  }, [isFiltersOpen]);
+
+  const activeFilterCount = [
+    filters.type,
+    filters.startDate,
+    filters.endDate,
+    filters.filter,
+  ].filter(Boolean).length;
+
   const refreshAfterTransactionChange = () => {
     refresh();
     window.dispatchEvent(new Event("refresh-dashboard"));
   };
-  const [isFormOpen, setIsFormOpen] = useState(false);
-  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [idToDelete, setIdToDelete] = useState<string | null>(null);
-  const [selectedTransaction, setSelectedTransaction] =
-    useState<Transaction | null>(null);
 
   const openDeleteModal = (id: string) => {
     setIdToDelete(id);
@@ -61,12 +99,43 @@ function TransactionList() {
     setPagination((prev) => ({ ...prev, currentPage: newPage }));
   };
 
+  const handleSearchChange = (value: string) => {
+    setSearchValue(value);
+    setPagination((prev) => ({ ...prev, currentPage: 1 }));
+  };
+
+  const handleApplyFiltersMobile = () => {
+    setFilters(localFilters);
+    setPagination((prev) => ({ ...prev, currentPage: 1 }));
+    setIsFiltersOpen(false);
+  };
+
+  const resetFilters = () => {
+    const emptyFilters: TransactionFilters = {
+      type: "",
+      startDate: "",
+      endDate: "",
+      category: "",
+      search: "",
+      filter: "",
+    };
+
+    setFilters(emptyFilters);
+    setLocalFilters(emptyFilters);
+    setSearchValue("");
+    setPagination((prev) => ({ ...prev, currentPage: 1 }));
+    if (isFiltersOpen) {
+      setIsFiltersOpen(false);
+    }
+  };
+
   return (
     <div className="transaction-list">
       <div className="transaction-list__header">
         <h3 className="transaction-list__title">
           {t("transaction_list__title")}
         </h3>
+
         {canManageTransactions && (
           <Button
             variant="primary"
@@ -80,111 +149,183 @@ function TransactionList() {
         )}
       </div>
 
-      <div className="transaction-filters">
-        <div className="search-group">
+      <div className="transaction-list__mobile-controls">
+        <div className="transaction-list__mobile-search-wrapper">
+          <Input
+            label=""
+            value={searchValue}
+            placeholder="Search transactions..."
+            onChange={handleSearchChange}
+          />
+        </div>
+
+        <button
+          type="button"
+          className="transaction-list__filter-button"
+          onClick={() => setIsFiltersOpen(true)}
+        >
+          <span>{t("filters")}</span>
+          {activeFilterCount > 0 && <strong>{activeFilterCount}</strong>}
+        </button>
+      </div>
+
+      {isFiltersOpen && (
+        <button
+          type="button"
+          className="transaction-list__filters-backdrop"
+          aria-label="Close filters"
+          onClick={() => setIsFiltersOpen(false)}
+        />
+      )}
+
+      <div
+        className={`transaction-filters ${
+          isFiltersOpen ? "transaction-filters--open" : ""
+        }`}
+        role="dialog"
+        aria-modal={isFiltersOpen}
+        aria-label="Transaction filters"
+      >
+        <div className="transaction-filters__mobile-header">
+          <div>
+            <span className="transaction-filters__eyebrow">{t("filters")}</span>
+            <h4>{t("filters")}</h4>
+          </div>
+
+          <button
+            type="button"
+            className="transaction-filters__close"
+            onClick={() => setIsFiltersOpen(false)}
+            aria-label="Close filters"
+          >
+            ×
+          </button>
+        </div>
+
+        <div className="transaction-filters__desktop-search">
           <Input
             label={t("search")}
             value={searchValue}
             placeholder="Search..."
-            onChange={(value) => {
-              setSearchValue(value);
-            }}
+            onChange={handleSearchChange}
           />
         </div>
 
-        <div className="filter-group">
-          <Select
-            label={t("transaction_type")}
-            value={filters.type ?? ""}
-            options={[
-              { label: t("all"), value: "" },
-              { label: t("income"), value: "income" },
-              { label: t("expense"), value: "expense" },
-            ]}
-            onChange={(val) => {
-              setFilters({ ...filters, type: val });
-              setPagination((prev) => ({ ...prev, currentPage: 1 }));
-            }}
-          />
-        </div>
+        <div className="transaction-filters__form-content">
+          <div className="filter-group">
+            <Select
+              label={t("transaction_type")}
+              value={
+                isFiltersOpen ? (localFilters.type ?? "") : (filters.type ?? "")
+              }
+              options={[
+                { label: t("all"), value: "" },
+                { label: t("income"), value: "income" },
+                { label: t("expense"), value: "expense" },
+              ]}
+              onChange={(val) => {
+                if (isFiltersOpen) {
+                  setLocalFilters({ ...localFilters, type: val });
+                } else {
+                  setFilters({ ...filters, type: val });
+                  setPagination((prev) => ({ ...prev, currentPage: 1 }));
+                }
+              }}
+            />
+          </div>
 
-        <div className="filter-group">
-          <Input
-            label={t("start_date")}
-            type="date"
-            value={filters.startDate || ""}
-            onChange={(value) => {
-              setFilters({ ...filters, startDate: value });
-              setPagination((prev) => ({ ...prev, currentPage: 1 }));
-            }}
-          />
-        </div>
+          <div className="filter-group">
+            <Select
+              label={t("filters")}
+              value={
+                isFiltersOpen
+                  ? (localFilters.filter ?? "")
+                  : (filters.filter ?? "")
+              }
+              options={[
+                { label: t("newest_to_oldest"), value: "newest" },
+                { label: t("oldest_to_newest"), value: "oldest" },
+                { label: t("last_7_days"), value: "7days" },
+                { label: t("last_30_days"), value: "30days" },
+              ]}
+              onChange={(value) => {
+                if (isFiltersOpen) {
+                  setLocalFilters({
+                    ...localFilters,
+                    filter: value as TransactionFilters["filter"],
+                  });
+                } else {
+                  setFilters((prev) => ({
+                    ...prev,
+                    filter: value as TransactionFilters["filter"],
+                  }));
+                  setPagination((prev) => ({ ...prev, currentPage: 1 }));
+                }
+              }}
+            />
+          </div>
 
-        <div className="filter-group">
-          <Input
-            label={t("end_date")}
-            type="date"
-            value={filters.endDate || ""}
-            onChange={(value) => {
-              setFilters({ ...filters, endDate: value });
-              setPagination((prev) => ({ ...prev, currentPage: 1 }));
-            }}
-          />
-        </div>
+          <div className="filter-group">
+            <Input
+              label={t("start_date")}
+              type="date"
+              value={
+                isFiltersOpen
+                  ? localFilters.startDate || ""
+                  : filters.startDate || ""
+              }
+              onChange={(value) => {
+                if (isFiltersOpen) {
+                  setLocalFilters({ ...localFilters, startDate: value });
+                } else {
+                  setFilters({ ...filters, startDate: value });
+                  setPagination((prev) => ({ ...prev, currentPage: 1 }));
+                }
+              }}
+            />
+          </div>
 
-        <div className="filter-group">
-          <Select
-            label={t("filters")}
-            value={filters.filter ?? ""}
-            options={[
-              { label: t("newest_to_oldest"), value: "newest" },
-              { label: t("oldest_to_newest"), value: "oldest" },
-              { label: t("last_7_days"), value: "7days" },
-              { label: t("last_30_days"), value: "30days" },
-            ]}
-            onChange={(value) => {
-              setFilters((prev) => ({
-                ...prev,
-                filter: value as TransactionFilters["filter"],
-              }));
-
-              setPagination((prev) => ({
-                ...prev,
-                currentPage: 1,
-              }));
-            }}
-          />
+          <div className="filter-group">
+            <Input
+              label={t("end_date")}
+              type="date"
+              value={
+                isFiltersOpen
+                  ? localFilters.endDate || ""
+                  : filters.endDate || ""
+              }
+              onChange={(value) => {
+                if (isFiltersOpen) {
+                  setLocalFilters({ ...localFilters, endDate: value });
+                } else {
+                  setFilters({ ...filters, endDate: value });
+                  setPagination((prev) => ({ ...prev, currentPage: 1 }));
+                }
+              }}
+            />
+          </div>
         </div>
 
         <div className="transaction-filters__reset">
-          <Button
-            variant="danger"
-            onClick={() => {
-              setFilters({
-                type: "",
-                startDate: "",
-                endDate: "",
-                category: "",
-                search: "",
-                filter: "",
-              });
-
-              setSearchValue("");
-
-              setPagination((prev) => ({
-                ...prev,
-                currentPage: 1,
-              }));
-            }}
-          >
+          <Button variant="danger" onClick={resetFilters}>
             {t("reset")}
+          </Button>
+        </div>
+
+        <div className="transaction-filters__mobile-actions">
+          <Button variant="danger" onClick={resetFilters}>
+            {t("reset")}
+          </Button>
+
+          <Button variant="primary" onClick={handleApplyFiltersMobile}>
+            {t("apply")}
           </Button>
         </div>
       </div>
 
       <div className="transaction-list__items">
         {transactions.length === 0 ? (
-          <p>{t("no_transactions")}</p>
+          <p className="transaction-list__empty">{t("no_transactions")}</p>
         ) : (
           transactions.map((item) => (
             <TransactionItem
@@ -232,6 +373,7 @@ function TransactionList() {
       >
         <div className="delete-confirm">
           <p className="delete-confirm__text">{t("delete_confirm")}</p>
+
           <div className="delete-confirm__actions">
             <Button
               variant="danger"
@@ -267,6 +409,7 @@ function TransactionList() {
             >
               {t("yes_delete")}
             </Button>
+
             <Button
               variant="primary"
               onClick={() => setIsDeleteModalOpen(false)}

@@ -14,6 +14,7 @@ import BudgetPage from "../views/Budgets/BudgetsPage";
 import ForgotPassword from "../components/Auth/ForgotPassword";
 import ResetPassword from "../components/Auth/ResetPassword";
 import NotificationsPage from "../views/Notifications/NotificationPage";
+import AIReviewPage from "../views/AIReview/AIReveiwPage";
 const AppRouter = () => {
   return (
     <Routes>
@@ -34,6 +35,7 @@ const AppRouter = () => {
           <Route path="/transactions" element={<TransactionPage />} />
           <Route path="/budgets" element={<BudgetPage />} />
           <Route path="/workspace" element={<WorkspacesPage />} />
+          <Route path="/ai-review" element={<AIReviewPage />} />
           <Route path="/settings" element={<SettingsPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
         </Route>

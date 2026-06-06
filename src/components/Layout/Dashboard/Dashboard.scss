@@ -66,26 +66,108 @@
   }
 }
 
-@media (max-width: 760px) {
+@media (max-width: 900px) {
   .dashboard {
     &__header {
-      flex-direction: column;
-      align-items: stretch;
-    }
-
-    &__currency-wrapper {
-      width: 100%;
-      min-width: 0;
-    }
-
-    &__cards {
-      grid-template-columns: 1fr;
-      gap: 1rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: start;
+      gap: 0.75rem;
       margin-bottom: 1rem;
     }
 
+    &__title-group {
+      min-width: 0;
+      grid-column: 1;
+    }
+
+    &__title {
+      font-size: 1.35rem;
+      line-height: 1.08;
+      letter-spacing: -0.05em;
+    }
+
+    &__subtitle {
+      font-size: 0.76rem;
+      line-height: 1.25;
+      max-width: 100%;
+    }
+
+    &__currency-wrapper {
+      grid-column: 2;
+      width: 96px;
+      min-width: 96px;
+      align-self: start;
+      margin-top: 0.1rem;
+
+      label,
+      .select__label {
+        display: none;
+      }
+
+      select {
+        height: 38px;
+        border-radius: 999px;
+        padding: 0 0.8rem;
+        font-size: 0.78rem;
+        font-weight: 900;
+      }
+    }
+
+    &__cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.5rem;
+      margin-bottom: 0.85rem;
+
+      > * {
+        min-width: 0;
+      }
+    }
+
     &__charts {
-      gap: 1rem;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.5rem;
+
+      > * {
+        min-width: 0;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+@media (max-width: 420px) {
+  .dashboard {
+    &__header {
+      gap: 0.55rem;
+    }
+
+    &__title {
+      font-size: 1.18rem;
+    }
+
+    &__subtitle {
+      font-size: 0.68rem;
+    }
+
+    &__currency-wrapper {
+      width: 84px;
+      min-width: 84px;
+
+      select {
+        height: 34px;
+        padding: 0 0.65rem;
+        font-size: 0.68rem;
+      }
+    }
+
+    &__cards {
+      gap: 0.42rem;
+      margin-bottom: 0.75rem;
+    }
+
+    &__charts {
+      gap: 0.42rem;
     }
   }
 }

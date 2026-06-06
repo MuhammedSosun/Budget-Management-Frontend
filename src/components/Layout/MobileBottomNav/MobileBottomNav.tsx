@@ -34,7 +34,7 @@ function MobileBottomNav() {
       >
         <span className="mobile-bottom-nav__icon">▦</span>
         <span className="mobile-bottom-nav__label">
-          {t("workspace.workspaces")}
+          {t("workspace.workspaces_mobile")}
         </span>
       </NavLink>
 

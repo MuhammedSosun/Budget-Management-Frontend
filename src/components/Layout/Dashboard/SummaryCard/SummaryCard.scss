@@ -2,10 +2,11 @@
   background-color: var(--bg-card);
   border-radius: 16px;
   padding: 24px;
-  min-width: 200px;
+  min-width: 0;
   box-shadow: var(--shadow);
   border: 1px solid var(--border);
   transition: transform 0.2s ease;
+  overflow: hidden;
 
   &:hover {
     transform: translateY(-5px);
@@ -16,21 +17,27 @@
   }
 
   &__title {
+    display: block;
     font-size: 0.9rem;
     color: var(--text-muted);
-    font-weight: 500;
+    font-weight: 700;
     text-transform: uppercase;
     letter-spacing: 0.5px;
   }
 
   &__body {
+    min-width: 0;
   }
 
   &__amount {
     font-size: 1.8rem;
-    font-weight: 700;
+    font-weight: 800;
     color: var(--text-main);
     margin: 0;
+    min-width: 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   &--income {
@@ -47,6 +54,84 @@
 
     .summary-card__amount {
       color: var(--danger);
+    }
+  }
+}
+
+@media (max-width: 900px) {
+  .summary-card {
+    height: 88px;
+    min-height: 88px;
+    max-height: 88px;
+    padding: 0.65rem 0.7rem;
+    border-radius: 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    &:hover {
+      transform: none;
+    }
+
+    &__header {
+      margin-bottom: 0.35rem;
+    }
+
+    &__title {
+      font-size: 0.58rem;
+      line-height: 1.2;
+      letter-spacing: 0.06em;
+      font-weight: 850;
+    }
+
+    &__amount {
+      font-size: clamp(0.9rem, 3vw, 1.15rem);
+      line-height: 1.05;
+      letter-spacing: -0.05em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .summary-card {
+    height: 78px;
+    min-height: 78px;
+    max-height: 78px;
+    padding: 0.5rem 0.55rem;
+    border-radius: 14px;
+
+    &__header {
+      margin-bottom: 0.28rem;
+    }
+
+    &__title {
+      font-size: 0.48rem;
+      line-height: 1.15;
+    }
+
+    &__amount {
+      font-size: clamp(0.76rem, 3.2vw, 0.95rem);
+      line-height: 1;
+    }
+  }
+}
+
+@media (max-width: 380px) {
+  .summary-card {
+    height: 70px;
+    min-height: 70px;
+    max-height: 70px;
+    padding: 0.45rem 0.45rem;
+
+    &__title {
+      font-size: 0.43rem;
+    }
+
+    &__amount {
+      font-size: 0.78rem;
     }
   }
 }

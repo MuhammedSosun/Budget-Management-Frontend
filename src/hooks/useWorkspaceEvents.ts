@@ -41,8 +41,6 @@ export const useWorkspaceEvents = () => {
         const payload = parsePayload(data);
         if (!payload) return;
 
-        console.log("SSE event geldi:", eventName, payload);
-
         if (
           eventName === "transaction:created" ||
           eventName === "transaction:updated" ||

@@ -291,7 +291,7 @@
       align-items: stretch;
     }
 
-    &__header .my-custom-button {
+    &__header button {
       width: 100%;
     }
 
@@ -317,15 +317,6 @@
         min-width: 0;
         width: 100%;
       }
-
-      .select-group__input {
-        width: 100%;
-      }
-    }
-
-    &__month-input {
-      width: 100%;
-      min-width: 0;
     }
   }
 }
@@ -334,38 +325,147 @@
   .budget-page {
     padding: 1rem;
 
+    &__header {
+      gap: 1rem;
+      margin-bottom: 1.25rem;
+
+      button {
+        height: 42px;
+        min-height: 42px;
+        border-radius: 14px;
+        font-size: 0.85rem;
+        font-weight: 900;
+      }
+    }
+
+    &__title {
+      font-size: 1.65rem;
+      letter-spacing: -0.04em;
+    }
+
+    &__description {
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
     &__toolbar {
       gap: 1rem;
       padding: 1rem;
-      border-radius: var(--radius-lg);
+      border-radius: 18px;
+      margin-bottom: 1.25rem;
+    }
+
+    &__toolbar-info {
+      display: flex;
+      flex-direction: column;
     }
 
     &__toolbar-eyebrow {
-      font-size: 0.72rem;
+      font-size: 0.65rem;
+      margin-bottom: 0.15rem;
     }
 
     &__toolbar-title {
-      font-size: 1rem;
+      font-size: 0.95rem;
     }
 
     &__toolbar-description {
-      font-size: 0.86rem;
-      line-height: 1.45;
+      font-size: 0.72rem;
+      line-height: 1.4;
+      margin-top: 0.2rem;
     }
 
     &__toolbar-actions {
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 0.75rem !important;
+      width: 100% !important;
+      box-sizing: border-box !important;
+      align-items: end !important;
+
+      .budget-page__filter,
+      .select-group,
+      .select-group > div {
+        width: 100% !important;
+        max-width: 100% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+      }
+
+      .select-group__label,
+      .budget-page__filter-label {
+        font-size: 0.72rem !important;
+        font-weight: 850 !important;
+        margin-bottom: 0.35rem !important;
+        color: var(--text-muted) !important;
+      }
+
+      input[type="month"].budget-page__month-input,
+      select,
+      .select-group__input,
+      .select-group__trigger {
+        width: 100% !important;
+        max-width: 100% !important;
+        height: 42px !important;
+        min-height: 42px !important;
+        font-size: 0.8rem !important;
+        border-radius: 12px !important;
+        padding: 0 0.75rem !important;
+        font-weight: 750 !important;
+        box-sizing: border-box !important;
+      }
     }
 
-    &__toolbar-actions .select-group__input,
-    &__month-input {
-      min-height: 44px;
-      font-size: 16px;
+    .budget-summary-cards {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+      gap: 0.65rem !important;
+      width: 100%;
+
+      .summary-card {
+        padding: 0.75rem !important;
+        border-radius: 16px !important;
+        min-height: auto !important;
+
+        &__icon {
+          width: 32px !important;
+          height: 32px !important;
+          font-size: 1rem !important;
+        }
+
+        &__title {
+          font-size: 0.65rem !important;
+          margin-bottom: 0.15rem !important;
+        }
+
+        &__value {
+          font-size: 1rem !important;
+          letter-spacing: -0.02em !important;
+        }
+
+        &__desc {
+          font-size: 0.6rem !important;
+          line-height: 1.2 !important;
+          margin-top: 0.15rem !important;
+        }
+      }
+    }
+
+    &__content {
+      margin-top: 1.25rem;
+    }
+
+    &__section-title {
+      font-size: 1.1rem;
+    }
+
+    &__section-description {
+      font-size: 0.78rem;
     }
 
     &__grid {
       grid-template-columns: 1fr;
+      gap: 0.85rem;
     }
 
     &__empty {
@@ -376,15 +476,7 @@
     &__delete-actions {
       display: grid;
       grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
-
-    &__delete-actions .my-custom-button {
-      width: 100%;
-    }
-  }
-}
-
-@media (max-width: 480px) {
-  .budget-page {
   }
 }
